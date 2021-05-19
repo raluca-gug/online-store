@@ -7,7 +7,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ProductListComponent } from './product-list.component';
-import { NavbarComponent } from 'src/app/navbar/navbar.component';
+import { NavbarComponent } from 'src/app/shared-module/navbar/navbar.component';
 import { ProductItemComponent } from '../product-item/product-item.component';
 import { MatIconModule } from '@angular/material/icon';
 import {

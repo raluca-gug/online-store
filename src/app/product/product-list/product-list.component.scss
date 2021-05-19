@@ -106,7 +106,7 @@ label {
   @media only screen and (max-width: 575px) {
     flex-direction: column;
     text-align: center;
-    margin: 180px auto 0;
+    margin: 180px auto 20px;
     .sort-item {
       margin-bottom: 3%;
     }
@@ -116,7 +116,7 @@ label {
   }
   display: flex;
   width: 80%;
-  margin: 130px auto 0;
+  margin: 130px auto 20px;
   font-size: 1.1rem;
 }
 .sort-item {

@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppComponent } from './app.component';
 import { HttpLoaderFactory } from './app.module';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './shared-module/navbar/navbar.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {

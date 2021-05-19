@@ -1,3 +1,4 @@
+import { SharedModule } from './shared-module/shared-module.module';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
 import { AppInterceptorInterceptor } from './interceptors/app-interceptor.interceptor';
@@ -17,7 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { OrderComponent } from './order/order.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 import { MyOrdersComponent } from './user-details/my-orders/my-orders.component';
@@ -53,7 +53,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     OrderItemComponent,
     PaymentSuccessComponent,
     PaymentFailureComponent,
-    NavbarComponent
   ],
   entryComponents: [ProductDetailsDialogComponent],
   imports: [
@@ -65,6 +64,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RatingModule,
     SocialLoginModule,
     MatButtonModule,
+    SharedModule,
     [HttpClientModule],
     OverlayModule,
     TranslateModule.forRoot({
@@ -108,6 +108,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }
   ],
   bootstrap: [AppComponent],
-  exports: [NavbarComponent, TranslateModule, AccountModule],
+  exports: [TranslateModule, AccountModule, SharedModule],
 })
 export class AppModule { }

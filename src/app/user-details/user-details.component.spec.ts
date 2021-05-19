@@ -6,7 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { UserDetailsComponent } from './user-details.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared-module/navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

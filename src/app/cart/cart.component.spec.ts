@@ -7,7 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CartComponent } from './cart.component';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { NavbarComponent } from '../shared-module/navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { RatingModule } from 'ng-starrating';
 import { HttpClient } from '@angular/common/http';
