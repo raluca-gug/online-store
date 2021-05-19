@@ -1,0 +1,181 @@
+.user-details {
+  @media only screen and (max-width: 500px) {
+    border-left: none;
+    border-right: none;
+    min-width: 100%;
+    overflow: scroll;
+    font-size: 1.1rem;
+    .user-name {
+      max-width: fit-content;
+      padding: 0.5rem;
+    }
+  }
+  min-width: fit-content;
+  max-width: 80vw;
+  min-height: 50%;
+  max-height: 80%;
+  overflow: auto;
+  display: flex;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to right,
+    #5fd4d2,
+    #e65353,
+    #4cb5cf,
+    #ffc663,
+    #56c465,
+    #634fbd
+  );
+  border-radius: 8px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  position: relative;
+  left: 50%;
+  top: 62%;
+  transform: translate(-50%, -50%);
+  h4 {
+    font-weight: 500;
+  }
+  .user-name {
+    border-right: 1px solid black;
+    padding-left: 2%;
+    text-align: center;
+    width: 200px;
+    position: sticky;
+    top: 0;
+    h2 {
+      margin-top: 30px;
+    }
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      li {
+        cursor: pointer;
+      }
+      li:hover {
+        background-color: #e0d7bc;
+      }
+    }
+    .user-img {
+      width: 80px;
+      height: 80px;
+      background-color: #634fbd;
+      text-align: center;
+      border-radius: 50%;
+      margin: 0 auto;
+
+      .user-logo {
+        color: white;
+        font-size: 40px;
+        margin: auto;
+        padding-top: 30px;
+      }
+    }
+  }
+  .user-information {
+    display: flex;
+    flex-grow: 1;
+    @media only screen and (max-width: 850px) {
+      flex-direction: column;
+      align-items: center;
+      input {
+        max-width: 95%;
+      }
+    }
+    .user-account-info {
+      @media only screen and (max-width: 850px) {
+        border: none;
+        margin-bottom: 12%;
+        align-items: center;
+        width: fit-content;
+      }
+      display: flex;
+      width: 50%;
+      border-right: 1px solid;
+      padding-left: 2%;
+      flex-direction: column;
+    }
+    .user-account-password {
+      @media only screen and (max-width: 850px) {
+        border: none;
+        margin-bottom: 12%;
+        align-items: center;
+        width: fit-content;
+      }
+      display: flex;
+      width: 50%;
+      padding-left: 2%;
+      .validation-text {
+        color: #ff0000;
+        text-align: justify;
+        margin-right: 2%;
+        max-width: fit-content;
+      }
+    }
+  }
+  .details-address {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    padding-left: 3%;
+  }
+}
+.edit-btn-light {
+  background-color: white;
+}
+.edit-btn {
+  border: none;
+  height: 30px;
+  cursor: pointer;
+}
+mat-icon {
+  vertical-align: middle;
+  color: #817e7e;
+  padding: 0 0.6rem;
+  cursor: pointer;
+}
+.active {
+  background-color: #b5a988;
+  color: white;
+}
+.password-error {
+  color: red;
+  font-size: 13px;
+}
+.submit-details-btn {
+  width: 165px;
+  margin-top: 10px;
+  background-image: linear-gradient(to left, #5fd4d2, #634fbd 40%);
+  color: white;
+  border: none;
+  height: 20px;
+}
+.submit-details {
+  width: 165px;
+  margin-top: 10px;
+  height: 20px;
+}
+.confirm-light {
+  background-color: #ffffff;
+}
+.confirm {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  padding: 3rem;
+  min-width: 40%;
+  text-align: center;
+  border-radius: 2%;
+  border: 2px solid #56c465;
+  .mat-icon {
+    font-size: 3rem;
+    color: #56c465;
+    margin: 0 5px 30px 0;
+  }
+}
+input{
+  font-size: 1.1rem;
+}

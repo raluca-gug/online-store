@@ -1,0 +1,72 @@
+<div class="details" *ngIf="product" [ngClass]="{ dark: darkTheme }">
+  <app-navbar (curentTheme)="receive($event)"></app-navbar>
+  <h1>{{ product.name | titlecase }}</h1>
+  <div class="product-information">
+    <img [src]="product.image" alt="" />
+    <div class="product-details">
+      <div class="rating-description">
+        <p>
+          {{ "ProductDetails.Rating" | translate }}
+          <star-rating
+            [value]="product.rating"
+            [totalstars]="5"
+            [readonly]="true"
+            checkedcolor="#ffd700"
+            uncheckedcolor="#dcdcdc"
+            size="24px"
+          ></star-rating
+          >({{ product.rating }}/5)
+        </p>
+        <p class="product-description">{{ product.description }}</p>
+      </div>
+      <div class="add-to-cart">
+        <p>{{ product.price }} lei</p>
+        <button (click)="addToCart(); openDialog()" *ngIf="!outOfStock">
+          <span class="material-icons shopping"> shopping_cart </span>
+          <div class="quantity" (click)="$event.stopPropagation()">
+            <span (click)="modifyQuantity(-1)" class="quantity-buttons">
+              -
+            </span>
+            <span class="larger">{{ qty }}</span>
+            <span
+              (click)="qty < product.itemsInStock ? modifyQuantity(1) : null"
+              class="quantity-buttons"
+            >
+              +
+            </span>
+          </div>
+          <span class="add-text">{{ "ProductDetails.Add" | translate }}</span>
+        </button>
+        <div class="outOfStock button" *ngIf="outOfStock">
+          {{ "ProductDetails.Out of stock" | translate }}
+        </div>
+      </div>
+      <h4
+        [ngClass]="
+          product.itemsInStock >= 20
+            ? 'goodStock'
+            : product.itemsInStock > 15
+            ? 'someStock'
+            : 'limitedStock'
+        "
+        *ngIf="product.itemsInStock"
+      >
+        {{ "ProductDetails.Quantity" | translate }} {{ product.itemsInStock }}
+        {{ "ProductDetails.pcs" | translate }}
+      </h4>
+    </div>
+  </div>
+</div>
+<h2 class="margin">{{ "ProductDetails.Recent" | translate }}</h2>
+<div class="product-list">
+  <app-product-item
+    *ngFor="let product of displayHistory"
+    [product]="product"
+    [ngStyle]="{ margin: '15px' }"
+    [darkTheme]="darkTheme"
+  ></app-product-item>
+  <i aria-hidden="true"></i>
+  <i aria-hidden="true"></i>
+  <i aria-hidden="true"></i>
+  <i aria-hidden="true"></i>
+</div>

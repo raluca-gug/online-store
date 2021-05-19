@@ -1,0 +1,8 @@
+<app-navbar (curentTheme)="receive($event)"></app-navbar>
+<div class="confirm"
+[ngClass]="{dark: darkTheme, 'confirm-light': !darkTheme }">
+    <mat-icon>do_not_disturb</mat-icon>
+    <h3>{{ "PaymentFailure.Wrong" | translate }}</h3>
+    <h2>{{ "PaymentFailure.BackTo" | translate }}</h2>
+    <button routerLink="/order">{{"PaymentFailure.back" | translate}}</button>
+</div>

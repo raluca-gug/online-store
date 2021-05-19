@@ -1,0 +1,119 @@
+<app-navbar (curentTheme)="receive($event)"></app-navbar>
+
+<div class="sort-container" [ngClass]="{ dark: darkTheme }">
+  <div class="sort-item">
+    <label for="order">{{ "ProductList.Sort" | translate }}</label>
+    <select
+      name="order"
+      (change)="selectSortCriteria($event)"
+      [(ngModel)]="sortBy"
+      [ngClass]="{ 'elevated-dark': darkTheme }"
+    >
+      <option value="-">-</option>
+      <option value="Price">
+        {{ "ProductList.Price" | translate }}
+      </option>
+      <option value="Rating">
+        {{ "ProductList.Rating" | translate }}
+      </option>
+      <option value="Name">
+        {{ "ProductList.Name" | translate }}
+      </option>
+      <option value="Brand">
+        {{ "ProductList.Brand" | translate }}
+      </option>
+    </select>
+  </div>
+  <div
+    *ngIf="descending"
+    class="sort-button"
+    [class.gray]="sortBy == '' || sortBy == '-'"
+    (click)="changeSortDirection()"
+  >
+    <mat-icon>arrow_circle_down</mat-icon
+    >{{ "ProductList.Descending" | translate }}
+  </div>
+  <div *ngIf="!descending" class="sort-button" (click)="changeSortDirection()">
+    <mat-icon>arrow_circle_up</mat-icon
+    >{{ "ProductList.Ascending" | translate }}
+  </div>
+</div>
+<div>
+  <img
+    src="../../../assets/PNGIX.com_bicycle-png_1213951.png"
+    class="moving-bike-img"
+    alt="bike runing"
+  />
+</div>
+<div class="product-list">
+  <app-product-item
+    class="child"
+    *ngFor="let product of products | filterProduct: searchTerm"
+    [product]="product"
+    [darkTheme]="darkTheme"
+  ></app-product-item>
+  <i aria-hidden="true"></i>
+  <i aria-hidden="true"></i>
+  <i aria-hidden="true"></i>
+  <i aria-hidden="true"></i>
+</div>
+<div class="page-controls">
+  <label for="pageSize">{{ "ProductList.Products" | translate }}</label>
+  <select
+    name="pageSize"
+    id="pageSize"
+    class="pageSize"
+    title="The number of products per page"
+    (change)="selectPageSizeHandler($event)"
+  >
+    <option
+      *ngFor="let pageSizeItem of pageSizeSelector"
+      value="{{ pageSizeItem }}"
+      [selected]="pageSizeItem === pageSize ? 'isSelected' : ''"
+    >
+      {{ pageSizeItem }}
+    </option>
+  </select>
+  <button
+    (click)="showFirstPage()"
+    *ngIf="pageNumber > 0"
+    title="Go to first page"
+  >
+    <<
+  </button>
+  <button
+    (click)="decreasePageNo()"
+    *ngIf="pageNumber > 0"
+    title="Go to previous page"
+  >
+    < {{ "ProductList.Previous" | translate }}
+  </button>
+  {{ "ProductList.Page" | translate }}
+  <button
+    *ngFor="let pageNo of multiplePages"
+    [style.color]="pageNumber === pageNo - 1 ? 'black' : null"
+    [style.text-decoration]="pageNumber === pageNo - 1 ? 'underline' : null"
+    (click)="showPageNo(pageNo - 1)"
+    title="Go to page"
+  >
+    {{ pageNo }}
+  </button>
+  <span *ngIf="pageNumber + numberOfMultiplePages <= totalPages">...</span>
+  {{ "ProductList.of" | translate }}
+  {{ totalPages }}
+  <button
+    (click)="increasePageNo()"
+    *ngIf="pageNumber + 1 < totalPages"
+    title="Go to next page"
+  >
+    {{ "ProductList.Next" | translate }} >
+  </button>
+  <button
+    (click)="showLastPage()"
+    *ngIf="pageNumber + 1 < totalPages"
+    title="Go to last page"
+  >
+    >>
+  </button>
+</div>
+<div class="footer"></div>

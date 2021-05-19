@@ -1,0 +1,132 @@
+<app-navbar (curentTheme)="receive($event)"></app-navbar>
+<div class="container" *ngIf="products.length">
+  <div
+    class="order-summary mat-elevation-z2"
+    [ngClass]="{ 'elevated-dark': darkTheme }"
+  >
+    <h2 class="line">{{ "Cart.Products in cart" | translate }}</h2>
+    <div *ngFor="let product of products" class="product line">
+      <div><img src="{{ product.image }}" alt="" class="product-image" /></div>
+      <div class="product-section">
+        <div class="product-name">
+          <h2>
+            <a
+              [routerLink]="['/products/', product.id]"
+              [ngClass]="{ 'elevated-dark': darkTheme }"
+              >{{ product.name.substring(0, 50) | titlecase }}</a
+            >
+          </h2>
+          <star-rating
+            class="star-rating"
+            [value]="product.rating"
+            [totalstars]="5"
+            checkedcolor="#ffd700"
+            uncheckedcolor="#dcdcdc"
+            size="18px"
+            [readonly]="true"
+          ></star-rating>
+          <h3
+            [ngClass]="
+              product.itemsInStock >= 20
+                ? 'goodStock'
+                : product.itemsInStock > 10
+                ? 'someStock'
+                : 'limitedStock'
+            "
+          >
+            {{ product.itemsInStock }} pcs in stock
+          </h3>
+        </div>
+        <div class="poduct-wraper">
+          <div class="product-data">
+            <p>{{ "Cart.Quantity" | translate }}</p>
+            <div class="outOfStock" *ngIf="product.itemsInStock <= 0">
+              {{ "Cart.Out of stock" | translate }}
+            </div>
+            <div *ngIf="product.itemsInStock > 0">
+              <button
+                (click)="modifyQuantity(product.id, -1)"
+                class="quantity-buttons"
+                [ngClass]="{
+                  'elevated-dark': darkTheme,
+                  'quantity-buttons-light': !darkTheme
+                }"
+              >
+                -
+              </button>
+              <span class="larger">{{ product.qty }}</span>
+              <button
+                (click)="
+                  product.itemsInStock > product.qty
+                    ? modifyQuantity(product.id, 1)
+                    : null
+                "
+                class="quantity-buttons"
+                [ngClass]="{
+                  'elevated-dark': darkTheme,
+                  'quantity-buttons-light': !darkTheme
+                }"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <div class="product-data">
+            <p>{{ "Cart.Price" | translate }}</p>
+            <h2>{{ (product.price * product.qty).toFixed(2) }} lei</h2>
+            <span class="pointer" (click)="deleteFromCart(product.id)">
+              <mat-icon class="trash">delete_forever</mat-icon>
+              {{ "Cart.Remove" | translate }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="calculation mat-elevation-z2"
+    [ngClass]="{ 'elevated-dark': darkTheme }"
+  >
+    <h2 class="line">{{ "Cart.Order review" | translate }}</h2>
+    <div class="calculation-body">
+      <p class="space-between">{{ "Cart.Products price" | translate }}</p>
+      <p>{{ total }} lei</p>
+    </div>
+    <div class="calculation-body line">
+      <p class="space-between">{{ "Cart.Shipping" | translate }}</p>
+      <p>
+        {{
+          transportFee === 0 ? ("Cart.Free" | translate) : transportFee + " lei"
+        }}
+      </p>
+    </div>
+    <div class="calculation-body margin2">
+      <h2 class="space-between">{{ "Cart.Total" | translate }}</h2>
+      <h2>{{ total + transportFee }} lei</h2>
+    </div>
+    <div class="calculation-body line">
+      <button
+        class="margin2 order-button"
+        [disabled]="products.length == 0"
+        (click)="changeRoute()"
+      >
+        {{ "Cart.Next Step" | translate }}
+      </button>
+    </div>
+    <button class="margin2 back-button" [routerLink]="'/'">
+      {{ "Cart.Continue shopping" | translate }}
+    </button>
+  </div>
+</div>
+<div class="empty-cart-container" *ngIf="products.length === 0">
+  <div
+    class="empty mat-elevation-z2"
+    [ngClass]="{ 'elevated-dark': darkTheme }"
+  >
+    {{ "Cart.Cart is empty" | translate }}
+  </div>
+  <button class="margin2 back-button" style="width: 14rem" [routerLink]="'/'">
+    {{ "Cart.Continue shopping" | translate }}
+  </button>
+</div>
