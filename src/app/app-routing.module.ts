@@ -29,6 +29,7 @@ const routes: Routes = [
     component: ConfirmAccountComponent,
     pathMatch: 'prefix',
   },
+  { path: 'service', loadChildren: () => import('./service/service.module').then(m => m.ServiceModule) },
 ];
 
 @NgModule({
