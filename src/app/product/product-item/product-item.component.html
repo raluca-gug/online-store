@@ -13,7 +13,7 @@
       {{ "ProductItem.Out of stock" | translate }}
     </div>
     <img src="{{ product.image }}" alt="" />
-    <h2>{{ product.name.substring(0, 30) | titlecase }}</h2>
+    <h2 *ngIf="product.name" >{{ product.name.substring(0, 30) | titlecase }}</h2>
     <star-rating
       [value]="product.rating"
       [totalstars]="5"
@@ -37,7 +37,7 @@
       {{ product.brand | titlecase }}
     </h3>
     <h4 class="details-header">{{ "ProductItem.Details" | translate }}</h4>
-    <p class="details">{{ product.description.substr(0, 100) }}</p>
+    <p *ngIf="product.description" class="details">{{ product.description.substr(0, 100) }}</p>
     <h4
       class="stockPosition"
       [ngClass]="

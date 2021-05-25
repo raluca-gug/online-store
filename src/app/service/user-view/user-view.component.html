@@ -27,7 +27,7 @@
                 </th>
                 <th pSortableColumn="bikeName" field="bikeName">Bike <p-sortIcon ></p-sortIcon></th>
                 <th pSortableColumn="issue" field="issue">Issue <p-sortIcon ></p-sortIcon></th>
-                <th pSortableColumn="date" field="date">Date <p-sortIcon></p-sortIcon></th>
+                <th pColumn="date" field="date">Date <i [ngClass]="sortAsc ? 'pi pi-sort-amount-up' : 'pi pi-sort-amount-down'"(click)="sortByDate()"></i></th>
                 <th pSortableColumn="status" field="status">Status <p-sortIcon></p-sortIcon></th>
                 <th></th>
             </tr>

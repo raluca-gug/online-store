@@ -1,3 +1,4 @@
+import { ServiceRequestsService } from './../../../services/service-requests.service';
 import { Product } from './../../models/product';
 import { FormMapper } from './../../models/formMapper';
 import { ProductService } from 'src/services/product.service';
@@ -6,7 +7,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CreateProduct } from 'src/app/models/createProduct';
-import { write } from 'node:fs';
 
 @Component({
   selector: 'app-user-view',
@@ -28,8 +28,9 @@ export class UserViewComponent implements OnInit {
   customOtherBrandField = false;
   customOtherNameField = false;
   bikes!: any;
-  editIdR=null;
-  editIdI=null;
+  editIdR = null;
+  editIdI = null;
+  sortAsc = true;
   filteredBikes = [];
   minDate = new Date();
   brands = [
@@ -56,7 +57,8 @@ export class UserViewComponent implements OnInit {
     private fb: FormBuilder,
     private productsService: ProductService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private serviceRequestService: ServiceRequestsService
   ) {
     this.billing = [
       { label: 'on', value: true },
@@ -70,16 +72,15 @@ export class UserViewComponent implements OnInit {
       .subscribe((res) => {
         this.products = res.content;
         this.bikes = this.products
-        .filter((item: any)=>item.name!==null)
-        .map((item) => {
-          let container = { label: '', value: '', image: '', brand: '' };
-          container.label = item.name.slice(0, 25);
-          container.value = item.name.slice(0, 25);
-          container.image = item.image;
-          container.brand = item.brand;
-          return container;
-        });
-        console.log('bici',this.bikes);
+          .filter((item: any) => item.name !== null)
+          .map((item) => {
+            let container = { label: '', value: '', image: '', brand: '' };
+            container.label = item.name.slice(0, 25);
+            container.value = item.name.slice(0, 25);
+            container.image = item.image;
+            container.brand = item.brand;
+            return container;
+          });
         this.filteredBikes = this.bikes;
       });
     this.requestForm = this.fb.group({
@@ -94,7 +95,8 @@ export class UserViewComponent implements OnInit {
       name: '',
       ro: false,
       cui: '',
-      requestId: ''
+      requestId: '',
+      price: 0,
     });
 
     if (localStorage.getItem('serviceRequests'))
@@ -102,7 +104,27 @@ export class UserViewComponent implements OnInit {
         localStorage.getItem('serviceRequests')!
       ).items;
   }
-
+  sortByDate() {
+    if (this.sortAsc) {
+      this.requests.sort(function (a: any, b: any) {
+        return new Date(a.date) < new Date(b.date)
+          ? -1
+          : new Date(a.date) > new Date(b.date)
+          ? 1
+          : 0;
+      });
+      this.sortAsc = false;
+    } else {
+      this.requests.sort(function (a: any, b: any) {
+        return new Date(a.date) > new Date(b.date)
+          ? -1
+          : new Date(a.date) < new Date(b.date)
+          ? 1
+          : 0;
+      });
+      this.sortAsc = true;
+    }
+  }
   filterByBrand(event: any) {
     this.customOtherNameField = false;
     if (!event.value) this.filteredBikes = this.bikes;
@@ -157,57 +179,54 @@ export class UserViewComponent implements OnInit {
       },
     });
   }
- 
+
   requestRemover(request: any) {
-    let storageRequest= this.readLocalStorage('serviceRequests');
-    let invoice=this.findInvoiceForRequest(request);
+    let storageRequest =
+      this.serviceRequestService.readLocalStorage('serviceRequests');
+    let invoice = this.serviceRequestService.findInvoiceForRequest(request);
     let storageRequestUpdated: { items?: any } = {};
     storageRequestUpdated.items = [];
-      storageRequestUpdated.items = storageRequest.filter(
-        (element: any) => element.id != request.id
-      );
-    this.writeLocalStorage('serviceRequests', storageRequestUpdated);
+    storageRequestUpdated.items = storageRequest.filter(
+      (element: any) => element.id != request.id
+    );
+    this.serviceRequestService.writeLocalStorage(
+      'serviceRequests',
+      storageRequestUpdated
+    );
     this.deleteInvoice(invoice);
     this.refreshRequests();
   }
 
-  deleteInvoice(invoice:any){
-    let invoices=this.readLocalStorage('invoiceData');
+  deleteInvoice(invoice: any) {
+    let invoices = this.serviceRequestService.readLocalStorage('invoiceData');
     let storageRequestUpdated: { items?: any } = {};
     storageRequestUpdated.items = [];
-    storageRequestUpdated.items=invoices.filter(
-      (element:any) => element.id!=invoice.id
+    storageRequestUpdated.items = invoices.filter(
+      (element: any) => element.id != invoice.id
     );
-    this.writeLocalStorage('invoiceData', storageRequestUpdated);
-    this.invoice=null;
+    this.serviceRequestService.writeLocalStorage(
+      'invoiceData',
+      storageRequestUpdated
+    );
+    this.invoice = null;
     this.invoiceForm.reset();
   }
-  findInvoiceForRequest(request: any){
-    let invoices=this.readLocalStorage('invoiceData');
-    if (invoices) {
-      return invoices.filter((item:any)=> item.requestId==request.id)[0];
-      // return invoices[0]
-    }
-    else return null;
-  }
+
   editRequest(request: any) {
     this.requestDialog = true;
-    this.editIdR=request.id;
+    this.editIdR = request.id;
     request.date = new Date(request.date);
     this.requestForm.patchValue(request);
-    this.invoice=this.findInvoiceForRequest(request);
-    console.log('this invoice', this.invoice);
-    if(this.invoice) {
-      console.log('found invoice:', request.id, this.invoice.requestId)
+    this.invoice = this.serviceRequestService.findInvoiceForRequest(request);
+    if (this.invoice) {
       this.invoiceForm.patchValue(this.invoice);
-      this.pj=true;
-      this.editIdI=this.invoice.id;
+      this.pj = true;
+      this.editIdI = this.invoice.id;
     }
     if (this.requestForm.controls.brand.value == 'Other') {
       this.customOtherBrandField = true;
       this.customOtherNameField = true;
     }
-    console.log('editable', this.invoice);
   }
 
   hideDialog() {
@@ -218,48 +237,25 @@ export class UserViewComponent implements OnInit {
     this.resetValues();
   }
   saveRequest() {
-    let editIndex = -1;
     this.request = new FormMapper(this.requestForm.value);
-    this.request.id=this.editIdR;
-    this.invoice = new FormMapper(this.invoiceForm.value)
-    this.invoice.id=this.editIdI;
-    console.log(this.request, this.invoice);
+    this.request.id = this.editIdR;
+    this.request.user = JSON.parse(localStorage.getItem('user')!).id;
+    this.invoice = new FormMapper(this.invoiceForm.value);
+    this.invoice.id = this.editIdI;
     if (!this.request.id) {
       this.request.id = Math.floor(Math.random() * 1000).toString();
-      this.request.user = JSON.parse(localStorage.getItem('user')!).id;
     }
-    if(!this.invoice.id) this.invoice.id=Math.floor(Math.random() * 1000).toString();
-    this.invoice.requestId=this.request.id;
+    if (!this.invoice.id)
+      this.invoice.id = Math.floor(Math.random() * 1000).toString();
+    this.invoice.requestId = this.request.id;
     if (this.customOtherBrandField && this.customOtherNameField)
       this.postNewProduct(this.request);
 
     let storageRequest: { items?: any } = {};
     storageRequest.items = [];
 
-    //request
-    storageRequest.items=this.readLocalStorage('serviceRequests');
-    if(storageRequest.items) 
-      storageRequest.items.forEach((element: any, i: any) => {
-        if (element.id === this.request.id) editIndex = i;
-      });
-    if (editIndex < 0) storageRequest.items.push(this.request);
-    else storageRequest.items[editIndex] = this.request;
-    console.log('trimit', storageRequest)
-    this.writeLocalStorage('serviceRequests', storageRequest)
-
-    //invoice
-    editIndex=-1
-    if(this.invoice.name && this.invoice.cui){
-      storageRequest.items=this.readLocalStorage('invoiceData');
-      storageRequest.items.forEach((element: any, i: any) => {
-        if (element.id === this.invoice.id)
-          editIndex = i; 
-      });
-      if (editIndex < 0) storageRequest.items.push(this.invoice);
-      else storageRequest.items[editIndex] = this.invoice;
-      console.log('trimit i', storageRequest)
-      this.writeLocalStorage('invoiceData', storageRequest);
-    }
+    this.serviceRequestService.updateRequests(this.request);
+    this.serviceRequestService.updateInvoices(this.invoice);
 
     this.requestDialog = false;
     this.resetValues();
@@ -271,17 +267,17 @@ export class UserViewComponent implements OnInit {
       life: 3000,
     });
   }
-  resetValues(){
+  resetValues() {
     this.requestForm.reset({
       status: 'pending',
     });
     this.invoiceForm.reset();
     this.customOtherBrandField = false;
-    this.editIdI=null;
-    this.editIdR=null;
-    this.pj=false;
-    this.invoice=null;
-    this.request=null;
+    this.editIdI = null;
+    this.editIdR = null;
+    this.pj = false;
+    this.invoice = null;
+    this.request = null;
   }
 
   applyFilterGlobal($event: Event, stringVal: string) {
@@ -303,22 +299,7 @@ export class UserViewComponent implements OnInit {
     this.productsService.postProduct(this.product).subscribe();
   }
 
-  readLocalStorage(name:string){
-    let storageData: { items?: any } = {};
-    storageData.items = [];
-    if (localStorage.getItem(name)) {
-      storageData.items = JSON.parse(
-        localStorage.getItem(name)!
-      ).items;
-    }
-    return storageData.items;
-  }
-  writeLocalStorage(name: string, data: any){
-    localStorage.setItem(
-      name,
-      JSON.stringify(data))
-  }
-  refreshRequests(){
+  refreshRequests() {
     if (localStorage.getItem('serviceRequests'))
       this.requests = JSON.parse(
         localStorage.getItem('serviceRequests')!
