@@ -1,3 +1,4 @@
+import { Product } from './../app/models/product';
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -26,4 +27,9 @@ export class ProductService {
   getPageSize(size: any) {
     return this.http.get<any>(`${environment.apiUrl}/products/${size}`);
   }
+
+  postProduct(product: any){
+    return this.http.post(`${environment.apiUrl}/products`, product)
+  }
+
 }

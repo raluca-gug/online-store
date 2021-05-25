@@ -1,0 +1,118 @@
+<!-- <app-navbar></app-navbar>
+<app-navbar></app-navbar>
+<p-toast></p-toast>
+<div class="card">
+    <p-toolbar styleClass="">
+        <ng-template pTemplate="left">
+            <button pButton pRipple icon="fa fa-trash" class="p-button-danger" (click)="deleteSelectedRequest()" [disabled]="!selectedRequests || !selectedRequests.length"></button>
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="requests" [rows]="10" [paginator]="true" [globalFilterFields]="['bikeName','issue','date','status']"
+          [rowHover]="true" dataKey="id" [(selection)]="selectedRequests"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h1 class="p-m-0">Manage Requests</h1>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text"(input)="applyFilterGlobal($event, 'contains')" placeholder="Search..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="bikeName" field="bikeName">Bike <p-sortIcon ></p-sortIcon></th>
+                <th pSortableColumn="issue" field="issue">Issue <p-sortIcon ></p-sortIcon></th>
+                <th pSortableColumn="date" field="date">Date <p-sortIcon></p-sortIcon></th>
+                <th pSortableColumn="status" field="status">Status <p-sortIcon></p-sortIcon></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-req>
+            <tr [pSelectableRow]="req">
+                <td>
+                    <p-tableCheckbox [value]="req"></p-tableCheckbox>
+                </td>
+                <td>{{req.bikeName}}</td>
+                <td>{{req.issue }}</td>
+                <td>{{req.date | date }}</td>
+                <td>{{req.status}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editRequest(req)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteRequest(req)"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                You have {{requests.length}} requests.
+            </div>
+        </ng-template>
+    </p-table>
+</div>
+<p-dialog [(visible)]="requestDialog" [style]="{width: '600px'}" header="Request Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+    <form [formGroup]='requestForm'>   
+        <div class="p-field p-grid" *ngIf="!customOtherBrandField">
+            <div class='p-col-1 p-m-1'><label>Brand*:</label></div>
+            <div class='p-col' > 
+                <p-dropdown [options]="brands" (onChange)='filterByBrand($event)' formControlName='brand' [showClear]="true" [filter]='true' filterBy="value" [virtualScroll]="true" placeholder="choose" optionLabel="label" optionValue="value" appendTo="body" >
+                    <ng-template let-option pTemplate="item">
+                        <span>{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="p-field p-grid" *ngIf="customOtherBrandField">
+            <div class='p-col-1 p-m-1'><label>Brand Name*:</label></div>
+            <div class='p-col'><input pInputText type="text" formControlName='brand'></div>
+        </div>
+        <div class="p-field p-grid" *ngIf="!customOtherNameField">
+            <div class='p-col-1 p-m-1'><label>Bike*:</label></div>
+            <div class='p-col' > 
+                <p-dropdown [options]="filteredBikes" formControlName='bikeName' [showClear]="true" [filter]='true' filterBy="label" [virtualScroll]="true" placeholder="choose" optionLabel="label" optionValue="value" appendTo="body" >
+                    <ng-template let-option pTemplate="item">
+                        <img src="{{option.image}}" alt="" class='small-image'>
+                        <span>{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="p-field p-grid" *ngIf="customOtherNameField">
+            <div class='p-col-1 p-m-1'><label>Name*:</label></div>
+            <div class='p-col'><input pInputText type="text" formControlName='bikeName'></div>
+        </div>
+        <div class="p-field p-grid" >
+            <div class='p-col-1 p-m-1'><label>Issue*:</label></div>
+            <div class='p-col' > 
+                <p-dropdown [options]="issues" formControlName='issue' [showClear]="true" [filter]='true' filterBy="label" [virtualScroll]="true" placeholder="choose" optionLabel="label" optionValue="value" appendTo="body" >
+                    <ng-template let-option pTemplate="item">
+                        <span>{{option.label}}</span>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+        </div>
+        <div class="p-field p-grid" >
+            <div class='p-col-1 p-m-1'><label>Details:</label></div>
+            <div class='p-col' > 
+                <textarea pInputTextarea formControlName='details' name="" id="" rows="5" cols="28"></textarea>
+            </div>
+        </div>
+        <div class="p-field p-grid ">
+            <label class='p-col-1 p-m-1' for="icon">Date*:</label>
+            <p-calendar class='p-col' dateFormat="dd.mm.yy" [minDate]="minDate" [disabledDays]="[0,6]"  formControlName='date' [showIcon]="true"  inputId="icon" appendTo="body" ></p-calendar>
+        </div>
+    </form>
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveRequest()" [disabled]="requestForm.invalid" ></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog> -->
