@@ -1,6 +1,6 @@
 export interface Product {
   name: string;
-  id: string;
+  id?: string;
   image: string;
   itemsInStock: number;
   description: string;
@@ -9,3 +9,5 @@ export interface Product {
   rating: number;
   qty: number;
 }
+
+
