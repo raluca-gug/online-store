@@ -50,5 +50,32 @@ export class ServiceRequestsService {
     }
     else return null;
   }
+  requestRemover(request: any) {
+      let storageRequest =
+        this.readLocalStorage('serviceRequests');
+      let invoice = this.findInvoiceForRequest(request);
+      let storageRequestUpdated: { items?: any } = {};
+      storageRequestUpdated.items = [];
+      storageRequestUpdated.items = storageRequest.filter(
+        (element: any) => element.id != request.id
+      );
+      this.writeLocalStorage(
+        'serviceRequests',
+        storageRequestUpdated
+      );
+      this.deleteInvoice(invoice);
+    }
   
+    deleteInvoice(invoice: any) {
+      let invoices = this.readLocalStorage('invoiceData');
+      let storageRequestUpdated: { items?: any } = {};
+      storageRequestUpdated.items = [];
+      storageRequestUpdated.items = invoices.filter(
+        (element: any) => element.id != invoice.id
+      );
+      this.writeLocalStorage(
+        'invoiceData',
+        storageRequestUpdated
+      );
+    }
 }

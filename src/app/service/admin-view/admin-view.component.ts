@@ -72,6 +72,7 @@ export class AdminViewComponent implements OnInit {
   saveInvoice(){
     this.invoice.price=this.invoiceForm.controls.price.value;
     this.request.status=this.invoiceForm.controls.status.value;
+    this.request.user=this.request.user.id;
     this.serviceRequestService.updateInvoices(this.invoice);
     this.serviceRequestService.updateRequests(this.request);
     this.requestDialog=false;
@@ -89,17 +90,6 @@ export class AdminViewComponent implements OnInit {
       'contains'
     );
   }
-    readLocalStorage(name: string) {
-    let storageData: { items?: any } = {};
-    storageData.items = [];
-    if (localStorage.getItem(name)) {
-      storageData.items = JSON.parse(localStorage.getItem(name)!).items;
-    }
-    return storageData.items;
-  }
-  writeLocalStorage(name: string, data: any) {
-    localStorage.setItem(name, JSON.stringify(data));
-  }
   deleteSelectedRequest() {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete these request?',
@@ -107,7 +97,7 @@ export class AdminViewComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.selectedRequests.forEach((element: any) =>
-          this.requestRemover(element)
+          this.serviceRequestService.requestRemover(element)
         );
         this.selectedRequests = null;
         this.messageService.add({
@@ -116,6 +106,7 @@ export class AdminViewComponent implements OnInit {
           detail: 'Requests Deleted',
           life: 3000,
         });
+        this.refreshRequests();
       },
     });
   }
@@ -125,41 +116,18 @@ export class AdminViewComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.requestRemover(request);
+        this.serviceRequestService.requestRemover(request);
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
           detail: 'Request Deleted',
           life: 3000,
         });
+        this.refreshRequests();
       },
     });
   }
  
-  requestRemover(request: any) {
-    let storageRequest= this.readLocalStorage('serviceRequests');
-    let invoice=this.serviceRequestService.findInvoiceForRequest(request);
-    let storageRequestUpdated: { items?: any } = {};
-    storageRequestUpdated.items = [];
-      storageRequestUpdated.items = storageRequest.filter(
-        (element: any) => element.id != request.id
-      );
-    this.writeLocalStorage('serviceRequests', storageRequestUpdated);
-    this.deleteInvoice(invoice);
-    this.refreshRequests();
-  }
-
-  deleteInvoice(invoice:any){
-    let invoices=this.readLocalStorage('invoiceData');
-    let storageRequestUpdated: { items?: any } = {};
-    storageRequestUpdated.items = [];
-    storageRequestUpdated.items=invoices.filter(
-      (element:any) => element.id!=invoice.id
-    );
-    this.writeLocalStorage('invoiceData', storageRequestUpdated);
-    this.invoice=null;
-    this.invoiceForm.reset();
-  }
   refreshRequests(){
     if (localStorage.getItem('serviceRequests'))
       this.requests = JSON.parse(

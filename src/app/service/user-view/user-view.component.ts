@@ -1,4 +1,4 @@
-import { ServiceRequestsService } from './../../../services/service-requests.service';
+import { ServiceRequestsService } from 'src/services/service-requests.service';
 import { Product } from './../../models/product';
 import { FormMapper } from './../../models/formMapper';
 import { ProductService } from 'src/services/product.service';
@@ -19,10 +19,10 @@ export class UserViewComponent implements OnInit {
   requestForm!: FormGroup;
   invoiceForm!: FormGroup;
   products!: Product[];
-  product = new CreateProduct();
   requests!: any;
-  request!: any;
   invoices!: any;
+  product = new CreateProduct();
+  request!: any;
   invoice!: any;
   requestDialog = false;
   customOtherBrandField = false;
@@ -51,7 +51,6 @@ export class UserViewComponent implements OnInit {
   billing: any[];
 
   brandOption!: any;
-  selectedBrand = '';
   selectedRequests!: any;
   constructor(
     private fb: FormBuilder,
@@ -98,11 +97,7 @@ export class UserViewComponent implements OnInit {
       requestId: '',
       price: 0,
     });
-
-    if (localStorage.getItem('serviceRequests'))
-      this.requests = JSON.parse(
-        localStorage.getItem('serviceRequests')!
-      ).items;
+    this.refreshRequests();
   }
   sortByDate() {
     if (this.sortAsc) {
@@ -151,7 +146,7 @@ export class UserViewComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.selectedRequests.forEach((element: any) =>
-          this.requestRemover(element)
+          this.serviceRequestService.requestRemover(element)
         );
         this.selectedRequests = null;
         this.messageService.add({
@@ -160,6 +155,7 @@ export class UserViewComponent implements OnInit {
           detail: 'Requests Deleted',
           life: 3000,
         });
+      this.refreshRequests();
       },
     });
   }
@@ -169,47 +165,16 @@ export class UserViewComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.requestRemover(request);
+        this.serviceRequestService.requestRemover(request);
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
           detail: 'Request Deleted',
           life: 3000,
         });
+      this.refreshRequests();
       },
     });
-  }
-
-  requestRemover(request: any) {
-    let storageRequest =
-      this.serviceRequestService.readLocalStorage('serviceRequests');
-    let invoice = this.serviceRequestService.findInvoiceForRequest(request);
-    let storageRequestUpdated: { items?: any } = {};
-    storageRequestUpdated.items = [];
-    storageRequestUpdated.items = storageRequest.filter(
-      (element: any) => element.id != request.id
-    );
-    this.serviceRequestService.writeLocalStorage(
-      'serviceRequests',
-      storageRequestUpdated
-    );
-    this.deleteInvoice(invoice);
-    this.refreshRequests();
-  }
-
-  deleteInvoice(invoice: any) {
-    let invoices = this.serviceRequestService.readLocalStorage('invoiceData');
-    let storageRequestUpdated: { items?: any } = {};
-    storageRequestUpdated.items = [];
-    storageRequestUpdated.items = invoices.filter(
-      (element: any) => element.id != invoice.id
-    );
-    this.serviceRequestService.writeLocalStorage(
-      'invoiceData',
-      storageRequestUpdated
-    );
-    this.invoice = null;
-    this.invoiceForm.reset();
   }
 
   editRequest(request: any) {
@@ -220,7 +185,7 @@ export class UserViewComponent implements OnInit {
     this.invoice = this.serviceRequestService.findInvoiceForRequest(request);
     if (this.invoice) {
       this.invoiceForm.patchValue(this.invoice);
-      this.pj = true;
+      if(this.invoice.name) this.pj = true;
       this.editIdI = this.invoice.id;
     }
     if (this.requestForm.controls.brand.value == 'Other') {
@@ -231,28 +196,25 @@ export class UserViewComponent implements OnInit {
 
   hideDialog() {
     this.requestDialog = false;
-    this.requestForm.reset({
-      status: 'pending',
-    });
     this.resetValues();
   }
   saveRequest() {
     this.request = new FormMapper(this.requestForm.value);
-    this.request.id = this.editIdR;
-    this.request.user = JSON.parse(localStorage.getItem('user')!).id;
     this.invoice = new FormMapper(this.invoiceForm.value);
-    this.invoice.id = this.editIdI;
-    if (!this.request.id) {
+    if(this.editIdR)
+      this.request.id = this.editIdR;
+    else{
       this.request.id = Math.floor(Math.random() * 1000).toString();
+      this.request.user = JSON.parse(localStorage.getItem('user')!).id;
     }
-    if (!this.invoice.id)
+    if(this.editIdI)
+      this.invoice.id = this.editIdI;
+    else{
       this.invoice.id = Math.floor(Math.random() * 1000).toString();
-    this.invoice.requestId = this.request.id;
+      this.invoice.requestId = this.request.id;
+    }
     if (this.customOtherBrandField && this.customOtherNameField)
       this.postNewProduct(this.request);
-
-    let storageRequest: { items?: any } = {};
-    storageRequest.items = [];
 
     this.serviceRequestService.updateRequests(this.request);
     this.serviceRequestService.updateInvoices(this.invoice);
@@ -267,6 +229,7 @@ export class UserViewComponent implements OnInit {
       life: 3000,
     });
   }
+
   resetValues() {
     this.requestForm.reset({
       status: 'pending',
@@ -300,9 +263,13 @@ export class UserViewComponent implements OnInit {
   }
 
   refreshRequests() {
+    let userId=JSON.parse(localStorage.getItem('user')!).id;
     if (localStorage.getItem('serviceRequests'))
       this.requests = JSON.parse(
         localStorage.getItem('serviceRequests')!
-      ).items;
+      ).items.filter((el:any)=> el.user==userId);
+  }
+  deleteInvoice(invoice: any){
+    this.serviceRequestService.deleteInvoice(invoice);
   }
 }

@@ -110,7 +110,7 @@
     <div class="p-field p-grid ">
         <label class='p-col-3 p-m-1' >Invoice details:</label>
         <p-selectButton [options]="billing" [(ngModel)]="pj" optionLabel="label" optionValue="value"></p-selectButton>
-        <button *ngIf="invoice" pButton  icon="fa fa-trash" class="p-button-danger p-ml-2" (click)="deleteInvoice(invoice)" [disabled]=""></button>
+        <div button *ngIf="invoice"><button *ngIf="invoice.name" pButton  icon="fa fa-trash" class="p-button-danger p-ml-2" (click)="deleteInvoice(invoice)" [disabled]=""></button></div>
     </div>
     <form [formGroup]="invoiceForm" *ngIf='pj'>
         <div class="p-field p-grid">
