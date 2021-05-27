@@ -7,12 +7,16 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { HighlightDirective } from './highlight/highlight.directive';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [
+    NavbarComponent,
+    HighlightDirective
+  ],
   imports: [
     CommonModule,
     OverlayModule,
@@ -26,6 +30,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     })
   ],
-  exports: [NavbarComponent]
+  exports: [
+    NavbarComponent,
+    HighlightDirective
+  ]
 })
 export class SharedModule { }
