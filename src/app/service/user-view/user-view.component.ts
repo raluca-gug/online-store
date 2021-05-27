@@ -73,11 +73,10 @@ export class UserViewComponent implements OnInit {
         this.bikes = this.products
           .filter((item: any) => item.name !== null)
           .map((item) => {
-            let container = { label: '', value: '', image: '', brand: '' };
+            let container = { label: '', value: '', product: {} };
             container.label = item.name.slice(0, 25);
             container.value = item.name.slice(0, 25);
-            container.image = item.image;
-            container.brand = item.brand;
+            container.product = item;
             return container;
           });
         this.filteredBikes = this.bikes;
@@ -125,7 +124,7 @@ export class UserViewComponent implements OnInit {
     if (!event.value) this.filteredBikes = this.bikes;
     else
       this.filteredBikes = this.bikes.filter(
-        (item: any) => item.brand == event.value
+        (item: any) => item.product.brand == event.value
       );
     if (event.value == 'Other') {
       this.customOtherNameField = true;

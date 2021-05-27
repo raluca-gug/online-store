@@ -75,8 +75,8 @@
             <div class='p-col-1 p-m-1'><label>Bike*:</label></div>
             <div class='p-col p-m-1' > 
                 <p-dropdown [options]="filteredBikes" formControlName='bikeName' [showClear]="true" [filter]='true' filterBy="label" [virtualScroll]="true" placeholder="choose" optionLabel="label" optionValue="value" appendTo="body" >
-                    <ng-template let-option pTemplate="item">
-                        <img src="{{option.image}}" alt="" class='small-image'>
+                    <ng-template let-option pTemplate="item" appBikeDetails='item'>
+                        <img src="{{option.product.image}}" alt="" class='small-image'>
                         <span>{{option.label}}</span>
                     </ng-template>
                 </p-dropdown>

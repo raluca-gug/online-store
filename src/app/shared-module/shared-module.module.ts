@@ -8,6 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HighlightDirective } from './highlight/highlight.directive';
+import { BikeDetailsDirective } from './bike-details/bike-details.directive';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -15,7 +16,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 @NgModule({
   declarations: [
     NavbarComponent,
-    HighlightDirective
+    HighlightDirective,
+    BikeDetailsDirective
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   exports: [
     NavbarComponent,
-    HighlightDirective
+    HighlightDirective,
+    BikeDetailsDirective
   ]
 })
 export class SharedModule { }
