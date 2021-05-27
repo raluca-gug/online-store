@@ -201,12 +201,11 @@ export class UserViewComponent implements OnInit {
   saveRequest() {
     this.request = new FormMapper(this.requestForm.value);
     this.invoice = new FormMapper(this.invoiceForm.value);
+    this.request.user = JSON.parse(localStorage.getItem('user')!).id;
     if(this.editIdR)
       this.request.id = this.editIdR;
-    else{
+    else
       this.request.id = Math.floor(Math.random() * 1000).toString();
-      this.request.user = JSON.parse(localStorage.getItem('user')!).id;
-    }
     if(this.editIdI)
       this.invoice.id = this.editIdI;
     else{
