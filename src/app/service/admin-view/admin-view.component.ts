@@ -83,6 +83,7 @@ export class AdminViewComponent implements OnInit {
       detail: 'Request saved',
       life: 3000,
     });
+    this.refreshRequests();
   }
   applyFilterGlobal($event: Event, stringVal: string) {
     this.dt!.filterGlobal(
@@ -92,7 +93,7 @@ export class AdminViewComponent implements OnInit {
   }
   deleteSelectedRequest() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete these request?',
+      message: 'Are you sure you want to delete these requests?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {

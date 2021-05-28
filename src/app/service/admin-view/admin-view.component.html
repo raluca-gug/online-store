@@ -1,6 +1,8 @@
+
+<div appScrollCatcher>
 <app-navbar></app-navbar>
 <p-toast></p-toast>
-<div class="card">
+<div class="card"  >
     <p-toolbar styleClass="">
         <ng-template pTemplate="left">
             <button pButton icon="fa fa-trash" class="p-button-danger" (click)="deleteSelectedRequest()" [disabled]="!selectedRequests || !selectedRequests.length"></button>
@@ -8,7 +10,7 @@
     </p-toolbar>
 
     <p-table #dt [value]="requestsMutated" [rows]="10" [paginator]="true" [globalFilterFields]="['bikeName','issue','date','status', 'user']"
-          [rowHover]="true" dataKey="id" [(selection)]="selectedRequests"
+          [rowHover]="true" dataKey="id" [(selection)]="selectedRequests" 
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">
@@ -24,11 +26,11 @@
                 <th style="width: 3rem">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                 </th>
-                <th pSortableColumn="user" field="user">User <p-sortIcon ></p-sortIcon></th>
-                <th pSortableColumn="bikeName" field="bikeName">Bike <p-sortIcon ></p-sortIcon></th>
-                <th pSortableColumn="issue" field="issue">Issue <p-sortIcon ></p-sortIcon></th>
-                <th pSortableColumn="date" field="date">Date <p-sortIcon></p-sortIcon></th>
-                <th pSortableColumn="status" field="status">Status <p-sortIcon></p-sortIcon></th>
+                <th pSortableColumn="user" field="user" appHighlightOnClick>User <p-sortIcon ></p-sortIcon></th>
+                <th pSortableColumn="bikeName" field="bikeName" appHighlightOnClick>Bike <p-sortIcon ></p-sortIcon></th>
+                <th pSortableColumn="issue" field="issue" appHighlightOnClick>Issue <p-sortIcon ></p-sortIcon></th>
+                <th pSortableColumn="date" field="date" appHighlightOnClick>Date <p-sortIcon></p-sortIcon></th>
+                <th pSortableColumn="status" field="status" appHighlightOnClick>Status <p-sortIcon></p-sortIcon></th>
                 <th></th>
             </tr>
         </ng-template>
@@ -61,7 +63,7 @@
         <div class="p-field p-grid" >
             <div class='p-col-1 p-m-1 p-mt-3'><label>Status:</label></div>
             <div class='p-col' > 
-                <p-dropdown [options]="statusOptions"  formControlName='status' [showClear]="true" [filter]='true' filterBy="value" [virtualScroll]="true" placeholder="choose" optionLabel="label" optionValue="value" appendTo="body" >
+                <p-dropdown [options]="statusOptions" formControlName='status' [showClear]="true" [filter]='true' filterBy="value" [virtualScroll]="true" placeholder="choose" optionLabel="label" optionValue="value" appendTo="body" >
                     <ng-template let-option pTemplate="item">
                         <span>{{option.label}}</span>
                     </ng-template>
@@ -82,3 +84,4 @@
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</div>
