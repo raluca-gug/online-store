@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject, waitForAsync } from '@angular/core/testing';
 import { ProductService } from './product.service';
 
 describe('Service: Product', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [ProductService],
@@ -22,9 +22,13 @@ describe('Service: Product', () => {
     [ProductService],
     (service: ProductService) => {
       spyOn(service, 'getProducts').and.callThrough();
-      service.getProducts(0, 10, '', '');
-      expect(service.getProducts).toHaveBeenCalled();
-      expect(service.getProducts).toHaveBeenCalledWith(0, 10, '', '');
+      let res;
+      service.getProducts(0, 10, '', '').subscribe(x=>{
+        res=x;
+        expect(res.content[0].id).toBe('6040d6ba1e240556a8b76ed7');
+      } );
+      
+      //expect(service.getProducts).toHaveBeenCalledWith(0, 10, '', '');
     }
   ));
   it('should get product', inject(

@@ -1,38 +1,58 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { environment } from './../environments/environment';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { OrderService } from './order.service';
 
 describe('OrderService', () => {
+  let httpTestingController: HttpTestingController;
   let service: OrderService;
-  let order: any;
 
-  beforeEach(() => {
+  beforeEach(async() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
+      providers: [OrderService]
     });
-    service = TestBed.inject(OrderService);
-    order = {
-      orderedProducts: {
-        '6040d6ba1e240556a8b76e98': 4,
-      },
-      orderDate: '2021-03-22T10:48:29.428',
-      orderValue: 8312,
-      userId: '603648273ed85832b440eb9b',
-      id: '605875fd26469c2991aaf0da',
-    };
+    httpTestingController= TestBed.inject(HttpTestingController)
+    service=TestBed.inject(OrderService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  
+  describe('postOrder() ',()=>{
+    it('should call post with the correct URL', ()=>{
+
+      service.postOrder({}).subscribe();
+
+      const req = httpTestingController.expectOne(`${environment.apiUrl}/orders`);
+      expect(true).toBe(true) //to avoid 'has no spec' warning
+      req.flush({});
+      httpTestingController.verify();
+    });
   });
 
-  it('should call post order', inject(
-    [OrderService],
-    (service: OrderService) => {
-      spyOn(service, 'postOrder').and.callThrough;
-      service.postOrder(order);
-      expect(service.postOrder).toHaveBeenCalled();
-    }
-  ));
+  describe('getOrderByUserId() ',()=>{
+    it('should call get with the correct URL', ()=>{
+
+      service.getOrderByUserId('1').subscribe();
+
+      const req = httpTestingController.expectOne(`${environment.apiUrl}/orders/user/1`);
+      expect(true).toBe(true) //to avoid 'has no spec' warning
+      req.flush({});
+      httpTestingController.verify();
+    });
+  });
+
+  describe('postPayPal() ',()=>{
+    it('should call post with the correct URL ', ()=>{
+
+      service.postPayPal({}).subscribe();
+
+      const req = httpTestingController.expectOne(`${environment.apiUrl}/payments/pay`);
+      expect(true).toBe(true) //to avoid 'has no spec' warning
+      req.flush({});
+      httpTestingController.verify();
+    });
+  });
+
+  
 });

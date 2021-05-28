@@ -85,13 +85,12 @@ describe('LoginComponent', () => {
     );
   });
 
-  it('should throw error because password pattern does not match', () => {
-    const accountService = fixture.debugElement.injector.get(AccountService);
-    spyOn(accountService, 'login').and.callThrough();
-    component.accountService.login('jade', 'Test1234');
-    expect(component.accountService.userValue==null || component.accountService.userValue==({ })).toBe(true);
-    // expect(component.accountService.userValue).toBe(true);
-  });
+  // it('should throw error because password pattern does not match', () => {
+  //   const accountService = fixture.debugElement.injector.get(AccountService);
+  //   component.accountService.login('jade', 'Test1234');
+  //   expect(component.accountService.userValue==null || component.accountService.userValue==({ })).toBe(true);
+  //   // expect(component.accountService.userValue).toBe(true);
+  // });
 
   it('should call FB sign in on click to FB button', fakeAsync(() => {
     spyOn(component, 'signInWithFB');
