@@ -1,9 +1,9 @@
-import { CreateUser } from './../app/models/createUser';
+import { CreateUser } from '../models/createUser';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/core/models/user';
 import { environment } from 'src/environments/environment';
 let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; put: jasmine.Spy };
 
@@ -40,7 +40,27 @@ describe('AccountService', () => {
     };
   });
 
-  fdescribe('login()', ()=>{
+  describe('isAuthenticated', ()=>{
+    it('should return true if user is logged in', ()=>{
+      let user={id: 1, username: 'raluca'}
+      localStorage.setItem('user', JSON.stringify(user));
+
+      expect(service.isAuthenticated()).toEqual(true);
+    })
+    it('should return false if no user is logged in', ()=>{
+      localStorage.removeItem('user');
+
+      expect(service.isAuthenticated()).toEqual(false);
+    })
+    it('should return false if user object is empty', ()=>{
+      let user={}
+      localStorage.setItem('user', JSON.stringify(user));
+
+      expect(service.isAuthenticated()).toEqual(false);
+    })
+  })
+
+  describe('login()', ()=>{
     it('should POST username and psw at correct url', ()=>{
       service.login('raluca', 'parola').subscribe();
 
@@ -55,7 +75,7 @@ describe('AccountService', () => {
       expect(service.userSubject.value.username).toEqual('raluca')
     })
   })
-  fdescribe('logout()', ()=>{
+  describe('logout()', ()=>{
     it('should delete user form local storage', ()=>{
       service.logout();
 
@@ -68,7 +88,7 @@ describe('AccountService', () => {
     })
   })
 
-  fdescribe('register', ()=>{
+  describe('register', ()=>{
     it('should POST new user at correct url', ()=>{
       let user=new CreateUser;
       service.register(user).subscribe();
@@ -78,7 +98,7 @@ describe('AccountService', () => {
     });
   })
 
-  fdescribe('getAll', ()=>{
+  describe('getAll', ()=>{
     it('should make a GET request at correct url', ()=>{
       service.getAll().subscribe();
 
@@ -87,7 +107,7 @@ describe('AccountService', () => {
     });
   })
   
-  fdescribe('getById', ()=>{
+  describe('getById', ()=>{
     it('should make a GET request at correct url', ()=>{
       service.getById('1').subscribe();
 
@@ -96,7 +116,7 @@ describe('AccountService', () => {
     });
   })
 
-  fdescribe('update()', ()=>{
+  describe('update()', ()=>{
     it('should PUT updated user at correct url', ()=>{
       let user={...new CreateUser(), id: '1'}
       service.update(user.id, {...user}).subscribe();
@@ -114,7 +134,7 @@ describe('AccountService', () => {
     })
   })
 
-  fdescribe('delete()', ()=>{
+  describe('delete()', ()=>{
     it('should make DELETE request at correct url', ()=>{
       service.delete('1').subscribe();
 
@@ -123,7 +143,7 @@ describe('AccountService', () => {
     });
   })
 
-  fdescribe('CreateUser()', ()=>{
+  describe('CreateUser()', ()=>{
     it('should POST user at correct url', ()=>{
       let user={...new CreateUser(), id: '1'}
       service.createUser(user).subscribe();
@@ -132,5 +152,6 @@ describe('AccountService', () => {
       expect(req.request.method).toEqual('POST')
     });
   })
+
 
 });

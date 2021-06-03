@@ -1,5 +1,5 @@
-import { CreateUser } from './../../models/createUser';
-import { CartService } from './../../../services/cart.service';
+import { CreateUser } from '../../core/models/createUser';
+import { CartService } from '../../core/services/cart.service';
 import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +7,7 @@ import { catchError, first } from 'rxjs/operators';
 import { SocialAuthService, SocialUser } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
-import { AccountService } from '../../../services/account.service';
+import { AccountService } from '../../core/services/account.service';
 import { of } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';

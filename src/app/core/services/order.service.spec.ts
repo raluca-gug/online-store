@@ -1,4 +1,4 @@
-import { environment } from './../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, inject } from '@angular/core/testing';
 

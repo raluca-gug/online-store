@@ -1,7 +1,7 @@
-import { ProductService } from './../../services/product.service';
-import { Product } from './../models/product';
-import { AccountService } from './../../services/account.service';
-import { CartService } from './../../services/cart.service';
+import { ProductService } from '../core/services/product.service';
+import { Product } from '../core/models/product';
+import { AccountService } from '../core/services/account.service';
+import { CartService } from '../core/services/cart.service';
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';

@@ -1,5 +1,5 @@
-import { ServiceRequestsService } from './../../../services/service-requests.service';
-import { AccountService } from 'src/services/account.service';
+import { ServiceRequestsService } from '../../core/services/service-requests.service';
+import { AccountService } from 'src/app/core/services/account.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';

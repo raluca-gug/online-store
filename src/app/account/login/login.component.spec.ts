@@ -10,7 +10,7 @@ import { By } from 'protractor';
 import { of } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { HttpLoaderFactory } from 'src/app/app.module';
-import { AccountService } from 'src/services/account.service';
+import { AccountService } from 'src/app/core/services/account.service';
 
 import { LoginComponent } from './login.component';
 

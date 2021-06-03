@@ -1,7 +1,7 @@
-import { Product } from './../../models/product';
+import { Product } from '../../core/models/product';
 import { Subscription } from 'rxjs';
-import { SearchService } from './../../../services/search.service';
-import { ProductService } from './../../../services/product.service';
+import { SearchService } from '../../core/services/search.service';
+import { ProductService } from '../../core/services/product.service';
 import {
   Component,
   OnInit,

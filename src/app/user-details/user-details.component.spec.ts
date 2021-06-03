@@ -1,4 +1,4 @@
-import { AccountService } from './../../services/account.service';
+import { AccountService } from '../core/services/account.service';
 import { FormsModule } from '@angular/forms';
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';

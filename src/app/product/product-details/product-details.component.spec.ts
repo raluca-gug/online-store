@@ -1,5 +1,5 @@
-import { ProductService } from 'src/services/product.service';
-import { CartService } from './../../../services/cart.service';
+import { ProductService } from 'src/app/core/services/product.service';
+import { CartService } from '../../core/services/cart.service';
 import { RouterModule } from '@angular/router';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 

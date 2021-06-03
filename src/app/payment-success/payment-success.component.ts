@@ -1,6 +1,6 @@
-import { CartService } from './../../services/cart.service';
-import { ProductService } from 'src/services/product.service';
-import { OrderService } from 'src/services/order.service';
+import { CartService } from '../core/services/cart.service';
+import { ProductService } from 'src/app/core/services/product.service';
+import { OrderService } from 'src/app/core/services/order.service';
 import { Component, ElementRef, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 

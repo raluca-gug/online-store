@@ -1,7 +1,7 @@
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/core/models/user';
 import { Router } from '@angular/router';
-import { SearchService } from '../../../services/search.service';
-import { CartService } from '../../../services/cart.service';
+import { SearchService } from '../../core/services/search.service';
+import { CartService } from '../../core/services/cart.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';

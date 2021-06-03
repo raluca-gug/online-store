@@ -1,13 +1,13 @@
-import { ProductService } from './../../services/product.service';
-import { Product } from './../models/product';
-import { User } from 'src/app/models/user';
-import { CartService } from './../../services/cart.service';
-import { OrderService } from './../../services/order.service';
+import { ProductService } from '../core/services/product.service';
+import { Product } from '../core/models/product';
+import { User } from 'src/app/core/models/user';
+import { CartService } from '../core/services/cart.service';
+import { OrderService } from '../core/services/order.service';
 import { Component, ElementRef, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { DOCUMENT } from '@angular/common';
-import { cartBE } from '../models/cartBE';
+import { cartBE } from '../core/models/cartBE';
 
 @Component({
   selector: 'app-order',

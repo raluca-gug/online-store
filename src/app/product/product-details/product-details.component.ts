@@ -1,11 +1,11 @@
-import { Product } from './../../models/product';
+import { Product } from '../../core/models/product';
 import { ProductDetailsDialogComponent } from './../product-details-dialog/product-details-dialog.component';
-import { CartService } from './../../../services/cart.service';
+import { CartService } from '../../core/services/cart.service';
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductService } from 'src/services/product.service';
+import { ProductService } from 'src/app/core/services/product.service';
 import { MatDialog } from '@angular/material/dialog';
-import { cartBE } from './../../models/cartBE';
+import { cartBE } from '../../core/models/cartBE';
 import { first, ignoreElements } from 'rxjs/operators';
 
 @Component({

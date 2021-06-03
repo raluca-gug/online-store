@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AccountService } from 'src/services/account.service';
+import { AccountService } from 'src/app/core/services/account.service';
 
 @Component({
   selector: 'app-new-password',

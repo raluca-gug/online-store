@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { AccountService } from '../../../services/account.service';
+import { AccountService } from '../../core/services/account.service';
 
 @Component({
   templateUrl: 'layout.component.html',

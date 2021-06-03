@@ -1,4 +1,4 @@
-import { CreateUser } from './../app/models/createUser';
+import { CreateUser } from '../models/createUser';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed} from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
@@ -60,7 +60,7 @@ describe('Cart Service', () => {
     xit('should call deleteCart if cart is empty', ()=>{
       localStorage.setItem('user',JSON.stringify({...new CreateUser(), id:'1'}));
       let cart={ id: '1', products: {}, userId: "606d80af5d5c555fe62bd7aa"};
-      spyOn(service, 'deleteCart');
+      spyOn(service, 'deleteCart').and.callThrough();
 
       service.update(cart);
 

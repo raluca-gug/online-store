@@ -1,12 +1,12 @@
-import { ServiceRequestsService } from 'src/services/service-requests.service';
-import { Product } from './../../models/product';
-import { FormMapper } from './../../models/formMapper';
-import { ProductService } from 'src/services/product.service';
+import { ServiceRequestsService } from 'src/app/core/services/service-requests.service';
+import { Product } from '../../core/models/product';
+import { FormMapper } from '../../core/models/formMapper';
+import { ProductService } from 'src/app/core/services/product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { CreateProduct } from 'src/app/models/createProduct';
+import { CreateProduct } from 'src/app/core/models/createProduct';
 
 @Component({
   selector: 'app-user-view',
@@ -31,7 +31,7 @@ export class UserViewComponent implements OnInit {
   editIdR = null;
   editIdI = null;
   sortAsc = true;
-  filteredBikes = [];
+  filteredBikes: any[] = [];
   minDate = new Date();
   brands = [
     { label: 'MERIDA', value: 'MERIDA' },

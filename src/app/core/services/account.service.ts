@@ -1,10 +1,10 @@
-import { User } from 'src/app/models/user';
-import { environment } from './../environments/environment';
+import { User } from 'src/app/core/models/user';
+import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateUser } from 'src/app/models/createUser';
+import { CreateUser } from 'src/app/core/models/createUser';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -18,6 +18,11 @@ export class AccountService {
       );
     else this.userSubject = new BehaviorSubject<any>(null);
     this.user = this.userSubject.asObservable();
+  }
+
+  isAuthenticated(){
+    let user=JSON.parse(localStorage.getItem('user')!);
+    return user ? (Object.keys(user).length  ?  true : false) : false;
   }
 
   public get userValue(): any {
