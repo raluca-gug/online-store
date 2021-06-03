@@ -1,17 +1,18 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CreateUser } from './../app/models/createUser';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/models/user';
+import { environment } from 'src/environments/environment';
 let httpClientSpy: { get: jasmine.Spy; post: jasmine.Spy; put: jasmine.Spy };
 
 import { AccountService } from './account.service';
 
 describe('AccountService', () => {
   let service: AccountService;
-  let accountService: AccountService;
   let user: User;
-  let userServerCompleteResponse: Response;
+  let httpController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -19,7 +20,8 @@ describe('AccountService', () => {
     });
     service = TestBed.inject(AccountService);
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put']);
-    accountService = new AccountService(httpClientSpy as any);
+    service = TestBed.inject(AccountService);
+    httpController= TestBed.inject(HttpTestingController);
     user = {
       firstName: 'Julie',
       lastName: 'Anderson',
@@ -38,35 +40,97 @@ describe('AccountService', () => {
     };
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-  it('login() should return an observable', () => {
-    expect(service.login('adenis', 'test')).toBeInstanceOf(Observable);
-  });
+  fdescribe('login()', ()=>{
+    it('should POST username and psw at correct url', ()=>{
+      service.login('raluca', 'parola').subscribe();
 
-  it('getAll() should return all users by making one get request', () => {
-    let users = [user];
-    httpClientSpy.get.and.returnValue(of(users));
-    accountService
-      .getAll()
-      .subscribe((response) => expect(response).toBe(users));
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-  });
+      const req=httpController.expectOne(`${environment.apiUrl}/login`)
+      expect(req.request.method).toEqual('POST')
+    });
+    it('should push current user in the user subject', ()=>{
+      service.login('raluca', 'parola').subscribe();
 
-  it('getById() should return one user by making one get request', () => {
-    httpClientSpy.get.and.returnValue(of(user));
-    accountService
-      .getById('12345')
-      .subscribe((response) => expect(response).toBe(user));
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-  });
+      const req=httpController.expectOne(`${environment.apiUrl}/login`)
+      req.flush({username: 'raluca'})
+      expect(service.userSubject.value.username).toEqual('raluca')
+    })
+  })
+  fdescribe('logout()', ()=>{
+    it('should delete user form local storage', ()=>{
+      service.logout();
 
-  it('userUpdate() should post modified user and return user by making one post request', () => {
-    httpClientSpy.put.and.returnValue(of(user));
-    accountService
-      .userUpdate('id', user)
-      .subscribe((response) => expect(response).toBe(user));
-    expect(httpClientSpy.put.calls.count()).toBe(1, 'one call');
-  });
+      expect(JSON.parse(localStorage.getItem('user')!)).toEqual(null);
+    });
+    it('should push empty user in the user subject', ()=>{
+      service.logout();
+
+      expect(service.userSubject.value.username).toEqual('')
+    })
+  })
+
+  fdescribe('register', ()=>{
+    it('should POST new user at correct url', ()=>{
+      let user=new CreateUser;
+      service.register(user).subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users/register`)
+      expect(req.request.method).toEqual('POST')
+    });
+  })
+
+  fdescribe('getAll', ()=>{
+    it('should make a GET request at correct url', ()=>{
+      service.getAll().subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users/findAll`)
+      expect(req.request.method).toEqual('GET')
+    });
+  })
+  
+  fdescribe('getById', ()=>{
+    it('should make a GET request at correct url', ()=>{
+      service.getById('1').subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users/1`)
+      expect(req.request.method).toEqual('GET')
+    });
+  })
+
+  fdescribe('update()', ()=>{
+    it('should PUT updated user at correct url', ()=>{
+      let user={...new CreateUser(), id: '1'}
+      service.update(user.id, {...user}).subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users/1`)
+      expect(req.request.method).toEqual('PUT')
+    });
+    it('should push current user in the user subject', ()=>{
+      let user={id:'1', firstname: 'raluca'};
+      service.update('1', {...user}).subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users/1`)
+      req.flush({...user})
+      expect(service.userSubject.value).toEqual(user);
+    })
+  })
+
+  fdescribe('delete()', ()=>{
+    it('should make DELETE request at correct url', ()=>{
+      service.delete('1').subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users/1`)
+      expect(req.request.method).toEqual('DELETE')
+    });
+  })
+
+  fdescribe('CreateUser()', ()=>{
+    it('should POST user at correct url', ()=>{
+      let user={...new CreateUser(), id: '1'}
+      service.createUser(user).subscribe();
+
+      const req=httpController.expectOne(`${environment.apiUrl}/users`)
+      expect(req.request.method).toEqual('POST')
+    });
+  })
+
 });

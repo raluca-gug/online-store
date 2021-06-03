@@ -8,7 +8,7 @@ import { CreateUser } from 'src/app/models/createUser';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-  private userSubject!: BehaviorSubject<any>;
+  public userSubject!: BehaviorSubject<any>;
   public user: Observable<any>;
 
   constructor(private http: HttpClient) {
@@ -54,7 +54,7 @@ export class AccountService {
     });
   }
 
-  register(user: User) {
+  register(user: any) {
     return this.http.post(`${environment.apiUrl}/users/register`, user);
   }
 
@@ -69,11 +69,10 @@ export class AccountService {
   update(id: any, params: any) {
     return this.http.put(`${environment.apiUrl}/users/${id}`, params).pipe(
       map((x) => {
-        if (id == this.userValue.id) {
           const user = { ...this.userValue, ...params };
           localStorage.setItem('user', JSON.stringify(user));
           this.userSubject.next(user);
-        }
+        
         return x;
       })
     );
