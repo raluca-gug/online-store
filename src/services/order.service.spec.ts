@@ -24,7 +24,7 @@ describe('OrderService', () => {
       service.postOrder({}).subscribe();
 
       const req = httpTestingController.expectOne(`${environment.apiUrl}/orders`);
-      expect(true).toBe(true) //to avoid 'has no spec' warning
+      expect(req.request.method).toEqual('POST');
       req.flush({});
       httpTestingController.verify();
     });
@@ -36,7 +36,7 @@ describe('OrderService', () => {
       service.getOrderByUserId('1').subscribe();
 
       const req = httpTestingController.expectOne(`${environment.apiUrl}/orders/user/1`);
-      expect(true).toBe(true) //to avoid 'has no spec' warning
+      expect(req.request.method).toEqual('GET');
       req.flush({});
       httpTestingController.verify();
     });
@@ -48,7 +48,7 @@ describe('OrderService', () => {
       service.postPayPal({}).subscribe();
 
       const req = httpTestingController.expectOne(`${environment.apiUrl}/payments/pay`);
-      expect(true).toBe(true) //to avoid 'has no spec' warning
+      expect(req.request.method).toEqual('POST');
       req.flush({});
       httpTestingController.verify();
     });

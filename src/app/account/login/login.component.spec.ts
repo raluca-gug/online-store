@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
   });
 
   it('shuould submit request', () => {
-    const accountService = fixture.debugElement.injector.get(AccountService);
+    //const accountService = fixture.debugElement.injector.get(AccountService);
     spyOn(component, 'onSubmit').and.callThrough();
     component.onSubmit();
     expect(component.onSubmit).toHaveBeenCalledTimes(1);
