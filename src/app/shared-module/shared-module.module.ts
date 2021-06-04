@@ -1,3 +1,4 @@
+import { FilterProductPipe } from './pipes/filter-product.pipe';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './../../modules/material/material.module';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -21,7 +22,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     HighlightDirective,
     BikeDetailsDirective,
     HighlightOnClickDirective,
-    ScrollCatcherDirective
+    ScrollCatcherDirective,
+    FilterProductPipe
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     HighlightDirective,
     BikeDetailsDirective,
     HighlightOnClickDirective,
-    ScrollCatcherDirective
+    ScrollCatcherDirective, 
+    FilterProductPipe
   ]
 })
 export class SharedModule { }

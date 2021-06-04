@@ -1,4 +1,4 @@
-import { CartService } from '../core/services/cart.service';
+import { CartService } from '../../core/services/cart.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { OrderService } from 'src/app/core/services/order.service';
 import { Component, ElementRef, OnInit, AfterViewInit } from '@angular/core';

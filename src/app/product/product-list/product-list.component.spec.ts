@@ -1,4 +1,4 @@
-import { FilterProductPipe } from './../../pipes/filter-product.pipe';
+import { FilterProductPipe } from '../../shared-module/pipes/filter-product.pipe';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,

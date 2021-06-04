@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader } from '@ngx-translate/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../app.module';
+import { HttpLoaderFactory } from '../../app.module';
 
 import { PaymentFailureComponent } from './payment-failure.component';
 

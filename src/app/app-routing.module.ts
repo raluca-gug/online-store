@@ -1,34 +1,19 @@
-import { PaymentSuccessComponent } from './payment-success/payment-success.component';
-import { OrderItemComponent } from './user-details/order-item/order-item.component';
-import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { OrderComponent } from './order/order.component';
 import { ProductDetailsComponent } from './product/product-details/product-details.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 
-import { CartComponent } from './cart/cart.component';
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PaymentFailureComponent } from './payment-failure/payment-failure.component';
 
 const accountModule = () =>
   import('./account/account.module').then((x) => x.AccountModule);
+const cartModule = () =>
+  import('./cart/cart.module').then((x) => x.CartModule);
 
 const routes: Routes = [
-  { path: '', component: ProductListComponent },
-  { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'products', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
   { path: 'account', loadChildren: accountModule },
-  { path: 'order', component: OrderComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'account/details', component: UserDetailsComponent },
-  { path: 'order/:id', component: OrderItemComponent },
-  { path: 'success', component: PaymentSuccessComponent },
-  { path: 'failure', component: PaymentFailureComponent },
-  {
-    path: 'userConfirmation',
-    component: ConfirmAccountComponent,
-    pathMatch: 'prefix',
-  },
+  { path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule)},
+  { path: 'cart', loadChildren: cartModule },
   { path: 'service', loadChildren: () => import('./service/service.module').then(m => m.ServiceModule) },
 ];
 

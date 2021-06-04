@@ -96,7 +96,7 @@
   list-style-type: none;
   width: 150px;
   padding-top: 8px;
-  height: 150px;
+  height: 180px;
   border-radius: 5px;
   @include mat-elevation(6);
   h3 {
@@ -114,11 +114,11 @@
   }
   .signout-btn {
     background-image: linear-gradient(to left, #5fd4d2, #634fbd 50%);
-    width: 75%;
+    width: 80%;
     color: white;
     border: 0;
     margin-top: 20px;
-    height: 30px;
+    padding: 2px;
   }
   .view-user-details {
     text-decoration: none;

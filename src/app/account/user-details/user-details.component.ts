@@ -1,5 +1,5 @@
 import { User } from 'src/app/core/models/user';
-import { AccountService } from '../core/services/account.service';
+import { AccountService } from './../../core/services/account.service';
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef } from '@angular/core';
 import { SocialAuthService } from 'angularx-social-login';
 

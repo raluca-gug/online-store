@@ -1,4 +1,4 @@
-import { OrderService } from '../../core/services/order.service';
+import { OrderService } from '../../../core/services/order.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
