@@ -38,6 +38,10 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   darkTheme!: boolean;
   curentTheme!: string;
 
+  receiveFromItem($event: any){
+    console.log('Am primit de la copil id: ', $event)
+  }
+
   callForProducts(): void {
     this.productServ
       .getProducts(

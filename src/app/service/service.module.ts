@@ -1,3 +1,4 @@
+import { CoreModule } from './../core/core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -5,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast'
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar'
-import { SharedModule } from './../shared-module/shared-module.module';
+import { HttpLoaderFactory, SharedModule } from './../shared-module/shared-module.module';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
@@ -22,6 +23,8 @@ import { ServiceComponent } from './service.component';
 import { UserViewComponent } from './user-view/user-view.component';
 import { AdminViewComponent } from './admin-view/admin-view.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 
 
@@ -29,6 +32,7 @@ import { InputTextModule } from 'primeng/inputtext';
   declarations: [ServiceComponent, UserViewComponent, AdminViewComponent],
   imports: [
     CommonModule,
+    CoreModule,
     SharedModule,
     ServiceRoutingModule, 
     FormsModule,
@@ -48,6 +52,13 @@ import { InputTextModule } from 'primeng/inputtext';
     SelectButtonModule, 
     CheckboxModule,
     InputNumberModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ]
 })
 export class ServiceModule { }

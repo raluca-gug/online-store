@@ -1,4 +1,4 @@
-import { AccountService } from '../core/services/account.service';
+import { AccountService } from '../../core/services/account.service';
 import { FormsModule } from '@angular/forms';
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -6,13 +6,13 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { UserDetailsComponent } from './user-details.component';
-import { NavbarComponent } from '../shared-module/navbar/navbar.component';
+import { NavbarComponent } from '../../shared-module/navbar/navbar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../app.module';
 import { SocialAuthService } from 'angularx-social-login';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { HttpLoaderFactory } from 'src/app/app.module';
 
 xdescribe('UserDetailsComponent', () => {
   let component: UserDetailsComponent;

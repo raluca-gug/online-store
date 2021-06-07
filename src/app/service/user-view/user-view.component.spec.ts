@@ -1,29 +1,61 @@
+import { ProductService } from './../../core/services/product.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { UserViewComponent } from './user-view.component';
+import { of } from 'rxjs';
+
 
 fdescribe('UserViewComponent', () => {
   let component: UserViewComponent;
   let fixture: ComponentFixture<UserViewComponent>;
+  let productService: any;
+  let getProductsSpy: any;
+  let response={"content":[{"id":"6040d6ba1e240556a8b76e8e","name":"BICICLETĂ MTB XC 900 S 29 CARBON ROȘU/NEGRU ROCKRIDER","description":"mollit culpa labore quis proident ullamco mollit ullamco do cupidatat est exercitation aliqua exercitation laborum sunt ullamco ea esse sunt exercitation incididunt laborum ex laborum","price":1577.8,"rating":0.0,"itemsInStock":72,"image":"https://s14761.pcdn.co/wp-content/uploads/sites/2/2020/08/Husqvarna-E-Mountainbikes-emtb-2021-Extreme-Cross-Hard-Cross-Mountain-Cross-news11-375x195.jpg","brand":"GIANT", "qty": 0}]};
+  let user=JSON.stringify({
+    "firstName": "Raluca",
+    "lastName": "Vana",
+    "email": "raluca.vana@gmail.com",
+    "username": "Raluca1234",
+    "telephone": "0700000",
+    "sex": "",
+    "password": "$2a$10$4GWTI56aIFnbwPLbDA27nO9GzWe8mHvRkugyggf5GFWNF5tWt/eay",
+    "addressEntity": {
+        "address": "dacia",
+        "city": "Oradea",
+        "county": "bihor",
+        "postalCode": "161616"
+    },
+    "id": "60ba21fa76d6230bd7167872",
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2MGJhMjFmYTc2ZDYyMzBiZDcxNjc4NzIsUmFsdWNhMTIzNCIsImlzcyI6ImV1LmFjY2VzYS5vbmxpbmVzdG9yZSIsImlhdCI6MTYyMjgxMTQ2NywiZXhwIjoxNjIzNDE2MjY3fQ.H7Dx_xgUZN9QY3Pa2qpGI66X_Ax-jdKaOmX6c0OCRgdFL5qPYqT8DCBKfd-T-C1btACrJ5mRZia9NIXPt_upTA"
+})
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach( () => {
+    productService=jasmine.createSpyObj('ProductService', ['getProducts']);
+    getProductsSpy = productService.getProducts.and.returnValue(of(response));
+    TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule
       ],
-      declarations: [ UserViewComponent ]
+      declarations: [ UserViewComponent ], 
+      providers: [{provide: ProductService, useValue: productService}]
     })
     .compileComponents();
-  });
-
-  beforeEach(() => {
+    localStorage.setItem('user', user);
     fixture = TestBed.createComponent(UserViewComponent);
     component = fixture.componentInstance;
+    productService=TestBed.inject(ProductService);
   });
 
+  describe('onInit', ()=>{
+    it('should get all products for select', ()=>{
+      fixture.detectChanges();
+      
+      expect(component.products[0]).toEqual(response.content[0]);
+    })
+  })
   describe('sortByDate ', ()=>{
     it('shoud sort dates asscending if sortAsc is true', () => {
       component.sortAsc=true;

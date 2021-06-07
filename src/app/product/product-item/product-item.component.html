@@ -1,4 +1,4 @@
-<div
+<!-- <div
   [ngClass]="{
     'elevated-dark': darkTheme,
     'product-light': !darkTheme,
@@ -7,13 +7,23 @@
   *ngIf="product"
   [routerLink]="['/products/', product.id]"
   class="product"
+> -->
+<div
+  [ngClass]="{
+    'elevated-dark': darkTheme,
+    'product-light': !darkTheme,
+    stockOut: product.itemsInStock <= 0
+  }"
+  *ngIf="product"
+  (click)="goToDetails()"
+  class="product"
 >
   <div class="face front">
     <div class="outOfStock" *ngIf="product.itemsInStock <= 0">
       {{ "ProductItem.Out of stock" | translate }}
     </div>
-    <img src="{{ product.image }}" alt="" />
-    <h2 *ngIf="product.name" >{{ product.name.substring(0, 30) | titlecase }}</h2>
+    <img src="{{ product.image }}" alt="" id='img' />
+    <h2 *ngIf="product.name" (click)="transmit()" id='clickable'>{{ product.name.substring(0, 30) | titlecase }}</h2>
     <star-rating
       [value]="product.rating"
       [totalstars]="5"

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../shared-module/shared-module.module';
 import { MaterialModule } from './../../modules/material/material.module';
@@ -29,6 +30,7 @@ import { HttpLoaderFactory } from '../app.module';
     MaterialModule,
     SharedModule,
     FormsModule,
+    RouterModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

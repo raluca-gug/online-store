@@ -40,6 +40,7 @@
 </div>
 <div class="product-list">
   <app-product-item
+    (id)=receiveFromItem($event);
     class="child"
     *ngFor="let product of products | filterProduct: searchTerm"
     [product]="product"

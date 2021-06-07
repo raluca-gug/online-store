@@ -10,7 +10,7 @@ const cartModule = () =>
   import('./cart/cart.module').then((x) => x.CartModule);
 
 const routes: Routes = [
-  { path: 'products', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
+  { path: '', loadChildren: () => import('./product/product.module').then(m => m.ProductModule)},
   { path: 'account', loadChildren: accountModule },
   { path: 'order', loadChildren: () => import('./order/order.module').then(m => m.OrderModule)},
   { path: 'cart', loadChildren: cartModule },
