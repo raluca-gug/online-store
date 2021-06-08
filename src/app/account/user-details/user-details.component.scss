@@ -172,6 +172,13 @@ input{
   border-radius: 3%;
   padding: 2px;
 }
+input.invalid:focus{
+  outline: 1px red solid;
+  border: 1px red solid
+}
+.invalid{
+  border: 1px red solid;
+}
 label {
   display: block;
   text-align: left;
@@ -184,4 +191,8 @@ label {
   justify-content: center;
   display: flex;
   margin: 1rem;
+}
+.error{
+  margin-top: 5px;
+  color: red;
 }

@@ -1,3 +1,4 @@
+import { AdditionalDetails } from './../../core/models/additionalDetails';
 import { AdditionalDetailsServiceService } from './../../core/services/additional-details-service.service';
 import {
   FormGroup,
@@ -32,6 +33,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   accountForm!: FormGroup;
   addressForm!: FormGroup;
   additionalDetailsForm!: FormGroup;
+  additionalDetails!: AdditionalDetails;
   userLogo: any;
   detailsOption = 1;
   usernameExists = false;
@@ -45,6 +47,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!);
     this.user = JSON.parse(localStorage.getItem('user') || '{ }');
+    this.additionalDetails=this.additionalDetailsService.get(this.user.id);
     if (this.user.hasOwnProperty('firstName'))
       this.userLogo =
         this.user.firstName[0].toUpperCase() +
@@ -54,30 +57,33 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
       lastName: [this.user.lastName, Validators.required],
       email: [this.user.email, Validators.required],
       username: [this.user.username, Validators.required],
-      telephone: [this.user.telephone, Validators.required],
+      telephone: [this.user.telephone, [Validators.required, Validators.minLength(9)]],
     });
 
     this.addressForm = this.fb.group({
       address: [this.user.addressEntity.address, Validators.required],
-      city: this.user.addressEntity.city,
-      county: this.user.addressEntity.county,
-      postalCode: this.user.addressEntity.postalCode,
+      city: [this.user.addressEntity.city, Validators.required],
+      county: [this.user.addressEntity.county, Validators.required],
+      postalCode: [this.user.addressEntity.postalCode, Validators.required],
     });
 
     this.additionalDetailsForm = this.fb.group({
       id: this.user.id,
-      weight: [, Validators.required],
-      height: [, Validators.required],
-      yearOfBirth: [, Validators.required],
+      weight: [this.additionalDetails.weight, [Validators.required, Validators.min(3), Validators.max(200)] ],
+      height: [this.additionalDetails.height, [Validators.required, Validators.min(1), Validators.max(250)]],
+      yearOfBirth: [this.additionalDetails.yearOfBirth, [Validators.required, Validators.min(1920), Validators.max(2020), Validators.pattern("^[0-9]*$")]],
     });
   }
 
   checkUsername() {
-    this.accountService
-      .checkUsernameNotTaken(this.accountForm.controls.username.value)
-      .subscribe((response: any) => {
-        this.usernameExists = response;
-      });
+    if(this.accountForm.controls.username.value!=this.user.username){
+      this.accountService
+        .checkUsernameNotTaken(this.accountForm.controls.username.value)
+        .subscribe((response: any) => {
+          this.usernameExists = response;
+
+        });
+    }
   }
 
   submit(param: FormGroup) {

@@ -11,6 +11,17 @@ export class AdditionalDetailsServiceService {
   add(data: AdditionalDetails){
     this.writeLocalStorage( data)
   }
+  get(id: string){
+    let index=-1;
+    let allData= this.readLocalStorage();
+    allData.forEach((element: any, i: number) => {
+        if (element.id===id) index=i;
+    });
+    if(index<0)
+      return {id: '', height: 0, weight: 0, yearOfBirth: 0  };
+    else
+      return allData[index];
+  }
 
   readLocalStorage() {
     let storageData: { items?: any } = {};

@@ -44,6 +44,7 @@
           <input
             type="text"
             formControlName='firstName'
+            [class.invalid]="accountForm.controls.firstName.invalid && accountForm.controls.firstName.touched"
           />
         </div>
         <div class="input-label-group">
@@ -51,14 +52,7 @@
           <input
             type="text"
             formControlName="lastName"
-            form
-          />
-        </div>
-        <div class="input-label-group">
-          <label>*Email:</label>
-          <input
-            type="text"
-            formControlName="email"
+            [class.invalid]="accountForm.controls.lastName.invalid && accountForm.controls.lastName.touched"
           />
         </div>
         <div class="input-label-group">
@@ -67,15 +61,31 @@
             type="text"
             formControlName="username"
             (keyup)='checkUsername()'
+            [class.invalid]="accountForm.controls.username.invalid && accountForm.controls.username.touched || usernameExists"
           />
-          <p *ngIf="usernameExists" > Username taken </p>
+          <p *ngIf="usernameExists" class='error'> 
+            Username taken 
+          </p>
         </div>
         <div class="input-label-group">
           <label for="phone"> *{{ "AccountInfo.Phone Number" | translate }}: </label>
           <input
             type="tel"
             formControlName="telephone"
+            [class.invalid]="accountForm.controls.telephone.invalid && accountForm.controls.telephone.touched "
           />
+          <p *ngIf="accountForm.controls.telephone.hasError('minlength')" class='error'> 
+             Telephone number apears to be too short 
+          </p>
+        </div>
+        <div *ngIf="accountForm">
+          <p *ngIf="accountForm.controls.telephone.hasError('required') 
+            || accountForm.controls.firstName.hasError('required')
+            || accountForm.controls.lastName.hasError('required')
+            || accountForm.controls.username.hasError('required')
+            " class='error'> 
+            All fields are required
+          </p>
         </div>
         <div class="btn-container">
           <button
@@ -100,6 +110,7 @@
           <input
             type="text"
             formControlName="address"
+            [class.invalid]="addressForm.controls.address.invalid && addressForm.controls.address.dirty "
           />
         </div>
         <div class="input-label-group">
@@ -107,6 +118,7 @@
           <input
             type="text"
             formControlName="city"
+            [class.invalid]="addressForm.controls.city.invalid && addressForm.controls.city.touched "
           />
         </div>
         <div class="input-label-group">
@@ -114,6 +126,7 @@
           <input
             type="text"
             formControlName="county"
+            [class.invalid]="addressForm.controls.county.invalid && addressForm.controls.county.touched "
           /><br />
         </div>
         <div class="input-label-group">
@@ -121,7 +134,17 @@
           <input
             type="text"
             formControlName="postalCode"
+            [class.invalid]="addressForm.controls.postalCode.invalid && addressForm.controls.postalCode.touched "
           />
+        </div>
+        <div *ngIf='addressForm'>
+          <p *ngIf="addressForm.controls.address.hasError('required') 
+              || addressForm.controls.city.hasError('required')
+              || addressForm.controls.county.hasError('required')
+              || addressForm.controls.postalCode.hasError('required')
+              " class='error'> 
+              All fields are required
+            </p>
         </div>
         <div class="btn-container">
           <button
@@ -157,21 +180,51 @@
           <input
             type="number"
             formControlName="weight"
+            [class.invalid]="additionalDetailsForm.controls.weight.invalid && additionalDetailsForm.controls.weight.touched "
           />
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('min')" class='error'>
+            Weight can't be samller than 3 kg
+          </p>
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('max')" class='error'>
+            Weight can't be greater than 200 kg
+          </p>
         </div>
         <div class="input-label-group" *ngIf='metric'>
           <label for="height"> *Height (cm): </label>
           <input
             type="number"
             formControlName="height"
+            [class.invalid]="additionalDetailsForm.controls.height.invalid && additionalDetailsForm.controls.height.touched "
           />
+          <p *ngIf="additionalDetailsForm.controls.height.hasError('min')" class='error'>
+            Height can't be samller than 1 cm
+          </p>
+          <p *ngIf="additionalDetailsForm.controls.height.hasError('max')" class='error'>
+            Height can't be greater than 250 cm
+          </p>
         </div>
         <div class="input-label-group" >
           <label for="yearOfBirth"> *Year of birth: </label>
           <input
             type="number"
+            min="1920"
             formControlName="yearOfBirth"
+            [class.invalid]="additionalDetailsForm.controls.yearOfBirth.invalid && additionalDetailsForm.controls.yearOfBirth.touched "
           />
+          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('min')" class='error'>
+            Year of birth can't be samller than 1920
+          </p>
+          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('max')" class='error'>
+            Year of birth can't be greater than 2020
+          </p>
+        </div>
+        <div *ngIf='additionalDetailsForm'>
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('required') 
+              || additionalDetailsForm.controls.height.hasError('required')
+              || additionalDetailsForm.controls.yearOfBirth.hasError('required')
+              " class='error'> 
+              All fields are required
+            </p>
         </div>
         <div class="btn-container">
           <button
