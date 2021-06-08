@@ -11,7 +11,7 @@ import { HttpLoaderFactory } from 'src/app/app.module';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-fdescribe('ProductItemComponent', () => {
+describe('ProductItemComponent', () => {
   let component: ProductItemComponent;
   let fixture: ComponentFixture<ProductItemComponent>;
   let translate: TranslateService;

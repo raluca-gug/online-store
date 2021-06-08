@@ -84,7 +84,7 @@
             || accountForm.controls.lastName.hasError('required')
             || accountForm.controls.username.hasError('required')
             " class='error'> 
-            All fields are required
+            *All fields are required
           </p>
         </div>
         <div class="btn-container">
@@ -143,7 +143,7 @@
               || addressForm.controls.county.hasError('required')
               || addressForm.controls.postalCode.hasError('required')
               " class='error'> 
-              All fields are required
+              *All fields are required
             </p>
         </div>
         <div class="btn-container">
@@ -217,17 +217,21 @@
           <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('max')" class='error'>
             Year of birth can't be greater than 2020
           </p>
+          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('pattern')" class='error'>
+            Year of birth cannot contain a decimal point
+          </p>
         </div>
         <div *ngIf='additionalDetailsForm'>
           <p *ngIf="additionalDetailsForm.controls.weight.hasError('required') 
               || additionalDetailsForm.controls.height.hasError('required')
               || additionalDetailsForm.controls.yearOfBirth.hasError('required')
               " class='error'> 
-              All fields are required
+              *All fields are required
             </p>
         </div>
         <div class="btn-container">
           <button
+            id="additionalDetails"
             class="submit-btn"
             (click)="submitAdditionalDetails()"
             [disabled]="!additionalDetailsForm.valid"

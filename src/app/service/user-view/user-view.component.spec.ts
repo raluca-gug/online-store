@@ -7,7 +7,7 @@ import { UserViewComponent } from './user-view.component';
 import { of } from 'rxjs';
 
 
-fdescribe('UserViewComponent', () => {
+describe('UserViewComponent', () => {
   let component: UserViewComponent;
   let fixture: ComponentFixture<UserViewComponent>;
   let productService: any;
