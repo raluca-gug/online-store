@@ -4,8 +4,8 @@
     <div class="user-img">
       <p class="user-logo">{{ userLogo }}</p>
     </div>
-    <h2>{{ newUser.firstName }} {{ newUser.lastName }}</h2>
-    <ul>
+    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+    <ul class='menu'>
       <li
         [ngClass]="{ active: detailsOption == 1 }"
         (click)="detailsOption = 1"
@@ -19,202 +19,121 @@
         {{ "AccountInfo.Address" | translate }}
       </li>
       <li
+        [ngClass]="{ active: detailsOption == 5 }"
+        (click)="detailsOption = 5"
+      >
+        {{ "Additional details" | translate }}
+      </li>
+      <li
         [ngClass]="{ active: detailsOption == 3 || detailsOption == 4 }"
         (click)="detailsOption = 3"
       >
         {{ "AccountInfo.My Orders" | translate }}
       </li>
+     
     </ul>
   </div>
   <div class="user-information" *ngIf="detailsOption == 1">
     <div class="user-account-info">
-      <h4>
+      <h2>
         {{ "AccountInfo.Account Info" | translate }}
-        <button
-          (click)="enableNameForm()"
-          title="edit"
-          class="edit-btn"
-          [ngClass]="{
-            'elevated-dark': darkTheme,
-            'edit-btn-light': !darkTheme
-          }"
-        >
-          <span class="material-icons"> mode_edit </span>
-        </button>
-      </h4>
-      <form #nameForm="ngForm">
-        <label> {{ "AccountInfo.First Name" | translate }} </label><br />
-        <input
-          type="text"
-          name="firstname"
-          [disabled]="accountName"
-          [(ngModel)]="user.firstName"
-          required
-        /><br />
-        <label>{{ "AccountInfo.Last Name" | translate }}</label
-        ><br />
-        <input
-          type="text"
-          name="lastname"
-          [disabled]="accountName"
-          [(ngModel)]="user.lastName"
-          required
-        /><br />
-        <label>Email</label><br />
-        <input
-          type="text"
-          name="email"
-          [disabled]="accountName"
-          [(ngModel)]="user.email"
-          required
-        /><br />
-        <label>{{ "AccountInfo.Username" | translate }}</label
-        ><br />
-        <input
-          type="text"
-          name="username"
-          [disabled]="accountName"
-          [(ngModel)]="user.username"
-          required
-        /><br />
-        <button
-          class="submit-details"
-          [disabled]="!nameForm.valid || accountName"
-          (click)="submitName()"
-          [ngClass]="
-            accountName
-              ? 'submit-details'
-              : !nameForm.valid
-              ? 'submit-details'
-              : 'submit-details-btn'
-          "
-        >
-          {{ "AccountInfo.Submit" | translate }}
-        </button>
+      </h2>
+      <form [formGroup]="accountForm">
+        <div class="input-label-group">
+          <label> *{{ "AccountInfo.First Name" | translate }}: </label>
+          <input
+            type="text"
+            formControlName='firstName'
+          />
+        </div>
+        <div class="input-label-group">
+          <label> *{{ "AccountInfo.Last Name" | translate }}:</label>
+          <input
+            type="text"
+            formControlName="lastName"
+            form
+          />
+        </div>
+        <div class="input-label-group">
+          <label>*Email:</label>
+          <input
+            type="text"
+            formControlName="email"
+          />
+        </div>
+        <div class="input-label-group">
+          <label>*{{ "AccountInfo.Username" | translate }}:</label>
+          <input
+            type="text"
+            formControlName="username"
+            (keyup)='checkUsername()'
+          />
+          <p *ngIf="usernameExists" > Username taken </p>
+        </div>
+        <div class="input-label-group">
+          <label for="phone"> *{{ "AccountInfo.Phone Number" | translate }}: </label>
+          <input
+            type="tel"
+            formControlName="telephone"
+          />
+        </div>
+        <div class="btn-container">
+          <button
+            class="submit-btn"
+            [disabled]="!accountForm.valid || usernameExists"
+            (click)="submit(accountForm)"
+          >
+            {{ "AccountInfo.Submit" | translate }}
+          </button>
+        </div>
       </form>
     </div>
-    <div class="user-account-password">
-      <div>
-        <h4>
-          {{ "AccountInfo.Change password" | translate }}
-          <button
-            title="edit"
-            class="edit-btn"
-            (click)="enablePasswordForm()"
-            [ngClass]="{
-              'elevated-dark': darkTheme,
-              'edit-btn-light': !darkTheme
-            }"
-          >
-            <span class="material-icons"> mode_edit </span>
-          </button>
-        </h4>
-        <label> {{ "AccountInfo.New Password" | translate }} </label><br />
-        <div *ngIf="!validPassword" class="validation-text">
-          {{ "AccountInfo.Validation" | translate }}
-        </div>
-        <div>
-          <input
-            [type]="hide ? 'password' : 'text'"
-            type="password"
-            name="password"
-            [(ngModel)]="newPassword"
-            [disabled]="accountPassword"
-          /><mat-icon *ngIf="eyeIcon" (click)="hide = !hide">{{
-            hide ? "visibility_off" : "visibility"
-          }}</mat-icon>
-        </div>
-        <br />
-        <label>{{ "AccountInfo.Repeat Password" | translate }} </label><br />
-        <input
-          [type]="hide ? 'password' : 'text'"
-          type="password"
-          [(ngModel)]="repeatPassword"
-          [disabled]="accountPassword"
-        /><br />
-        <p class="password-error" *ngIf="!passwordMatch">
-          {{ "AccountInfo.InvalidPass" | translate }}
-        </p>
-        <button
-          (click)="submitPassword()"
-          [disabled]="accountPassword"
-          [ngClass]="accountPassword ? 'submit-details' : 'submit-details-btn'"
-        >
-          {{ "AccountInfo.Submit" | translate }}
-        </button>
-      </div>
-    </div>
   </div>
-  <div class="details-address" *ngIf="detailsOption == 2">
-    <form #addressForm="ngForm">
-      <label for="phone"> {{ "AccountInfo.Phone Number" | translate }} </label
-      ><br />
-      <input
-        type="number"
-        name="phone"
-        [(ngModel)]="user.telephone"
-        [disabled]="accountAddress"
-        required
-      /><br />
-      <label for="address"> {{ "AccountInfo.Address" | translate }} </label
-      ><br />
-      <input
-        type="text"
-        name="address"
-        [(ngModel)]="user.addressEntity.address"
-        [disabled]="accountAddress"
-        required
-      /><br />
-      <label for="city"> {{ "AccountInfo.City" | translate }} </label><br />
-      <input
-        type="text"
-        name="city"
-        [(ngModel)]="user.addressEntity.city" 
-        [disabled]="accountAddress"
-        required
-      /><br />
-      <label for="county"> {{ "AccountInfo.County" | translate }} </label><br />
-      <input
-        type="text"
-        name="county"
-        [(ngModel)]="user.addressEntity.county"
-        [disabled]="accountAddress"
-        required
-      /><br />
-      <label for="postal"> {{ "AccountInfo.Postal Code" | translate }} </label
-      ><br />
-      <input
-        type="text"
-        name="postal"
-        [(ngModel)]="user.addressEntity.postalCode"
-        [disabled]="accountAddress"
-        required
-      /><br />
-      <button
-        (click)="submitAddress()"
-        [disabled]="accountAddress || !addressForm.valid"
-        [ngClass]="
-          accountAddress
-            ? 'submit-details'
-            : !addressForm.valid
-            ? 'submit-details'
-            : 'submit-details-btn'
-        "
-      >
-        {{ "AccountInfo.Submit" | translate }}
-      </button>
-    </form>
-    <button
-      title="edit"
-      class="edit-btn"
-      (click)="enableAddressForm()"
-      [ngClass]="{
-        'elevated-dark': darkTheme,
-        'edit-btn-light': !darkTheme
-      }"
-    >
-      <span class="material-icons"> mode_edit </span>
-    </button>
+  <div class="user-information" *ngIf="detailsOption == 2">
+    <div class="user-account-info">
+      <h2>
+        Address
+      </h2>
+      <form [formGroup]='addressForm'>
+        <div class="input-label-group">
+          <label for="address"> *{{ "AccountInfo.Address" | translate }}: </label>
+          <input
+            type="text"
+            formControlName="address"
+          />
+        </div>
+        <div class="input-label-group">
+          <label for="city"> *{{ "AccountInfo.City" | translate }}: </label>
+          <input
+            type="text"
+            formControlName="city"
+          />
+        </div>
+        <div class="input-label-group">
+          <label for="county"> *{{ "AccountInfo.County" | translate }}: </label>
+          <input
+            type="text"
+            formControlName="county"
+          /><br />
+        </div>
+        <div class="input-label-group">
+          <label for="postalCode"> *{{ "AccountInfo.Postal Code" | translate }}: </label>
+          <input
+            type="text"
+            formControlName="postalCode"
+          />
+        </div>
+        <div class="btn-container">
+          <button
+            class='submit-btn'
+            (click)="submit(addressForm)"
+            [disabled]="!addressForm.valid"
+          >
+            {{ "AccountInfo.Submit" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
   <div *ngIf="detailsOption === 3" class="details-address">
     <app-my-orders
@@ -226,6 +145,45 @@
       [order]="order"
       (sectionEvent)="receiveSectionChangeFromOrderItem($event)"
     ></app-order-item>
+  </div>
+  <div class="user-information" *ngIf="detailsOption == 5">
+    <div class="user-account-info">
+      <h2>
+        Additional details
+      </h2>
+      <form [formGroup]='additionalDetailsForm'>
+        <div class="input-label-group" *ngIf='metric'>
+          <label for="weight"> *Weight (kg): </label>
+          <input
+            type="number"
+            formControlName="weight"
+          />
+        </div>
+        <div class="input-label-group" *ngIf='metric'>
+          <label for="height"> *Height (cm): </label>
+          <input
+            type="number"
+            formControlName="height"
+          />
+        </div>
+        <div class="input-label-group" >
+          <label for="yearOfBirth"> *Year of birth: </label>
+          <input
+            type="number"
+            formControlName="yearOfBirth"
+          />
+        </div>
+        <div class="btn-container">
+          <button
+            class="submit-btn"
+            (click)="submitAdditionalDetails()"
+            [disabled]="!additionalDetailsForm.valid"
+          >
+            {{ "AccountInfo.Submit" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
   <div
     class="confirm"

@@ -1,6 +1,19 @@
+import { AdditionalDetailsServiceService } from './../../core/services/additional-details-service.service';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { User } from 'src/app/core/models/user';
 import { AccountService } from './../../core/services/account.service';
-import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ElementRef,
+} from '@angular/core';
 
 @Component({
   selector: 'app-user-details',
@@ -11,41 +24,68 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private elementRef: ElementRef,
     private accountService: AccountService,
-  ) {
-  }
+    private fb: FormBuilder,
+    private additionalDetailsService: AdditionalDetailsServiceService
+  ) {}
+
   user!: User;
-  newUser = JSON.parse('{ }');
+  accountForm!: FormGroup;
+  addressForm!: FormGroup;
+  additionalDetailsForm!: FormGroup;
   userLogo: any;
-  accountName = true;
-  accountPassword = true;
-  accountAddress = true;
-  regExpStr = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}';
   detailsOption = 1;
-  newPassword = '';
-  repeatPassword = '';
-  hide = true;
-  eyeIcon = false;
-  validPassword = true;
-  passwordMatch = true;
+  usernameExists = false;
   confirm = false;
   interval: any;
   order: any;
   darkTheme!: boolean;
   curentTheme!: boolean;
+  metric = true;
 
-  enableNameForm() {
-    this.accountName = !this.accountName;
+  ngOnInit() {
+    this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!);
+    this.user = JSON.parse(localStorage.getItem('user') || '{ }');
+    if (this.user.hasOwnProperty('firstName'))
+      this.userLogo =
+        this.user.firstName[0].toUpperCase() +
+        this.user.lastName[0].toUpperCase();
+    this.accountForm = this.fb.group({
+      firstName: [this.user.firstName, Validators.required],
+      lastName: [this.user.lastName, Validators.required],
+      email: [this.user.email, Validators.required],
+      username: [this.user.username, Validators.required],
+      telephone: [this.user.telephone, Validators.required],
+    });
+
+    this.addressForm = this.fb.group({
+      address: [this.user.addressEntity.address, Validators.required],
+      city: this.user.addressEntity.city,
+      county: this.user.addressEntity.county,
+      postalCode: this.user.addressEntity.postalCode,
+    });
+
+    this.additionalDetailsForm = this.fb.group({
+      id: this.user.id,
+      weight: [, Validators.required],
+      height: [, Validators.required],
+      yearOfBirth: [, Validators.required],
+    });
   }
-  enablePasswordForm() {
-    this.accountPassword = !this.accountPassword;
-    this.eyeIcon = !this.eyeIcon;
+
+  checkUsername() {
+    this.accountService
+      .checkUsernameNotTaken(this.accountForm.controls.username.value)
+      .subscribe((response: any) => {
+        this.usernameExists = response;
+      });
   }
-  enableAddressForm() {
-    this.accountAddress = !this.accountAddress;
-  }
-  submitName() {
-    if (this.user.password == '') {
-      this.user.password = this.newUser.password;
+
+  submit(param: FormGroup) {
+    if (param == this.accountForm)
+      Object.assign(this.user, Object.assign(param.value));
+    else {
+      Object.assign(this.user.addressEntity, Object.assign(param.value));
+      Object.assign(this.user);
     }
     this.accountService.userUpdate(this.user.id, this.user).subscribe();
     localStorage.setItem('user', JSON.stringify(this.user));
@@ -54,28 +94,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.confirm = false;
     }, 1500);
   }
-  submitPassword() {
-    if (this.newPassword == this.repeatPassword && this.newPassword != '') {
-      if (new RegExp(this.regExpStr, 'g').test(this.newPassword)) {
-        this.user.password = this.newPassword;
-        this.accountService.userUpdate(this.user.id, this.user).subscribe();
-        this.confirm = true;
-        this.interval = setInterval(() => {
-          this.validPassword = true;
-          this.confirm = false;
-        }, 3500);
-      }
-      this.validPassword = false
-    } else {
-      this.passwordMatch = false;
-    }
-  }
-  submitAddress() {
-    if (this.user.password == '') {
-      this.user.password = this.newUser.password;
-    }
-    this.accountService.userUpdate(this.user.id, this.user).subscribe();
-    localStorage.setItem('user', JSON.stringify(this.user));
+
+  submitAdditionalDetails() {
+    this.additionalDetailsService.add(this.additionalDetailsForm.value);
     this.confirm = true;
     this.interval = setInterval(() => {
       this.confirm = false;
@@ -90,24 +111,18 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.detailsOption = $event;
   }
 
-  ngOnInit() {
-    this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!)
-    this.newUser = JSON.parse(localStorage.getItem('user') || '{ }');
-    if (this.newUser.hasOwnProperty('firstName'))
-      this.userLogo =
-        this.newUser.firstName[0].toUpperCase() +
-        this.newUser.lastName[0].toUpperCase();
-    this.user = { ...this.newUser, password: '' };
-  }
   ngAfterViewInit() {
-    this.darkTheme ?
-      this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = "#3d3c3c"
-      : this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#fafbfc';
+    this.darkTheme
+      ? (this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+          '#3d3c3c')
+      : (this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+          '#fafbfc');
   }
   receive(event: any) {
-    this.curentTheme = event
-    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.curentTheme
-    this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!)
+    this.curentTheme = event;
+    this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor =
+      this.curentTheme;
+    this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!);
   }
 
   ngOnDestroy() {

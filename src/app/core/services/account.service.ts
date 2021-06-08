@@ -99,7 +99,7 @@ export class AccountService {
 
   // publish updated user to subscribers
   userUpdate(id: any, updatedUser: any) {
-    return this.http.put(`${environment.apiUrl}/users/${id}`, updatedUser);
+    return this.http.put(`${environment.apiUrl}/users/${id}`, updatedUser, {observe: 'response'});
   }
 
   confirmAccount(id: any) {

@@ -10,6 +10,7 @@
       padding: 0.5rem;
     }
   }
+  margin-top: 150px;
   min-width: fit-content;
   max-width: 80vw;
   min-height: 50%;
@@ -33,13 +34,18 @@
   position: relative;
   left: 50%;
   top: 62%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -20%);
   h4 {
     font-weight: 500;
   }
+  .menu{
+    font-size: 1rem;
+    li{
+      padding: 3px;
+    }
+  }
   .user-name {
     border-right: 1px solid black;
-    padding-left: 2%;
     text-align: center;
     width: 200px;
     position: sticky;
@@ -76,6 +82,10 @@
   .user-information {
     display: flex;
     flex-grow: 1;
+    justify-content: center;
+    h2{
+      text-align: center
+    }
     @media only screen and (max-width: 850px) {
       flex-direction: column;
       align-items: center;
@@ -89,37 +99,15 @@
         margin-bottom: 12%;
         align-items: center;
         width: fit-content;
-      }
-      display: flex;
-      width: 50%;
-      border-right: 1px solid;
-      padding-left: 2%;
-      flex-direction: column;
-    }
-    .user-account-password {
-      @media only screen and (max-width: 850px) {
-        border: none;
-        margin-bottom: 12%;
-        align-items: center;
-        width: fit-content;
-      }
-      display: flex;
-      width: 50%;
-      padding-left: 2%;
-      .validation-text {
-        color: #ff0000;
-        text-align: justify;
-        margin-right: 2%;
-        max-width: fit-content;
-      }
+      };
     }
   }
-  .details-address {
-    display: flex;
-    justify-content: center;
-    width: 60%;
-    padding-left: 3%;
-  }
+}
+.details-address {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+  padding-left: 3%;
 }
 .edit-btn-light {
   background-color: white;
@@ -135,27 +123,29 @@ mat-icon {
   padding: 0 0.6rem;
   cursor: pointer;
 }
+
 .active {
-  background-color: #b5a988;
+  background-image: linear-gradient(to left, #5fd4d2, #634fbda6 50%);
   color: white;
 }
-.password-error {
-  color: red;
-  font-size: 13px;
+
+.submit-btn {
+    background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
+    color: white;
+    min-width: 7rem;
+    min-height: 2rem;
+    border-radius: 3%;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
-.submit-details-btn {
-  width: 165px;
-  margin-top: 10px;
-  background-image: linear-gradient(to left, #5fd4d2, #634fbd 40%);
-  color: white;
-  border: none;
-  height: 20px;
+
+.submit-btn:disabled{
+  background-image: linear-gradient(to right, #5fd4d2d0, #634fbda4 40%);
+  cursor: not-allowed;
 }
-.submit-details {
-  width: 165px;
-  margin-top: 10px;
-  height: 20px;
-}
+
+
 .confirm-light {
   background-color: #ffffff;
 }
@@ -177,5 +167,21 @@ mat-icon {
   }
 }
 input{
-  font-size: 1.1rem;
+  font-size: 1rem;
+  border: 1px gray solid;
+  border-radius: 3%;
+  padding: 2px;
+}
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 2px;
+}
+.input-label-group{
+  margin-bottom: 8px;
+}
+.btn-container{
+  justify-content: center;
+  display: flex;
+  margin: 1rem;
 }

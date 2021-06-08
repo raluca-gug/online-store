@@ -1,22 +1,23 @@
-<h1>{{ "AccountInfo.My Orders" | translate }}</h1>
-
-<div *ngFor="let order of myOrders" class="order-card">
-  <div class="upper-section">
-    <div>
-      <p class="order-number">
-        {{ "AccountInfo.Order nb" | translate }} {{ order.id }}
-      </p>
-      <p>
-        {{ "AccountInfo.Placed on" | translate }}
-        {{ order.orderDate.substring(0, 10) }}, at
-        {{ order.orderDate.substring(11, 16) }}
-      </p>
+<div class="container">  
+  <h1>{{ "AccountInfo.My Orders" | translate }}</h1>
+  <div *ngFor="let order of myOrders" class="order-card">
+    <div class="upper-section">
+      <div>
+        <p class="order-number">
+          {{ "AccountInfo.Order nb" | translate }} {{ order.id }}
+        </p>
+        <p>
+          {{ "AccountInfo.Placed on" | translate }}
+          {{ order.orderDate.substring(0, 10) }}, at
+          {{ order.orderDate.substring(11, 16) }}
+        </p>
+      </div>
+      <button (click)="sendSectionChange(order)">
+        {{ "AccountInfo.Details" | translate }}
+      </button>
     </div>
-    <button (click)="sendSectionChange(order)">
-      {{ "AccountInfo.Details" | translate }}
-    </button>
+    <p class="padding">
+      {{ "AccountInfo.Value" | translate }} {{ order.orderValue }} lei
+    </p>
   </div>
-  <p class="padding">
-    {{ "AccountInfo.Value" | translate }} {{ order.orderValue }} lei
-  </p>
 </div>
