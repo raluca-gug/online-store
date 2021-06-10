@@ -5,7 +5,7 @@ import { ProductDetailsDialogComponent } from './product-details-dialog.componen
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ProductItemComponent } from '../product-item/product-item.component';
+import { ProductItemComponent } from '../../shared-module/product-item/product-item.component';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';

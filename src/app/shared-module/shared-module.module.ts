@@ -1,3 +1,5 @@
+import { RatingModule } from 'ng-starrating';
+import { ProductItemComponent } from './product-item/product-item.component';
 import { FilterProductPipe } from './pipes/filter-product.pipe';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from './../../modules/material/material.module';
@@ -23,13 +25,15 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BikeDetailsDirective,
     HighlightOnClickDirective,
     ScrollCatcherDirective,
-    FilterProductPipe
+    FilterProductPipe, 
+    ProductItemComponent,
   ],
   imports: [
     CommonModule,
     OverlayModule,
     MaterialModule,
     RouterModule,
+    RatingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -44,7 +48,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BikeDetailsDirective,
     HighlightOnClickDirective,
     ScrollCatcherDirective, 
-    FilterProductPipe
+    FilterProductPipe,
+    ProductItemComponent
   ]
 })
 export class SharedModule { }

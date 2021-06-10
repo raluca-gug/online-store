@@ -61,6 +61,13 @@
           <p *ngIf="usernameExists" class='error'> 
             Username taken 
           </p>
+          <p *ngIf="accountForm.controls.username.hasError('invalidAsync')" class='error'> 
+            Username taken async validator 
+            
+          </p>
+          <p>
+            {{accountForm.controls.errors | json}}
+          </p>
         </div>
         <div class="input-label-group">
           <label for="phone"> *{{ "AccountInfo.Phone Number" | translate }}: </label>
@@ -180,10 +187,10 @@
             formControlName="weight"
             [class.invalid]="additionalDetailsForm.controls.weight.invalid && additionalDetailsForm.controls.weight.touched "
           />
-          <p *ngIf="additionalDetailsForm.controls.weight.hasError('min')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('smaller')" class='error'>
             Weight can't be samller than 3 kg
           </p>
-          <p *ngIf="additionalDetailsForm.controls.weight.hasError('max')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('bigger')" class='error'>
             Weight can't be greater than 200 kg
           </p>
         </div>

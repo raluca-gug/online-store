@@ -8,7 +8,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from 'src/app/shared-module/navbar/navbar.component';
-import { ProductItemComponent } from '../product-item/product-item.component';
+import { ProductItemComponent } from '../../shared-module/product-item/product-item.component';
 import { RatingModule } from 'ng-starrating';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';

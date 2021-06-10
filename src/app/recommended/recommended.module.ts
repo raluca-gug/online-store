@@ -1,4 +1,4 @@
-import { ProductModule } from './../product/product.module';
+import { SharedModule } from './../shared-module/shared-module.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecommendedComponent } from './recommended/recommended.component';
@@ -8,7 +8,7 @@ import { RecommendedComponent } from './recommended/recommended.component';
   declarations: [RecommendedComponent],
   imports: [
     CommonModule, 
-    ProductModule,
+    SharedModule
   ],
   exports: [RecommendedComponent],
 })

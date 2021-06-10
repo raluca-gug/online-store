@@ -4,7 +4,6 @@ import { SharedModule } from './../shared-module/shared-module.module';
 import { MaterialModule } from './../../modules/material/material.module';
 import { RatingModule } from 'ng-starrating';
 import { ProductListComponent } from './product-list/product-list.component';
-import { ProductItemComponent } from './product-item/product-item.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,7 +19,6 @@ import { HttpLoaderFactory } from '../app.module';
   declarations: [
     ProductDetailsComponent,
     ProductDetailsDialogComponent,
-    ProductItemComponent,
     ProductListComponent
   ],
   imports: [
@@ -39,7 +37,6 @@ import { HttpLoaderFactory } from '../app.module';
       }
     }),
   ],
-  exports: [ProductItemComponent],
   
   entryComponents: [ProductDetailsDialogComponent],
 })

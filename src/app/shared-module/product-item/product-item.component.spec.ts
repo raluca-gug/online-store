@@ -1,4 +1,4 @@
-import { Product } from './../../core/models/product';
+import { Product } from '../../core/models/product';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 /* tslint:disable:no-unused-variable */
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';

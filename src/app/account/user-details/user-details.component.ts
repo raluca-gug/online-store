@@ -5,6 +5,9 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { User } from 'src/app/core/models/user';
 import { AccountService } from './../../core/services/account.service';
@@ -15,6 +18,7 @@ import {
   AfterViewInit,
   ElementRef,
 } from '@angular/core';
+import { usernameValidator } from 'src/app/shared-module/username-validator';
 
 @Component({
   selector: 'app-user-details',
@@ -56,7 +60,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
       firstName: [this.user.firstName, Validators.required],
       lastName: [this.user.lastName, Validators.required],
       email: [this.user.email, Validators.required],
-      username: [this.user.username, Validators.required],
+      username: [this.user.username, Validators.required /*, usernameValidator.createValidator(this.accountService)*/],
       telephone: [this.user.telephone, [Validators.required, Validators.minLength(9)]],
     });
 
@@ -69,10 +73,21 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.additionalDetailsForm = this.fb.group({
       id: this.user.id,
-      weight: [this.additionalDetails.weight, [Validators.required, Validators.min(3), Validators.max(200)] ],
+      weight: [this.additionalDetails.weight, [Validators.required, this.checkWeightInterval()] ],
       height: [this.additionalDetails.height, [Validators.required, Validators.min(1), Validators.max(250)]],
       yearOfBirth: [this.additionalDetails.yearOfBirth, [Validators.required, Validators.min(1920), Validators.max(2020), Validators.pattern("^[0-9]*$")]],
     });
+  }
+
+  checkWeightInterval(): ValidatorFn{
+    return (control: AbstractControl): ValidationErrors | null => {
+      let isInRange;
+      if (control.value<3) isInRange=-1
+      else if (control.value>200) isInRange=1 
+      if(isInRange==-1) return {smaller: {value: control.value}}
+      if(isInRange==1) return {bigger: {value: control.value}}
+      return null;
+    };
   }
 
   checkUsername() {
