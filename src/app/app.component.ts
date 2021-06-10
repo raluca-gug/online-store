@@ -1,3 +1,4 @@
+import { getProductDetailsArray } from './recommended/getProductsDetails';
 
 import { Component, OnInit, TemplateRef } from '@angular/core';
 @Component({

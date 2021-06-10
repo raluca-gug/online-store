@@ -1,5 +1,3 @@
-import { RecommendedComponent } from './../recommended/recommended/recommended.component';
-import { RecommendedModule } from './../recommended/recommended.module';
 import { SharedModule } from './../shared-module/shared-module.module';
 import { RatingModule } from 'ng-starrating';
 import { OrderItemComponent } from './user-details/order-item/order-item.component';
@@ -30,7 +28,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MaterialModule,
     RatingModule,
     SharedModule,
-    RecommendedModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -15,7 +15,7 @@ import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { By } from '@angular/platform-browser';
 
-fdescribe('UserDetailsComponent', () => {
+describe('UserDetailsComponent', () => {
   let component: UserDetailsComponent;
   let fixture: ComponentFixture<UserDetailsComponent>;
   let spy: any;

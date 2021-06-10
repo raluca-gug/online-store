@@ -22,10 +22,6 @@
         (click)="detailsOption = 3" >
         {{ "AccountInfo.My Orders" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == 6 }"
-        (click)="detailsOption = 6">
-        Recommended bikes
-      </li>
     </ul>
   </div>
   <div class="user-information" *ngIf="detailsOption == 1">
@@ -159,9 +155,6 @@
         </div>
       </form>
     </div>
-  </div>
-  <div *ngIf="detailsOption === 6" class="details-address">
-    <app-recommended></app-recommended>
   </div>
   <div *ngIf="detailsOption === 3" class="details-address">
     <app-my-orders
