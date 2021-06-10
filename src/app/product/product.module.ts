@@ -39,6 +39,7 @@ import { HttpLoaderFactory } from '../app.module';
       }
     }),
   ],
+  exports: [ProductItemComponent],
   
   entryComponents: [ProductDetailsDialogComponent],
 })
