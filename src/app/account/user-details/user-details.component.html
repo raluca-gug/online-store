@@ -6,29 +6,25 @@
     </div>
     <h2>{{ user.firstName }} {{ user.lastName }}</h2>
     <ul class='menu'>
-      <li [ngClass]="{ active: detailsOption == 1 }"
+      <li [ngClass]="{ active: detailsOption == DetailsOption.Account }"
         (click)="detailsOption = 1">
         {{ "AccountInfo.Account Info" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == 2 }"
-        (click)="detailsOption = 2">
+      <li [ngClass]="{ active: detailsOption == DetailsOption.Address}"
+        (click)="detailsOption = DetailsOption.Address">
         {{ "AccountInfo.Address" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == 5 }"
+      <li [ngClass]="{ active: detailsOption == DetailsOption.AddDetails }"
         (click)="detailsOption = 5">
         {{ "Additional details" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == 3 || detailsOption == 4 }"
-        (click)="detailsOption = 3" >
+      <li [ngClass]="{ active: detailsOption == DetailsOption.Orders || detailsOption == DetailsOption.OrderItem}"
+        (click)="detailsOption = DetailsOption.Orders" >
         {{ "AccountInfo.My Orders" | translate }}
-      </li>
-      <li [ngClass]="{ active: detailsOption == 6 }"
-        (click)="detailsOption = 6">
-        Recommended bikes
       </li>
     </ul>
   </div>
-  <div class="user-information" *ngIf="detailsOption == 1">
+  <div class="user-information" *ngIf="detailsOption == DetailsOption.Account">
     <div class="user-account-info">
       <h2>
         {{ "AccountInfo.Account Info" | translate }}
@@ -160,27 +156,24 @@
       </form>
     </div>
   </div>
-  <div *ngIf="detailsOption === 6" class="details-address">
-    <app-recommended></app-recommended>
-  </div>
   <div *ngIf="detailsOption === 3" class="details-address">
     <app-my-orders
       (sectionEvent)="receiveSectionChangeFromMyOrder($event)"
     ></app-my-orders>
   </div>
-  <div *ngIf="detailsOption == 4">
+  <div *ngIf="detailsOption == DetailsOption.OrderItem">
     <app-order-item
       [order]="order"
       (sectionEvent)="receiveSectionChangeFromOrderItem($event)"
     ></app-order-item>
   </div>
-  <div class="user-information" *ngIf="detailsOption == 5">
+  <div class="user-information" *ngIf="detailsOption == DetailsOption.AddDetails">
     <div class="user-account-info">
       <h2>
         Additional details
       </h2>
       <form [formGroup]='additionalDetailsForm'>
-        <div class="input-label-group" *ngIf='metric'>
+        <div class="input-label-group">
           <label for="weight"> *Weight (kg): </label>
           <input
             type="number"
@@ -194,7 +187,7 @@
             Weight can't be greater than 200 kg
           </p>
         </div>
-        <div class="input-label-group" *ngIf='metric'>
+        <div class="input-label-group" >
           <label for="height"> *Height (cm): </label>
           <input
             type="number"

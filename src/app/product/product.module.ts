@@ -1,3 +1,4 @@
+import { RecommendedModule } from './../recommended/recommended.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../shared-module/shared-module.module';
@@ -28,6 +29,7 @@ import { HttpLoaderFactory } from '../app.module';
     MaterialModule,
     SharedModule,
     FormsModule,
+    RecommendedModule,
     RouterModule,
     TranslateModule.forRoot({
       loader: {
