@@ -4,10 +4,9 @@ export class getProductDetailsArray{
     static getProductDetail(productService: ProductService){
         let products!: any;
         let productsDetails:any=[];
-    productService.getProducts(0,100, 'name', 'ASC')
+    productService.getProducts(0, 100, 'name', 'ASC')
     .subscribe(res=>{
       products=res.content;
-      console.log(products);
       products.forEach((element: any, i: number)=> {
         productsDetails[i]=new ProductDetails();
         productsDetails[i].id=element.id;
@@ -29,12 +28,15 @@ export class getProductDetailsArray{
             productsDetails[i].maxWeight=160;
             }
 
-        if(element.name.includes('29'))
+        if(element.name.includes('29')){
           productsDetails[i].wheelDiameter=29;
-        else if(element.name.includes('27,5'))
+        }
+        else if(element.name.includes('27,5')){
               productsDetails[i].wheelDiameter=27.5;
-              else if(element.name.includes('24'))
+        }
+              else if(element.name.includes('24')){
                 productsDetails[i].wheelDiameter=24;
+              }
         
       });
       localStorage.setItem('productsDetails', JSON.stringify(productsDetails));

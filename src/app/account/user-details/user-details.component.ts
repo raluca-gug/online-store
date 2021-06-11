@@ -20,6 +20,14 @@ import {
 } from '@angular/core';
 import { usernameValidator } from 'src/app/shared-module/username-validator';
 
+enum DetailsOption {
+  Account=1,
+  Address=2,
+  Orders=3,
+  OrderItem=4,
+  AddDetails=5
+}
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -46,7 +54,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   order: any;
   darkTheme!: boolean;
   curentTheme!: boolean;
-  metric = true;
+  DetailsOption=DetailsOption;
 
   ngOnInit() {
     this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!);
