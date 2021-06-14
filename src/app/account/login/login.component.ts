@@ -175,12 +175,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       : this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = '#fafbfc';
   }
   backToPreviousPage() {
-    // const { redirect } = window.history.state;
-    // if (redirect == '/cart') this.router.navigateByUrl('/order');
-    // else this.router.navigateByUrl(redirect || '/');
     if(this.accountService.redirectUrl){
       this.router.navigateByUrl(this.accountService.redirectUrl);
-    }else{
+    } else {
       this.router.navigateByUrl('/');
     }
   }
