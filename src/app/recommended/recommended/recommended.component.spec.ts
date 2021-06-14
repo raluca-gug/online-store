@@ -18,7 +18,7 @@ fdescribe('RecommendedComponent', () => {
     "id": "6040d6ba1e240556a8b76ecb",
     "category": "MTB",
     "maxWeight": 160,
-    "wheelDiameter": 27.5
+    "wheelDiameter": 26
   },
   {
     "id": "6040d6ba1e240556a8b76e9f",
@@ -35,7 +35,7 @@ fdescribe('RecommendedComponent', () => {
   let userDetail=JSON.stringify({items:[{
     "id": "60ba21fa76d6230bd7167872",
     "weight": 200,
-    "height": 15,
+    "height": 200,
     "yearOfBirth": 1920
   }]})
   let user=JSON.stringify({
@@ -67,7 +67,7 @@ fdescribe('RecommendedComponent', () => {
     component = fixture.componentInstance;
     spy = jasmine.createSpyObj('ProductService', ['getProduct']);
     localStorage.setItem('user', user);
-    localStorage.setItem('additionalDetails', userDetail)
+    //localStorage.setItem('additionalDetails', userDetail)
     localStorage.setItem('productsDetails', JSON.stringify(details));
     fixture.detectChanges();
   });
@@ -97,6 +97,91 @@ fdescribe('RecommendedComponent', () => {
       component.userDetails.weight=30;
     
       expect( component.filterByWeight()).toEqual(details);
+    })
+  });
+
+  describe('filter by wheelRange', ()=>{
+    it('should return 27.5" and 29" height=200', () => {
+      component.productsDetails=details;
+      component.userDetails.height=200;
+
+      expect(component.filterByWheelRange(details)).toEqual([details[0], details[2]]);
+
+    });
+    it('should return 26", 27.5" and 29" height=180', () => {
+      component.productsDetails=details;
+      component.userDetails.height=180;
+      component.idealWheel=component.computeIdealWheel(component.userDetails.height);
+
+      expect(component.filterByWheelRange(details)).toEqual(details.slice(0,3));
+    })
+    it('should return 26", 27.5" and 24" height=150', () => {
+      component.productsDetails=details;
+      component.userDetails.height=150;
+      component.idealWheel=component.computeIdealWheel(component.userDetails.height);
+
+      expect(component.filterByWheelRange(details)).toEqual([details[0], details[1], details[3]]);
+    })
+    it('should return 26" and 24" height=140', () => {
+      component.productsDetails=details;
+      component.userDetails.height=140;
+      component.idealWheel=component.computeIdealWheel(component.userDetails.height);
+
+      expect(component.filterByWheelRange(details)).toEqual([details[1], details[3]]);
+    })
+  });
+  
+  describe('filter by wheelDiameter', ()=>{
+    it('should return 29" height=200', () => {
+      component.productsDetails=details;
+      component.userDetails.height=200;
+
+      expect(component.filterByWheelDiameter(details)).toEqual([details[2]]);
+
+    });
+    it('should return 27.5" and height=180', () => {
+      component.productsDetails=details;
+      component.userDetails.height=180;
+      component.idealWheel=component.computeIdealWheel(component.userDetails.height);
+
+      expect(component.filterByWheelDiameter(details)).toEqual([details[0]]);
+    })
+    it('should return 26" height=150', () => {
+      component.productsDetails=details;
+      component.userDetails.height=150;
+      component.idealWheel=component.computeIdealWheel(component.userDetails.height);
+
+      expect(component.filterByWheelDiameter(details)).toEqual([details[1]]);
+    })
+    it('should return 24" height=140', () => {
+      component.productsDetails=details;
+      component.userDetails.height=140;
+      component.idealWheel=component.computeIdealWheel(component.userDetails.height);
+
+      expect(component.filterByWheelDiameter(details)).toEqual([details[3]]);
+    })
+  });
+  describe('filter by age', ()=>{
+    it('should return Electric for age=70', () => {
+      component.userDetails.yearOfBirth=1951;
+
+      expect(component.filterByAge(details)).toEqual([details[0]]);
+
+    });
+    it('should return All mountain for age=51', () => {
+      component.userDetails.yearOfBirth=1970;
+
+      expect(component.filterByAge(details)).toEqual([details[2]]);
+    })
+    it('should return Mtb for age=29', () => {
+      component.userDetails.yearOfBirth=1992;
+
+      expect(component.filterByAge(details)).toEqual([details[1]]);
+    })
+    it('should return Copii for age=10', () => {
+      component.userDetails.yearOfBirth=2011;
+
+      expect(component.filterByAge(details)).toEqual([details[3]]);
     })
   });
 })

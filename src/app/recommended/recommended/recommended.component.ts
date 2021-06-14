@@ -30,21 +30,21 @@ export class RecommendedComponent implements OnInit {
     // if (localStorage.getItem('productsDetails') === null)      
     //   getProductDetailsArray.getProductDetail(this.productService);
     this.productsDetails=JSON.parse(localStorage.getItem('productsDetails')!);
+    this.idealWheel=this.computeIdealWheel(this.userDetails.height)
     if(this.userDetails.id){
       this.productsDetails=this.filterByWeight();
       if(this.productsDetails.length>3){
-        this.idealWheel=this.computeIdealWheel(this.userDetails.height);
-        this.aproximateWheel= this.filterByWheelRange();
+        this.aproximateWheel= this.filterByWheelRange(this.productsDetails);
         if(this.aproximateWheel.length<3){
           this.fill(this.aproximateWheel, this.productsDetails)
         }
         else {
-          this.exactWheel=this.filterByWheelDiameter();
+          this.exactWheel=this.filterByWheelDiameter(this.aproximateWheel);
           if(this.exactWheel.length<3){
             this.fill(this.exactWheel, this.aproximateWheel);
           }
           else {
-            this.ageAppropriate=this.filterByAge()
+            this.ageAppropriate=this.filterByAge(this.exactWheel)
             if(this.ageAppropriate.length<3 ) this.fill(this.ageAppropriate, this.exactWheel);
             this.productsDetails=this.ageAppropriate;
           }
@@ -90,17 +90,17 @@ export class RecommendedComponent implements OnInit {
     return this.productsDetails.filter(el=> el.maxWeight>=this.userDetails.weight);
   }
 
-  filterByWheelRange(){
-    return this.productsDetails.filter(el=> el.wheelDiameter<=this.idealWheel+2 && el.wheelDiameter>=this.idealWheel-2);
+  filterByWheelRange(array: any){
+    return array.filter((el: any)=> el.wheelDiameter<=this.idealWheel+2 && el.wheelDiameter>=this.idealWheel-2);
   }
 
-  filterByWheelDiameter(){
-    return this.aproximateWheel.filter(el=> el.wheelDiameter==this.idealWheel);
+  filterByWheelDiameter(array: any){
+    return array.filter((el: any)=> el.wheelDiameter==this.idealWheel);
   }
 
-  filterByAge(){
+  filterByAge(array: any){
     let idealCategory=this.computeIdealCategory(this.userDetails.yearOfBirth);
-    return this.exactWheel.filter(el=> el.category==idealCategory)
+    return array.filter((el: any)=> el.category==idealCategory)
   }
 
 }

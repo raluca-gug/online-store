@@ -1,22 +1,32 @@
 .product-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    background-color: #eceff1;
+  display: flex;
+  flex-wrap: wrap;
+
+  .child {
+    cursor: pointer;
+    margin: 10px;
+  }
 }
+
 .container {
-    margin-top: 0px;
-    margin: 0 auto;
+  padding: 10px 0;
+  width: 89vw;
+  background-color: #eceff1;
 }
+
 h1 {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
+
 h1:before,
 h1:after {
-    content: " ";
-    flex: 1 1;
-    border-bottom: 2px solid #4cb5cf;
-    margin: auto 1rem;
-  }
+  content: " ";
+  flex: 1 1;
+  border-bottom: 2px solid #4cb5cf;
+  margin: auto 1rem;
+}
+
+.no-products {
+  text-align: center;
+}

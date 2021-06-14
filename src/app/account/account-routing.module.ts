@@ -1,3 +1,5 @@
+import { LeaveGuard } from './register/leave.guard';
+import { AuthGuard } from './auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { LayoutComponent } from './layout/layout.component';
@@ -16,13 +18,13 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'new-password', component: NewPasswordComponent },
-      { path: 'register', component: RegisterComponent },
+      { path: 'register', canDeactivate: [LeaveGuard], component: RegisterComponent },
       {
         path: 'userConfirmation',
         component: ConfirmAccountComponent,
         pathMatch: 'prefix',
       },
-      { path: 'details', component: UserDetailsComponent },
+      { path: 'details', canActivate: [AuthGuard], component: UserDetailsComponent },
       { path: 'order/:id', component: OrderItemComponent },
     
     ],
