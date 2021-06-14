@@ -10,6 +10,7 @@ import { CreateUser } from 'src/app/core/models/createUser';
 export class AccountService {
   public userSubject!: BehaviorSubject<any>;
   public user: Observable<any>;
+  public redirectUrl!: string;
 
   constructor(private http: HttpClient) {
     if (localStorage.hasOwnProperty('user'))

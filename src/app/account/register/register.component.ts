@@ -5,7 +5,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
@@ -45,6 +44,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.accountService.createUser(this.user).subscribe(
       () => {
         this.success = 1;
+        this.form.reset();
         this.interval = setInterval(() => {
           this.router.navigate(['/account/login']);
         }, 5000);
@@ -104,6 +104,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       city: ['', Validators.required],
       postalCode: '',
     });
+  }
+
+  isDirty(): boolean{
+    return this.form.dirty;
   }
   ngOnDestroy() {
     if (this.interval) {

@@ -55,6 +55,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   darkTheme!: boolean;
   curentTheme!: boolean;
   DetailsOption=DetailsOption;
+ 
 
   ngOnInit() {
     this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!);
