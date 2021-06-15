@@ -98,22 +98,20 @@
         </h4></a
       >
 
-      <a
+      <a *ngIf="userLogged"
       routerLink="/service/user"
       [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }"
       ><span class="material-icons icons"> build </span>
       <h4>
         Service
-      </h4></a
-    >
-    <a
-      routerLink="/service/admin"
-      [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }"
-      ><span class="material-icons icons"> build </span>
-      <h4>
-        Admin
-      </h4></a
-    >
+      </h4></a>
+      <a *ngIf="isAdmin"
+        routerLink="/service/admin"
+        [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }"
+        ><span class="material-icons icons"> build </span>
+        <h4>
+          Admin
+        </h4></a>
 
     </div>
     <div class="language-selector">

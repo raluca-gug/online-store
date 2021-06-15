@@ -45,18 +45,18 @@ xdescribe('AccountService', () => {
       let user={id: 1, username: 'raluca'}
       localStorage.setItem('user', JSON.stringify(user));
 
-      expect(service.isAuthenticated()).toEqual(true);
+      expect(service.isAuthenticated).toEqual(true);
     })
     it('should return false if no user is logged in', ()=>{
       localStorage.removeItem('user');
 
-      expect(service.isAuthenticated()).toEqual(false);
+      expect(service.isAuthenticated).toEqual(false);
     })
     it('should return false if user object is empty', ()=>{
       let user={}
       localStorage.setItem('user', JSON.stringify(user));
 
-      expect(service.isAuthenticated()).toEqual(false);
+      expect(service.isAuthenticated).toEqual(false);
     })
   })
 

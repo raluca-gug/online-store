@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CreateUser } from 'src/app/core/models/createUser';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -21,9 +20,16 @@ export class AccountService {
     this.user = this.userSubject.asObservable();
   }
 
-  isAuthenticated(){
+  get isAuthenticated() {
     let user=JSON.parse(localStorage.getItem('user')!);
     return user ? (Object.keys(user).length  ?  true : false) : false;
+  }
+
+  get isAdmin() {
+    let user=JSON.parse(localStorage.getItem('user')!);
+    return this.isAuthenticated ?
+      user.id=='60ba21fa76d6230bd7167872' ?  true : false
+      : false ;
   }
 
   public get userValue(): any {

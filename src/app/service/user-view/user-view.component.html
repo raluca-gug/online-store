@@ -9,7 +9,7 @@
     </p-toolbar>
 
     <p-table #dt [value]="requests" [rows]="10" [paginator]="true" [globalFilterFields]="['bikeName','issue','date','status']"
-          [rowHover]="true" dataKey="id" [(selection)]="selectedRequests"   appScrollCatcher
+          [rowHover]="true" dataKey="id" [(selection)]="selectedRequests"   
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
         <ng-template pTemplate="caption">
             <div class="p-d-flex p-ai-center p-jc-between">

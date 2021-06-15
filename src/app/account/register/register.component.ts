@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AccountService } from '../../core/services/account.service';
 import { CreateUser } from '../../core/models/createUser';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -12,8 +12,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     public accountService: AccountService,
     private router: Router,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+  ) {}
   form!: FormGroup;
   message = '';
   hide1 = true;
@@ -26,6 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   emailExists: any;
   usernameExists: any;
   darkTheme!: boolean;
+  dialog!: any;
 
 
   submit() {
@@ -109,6 +111,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isDirty(): boolean{
     return this.form.dirty;
   }
+
+  onLeave(){
+    setTimeout(() => { 
+      this.dialog=this.router.routerState.snapshot.root.data;
+    }, 500);
+  }
+
   ngOnDestroy() {
     if (this.interval) {
       clearInterval(this.interval);

@@ -261,7 +261,9 @@ export class UserViewComponent implements OnInit {
   }
 
   refreshRequests() {
-    let userId=JSON.parse(localStorage.getItem('user')!).id;
+    let userId: string;
+    localStorage.getItem("user") !== null ?
+      userId=JSON.parse(localStorage.getItem('user')!).id : null;
     if (localStorage.getItem('serviceRequests'))
       this.requests = JSON.parse(
         localStorage.getItem('serviceRequests')!
