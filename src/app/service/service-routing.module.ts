@@ -9,8 +9,8 @@ import { UserViewComponent } from './user-view/user-view.component';
 
 const routes: Routes = [
   { path: '', component: ServiceComponent },
-  { path: 'user',  canActivate: [AuthGuard], component: UserViewComponent },
-  { path: 'admin', canActivate: [AdminGuard], component: AdminViewComponent },
+  { path: 'user',  canActivate: [AuthGuard], component: UserViewComponent},
+  { path: 'admin', canActivate: [AdminGuard], component: AdminViewComponent,  data :{ role: "admin"} },
 ];
 
 @NgModule({

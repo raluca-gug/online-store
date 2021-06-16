@@ -9,14 +9,13 @@ import { LeavePageDialogComponent } from './leave-page-dialog/leave-page-dialog.
   providedIn: 'root'
 })
 export class LeaveGuard implements CanDeactivate<RegisterComponent> {
-  constructor(public dialog: MatDialog,){}
+  constructor(public dialog: MatDialog){}
   canDeactivate(
     component: RegisterComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.isDirty()) {
-      currentState.root.data={leave: 'By navigating away from this page you will lose your data. Are you sure?'}
       let dialogRef=this.dialog.open(LeavePageDialogComponent, {
         data:  'By navigating away from this page you will lose your data. Are you sure?'
       })

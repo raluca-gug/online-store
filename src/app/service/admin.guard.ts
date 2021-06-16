@@ -1,7 +1,7 @@
 import { AccountService } from 'src/app/core/services/account.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, GuardsCheckStart, GuardsCheckEnd,} from '@angular/router';
+import { Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,8 @@ export class AdminGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.checkIfAdmin();
+    //return this.checkIfAdmin();
+    return route.data.role=='admin'
   }
   
   checkIfAdmin() {
