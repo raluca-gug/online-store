@@ -38,80 +38,90 @@
     >{{ "ProductList.Ascending" | translate }}
   </div>
 </div>
-<div class="product-list">
-  <app-recommended></app-recommended>
-</div>
-<div class="product-list">
-  <app-product-item
-    (id)=receiveFromItem($event);
-    class="child"
-    *ngFor="let product of products | filterProduct: searchTerm"
-    [product]="product"
-    [darkTheme]="darkTheme"
-    appBikeDetails="product"
-  ></app-product-item>
-  <i aria-hidden="true"></i>
-  <i aria-hidden="true"></i>
-  <i aria-hidden="true"></i>
-  <i aria-hidden="true"></i>
-</div>
-<div class="page-controls">
-  <label for="pageSize">{{ "ProductList.Products" | translate }}</label>
-  <select
-    name="pageSize"
-    id="pageSize"
-    class="pageSize"
-    title="The number of products per page"
-    (change)="selectPageSizeHandler($event)"
-  >
-    <option
-      *ngFor="let pageSizeItem of pageSizeSelector"
-      value="{{ pageSizeItem }}"
-      [selected]="pageSizeItem === pageSize ? 'isSelected' : ''"
-    >
-      {{ pageSizeItem }}
-    </option>
-  </select>
-  <button
-    (click)="showFirstPage()"
-    *ngIf="pageNumber > 0"
-    title="Go to first page"
-  >
-    <<
-  </button>
-  <button
-    (click)="decreasePageNo()"
-    *ngIf="pageNumber > 0"
-    title="Go to previous page"
-  >
-    < {{ "ProductList.Previous" | translate }}
-  </button>
-  {{ "ProductList.Page" | translate }}
-  <button
-    *ngFor="let pageNo of multiplePages"
-    [style.color]="pageNumber === pageNo - 1 ? 'black' : null"
-    [style.text-decoration]="pageNumber === pageNo - 1 ? 'underline' : null"
-    (click)="showPageNo(pageNo - 1)"
-    title="Go to page"
-  >
-    {{ pageNo }}
-  </button>
-  <span *ngIf="pageNumber + numberOfMultiplePages <= totalPages">...</span>
-  {{ "ProductList.of" | translate }}
-  {{ totalPages }}
-  <button
-    (click)="increasePageNo()"
-    *ngIf="pageNumber + 1 < totalPages"
-    title="Go to next page"
-  >
-    {{ "ProductList.Next" | translate }} >
-  </button>
-  <button
-    (click)="showLastPage()"
-    *ngIf="pageNumber + 1 < totalPages"
-    title="Go to last page"
-  >
-    >>
-  </button>
+<div class="container">
+  <div class="sidebar" *ngIf='sidebarOpen'>
+    <app-sidebar (priceRange)='receivePriceRange($event)' (clearFilter)='clearFilter($event)' (wheelDiameter)='receiveWheelDiameter($event)'></app-sidebar>
+  </div>
+  <div class="sidebar">
+    <mat-icon (click)="sidebarOpen=!sidebarOpen">filter_list</mat-icon>
+  </div>
+  <div class="content">
+    <div class="product-list">
+      <app-product-item
+        (id)=receiveFromItem($event);
+        class="child"
+        *ngFor="let product of products | filterProduct: searchTerm"
+        [product]="product"
+        [darkTheme]="darkTheme"
+        appBikeDetails="product"
+      ></app-product-item>
+      <i aria-hidden="true"></i>
+      <i aria-hidden="true"></i>
+      <i aria-hidden="true"></i>
+      <i aria-hidden="true"></i>
+    </div>
+    <div class='recommended'>
+      <app-recommended></app-recommended>
+    </div>
+    <div class="page-controls">
+      <label for="pageSize">{{ "ProductList.Products" | translate }}</label>
+      <select
+        name="pageSize"
+        id="pageSize"
+        class="pageSize"
+        title="The number of products per page"
+        (change)="selectPageSizeHandler($event)"
+      >
+        <option
+          *ngFor="let pageSizeItem of pageSizeSelector"
+          value="{{ pageSizeItem }}"
+          [selected]="pageSizeItem === pageSize ? 'isSelected' : ''"
+        >
+          {{ pageSizeItem }}
+        </option>
+      </select>
+      <button
+        (click)="showFirstPage()"
+        *ngIf="pageNumber > 0"
+        title="Go to first page"
+      >
+        <<
+      </button>
+      <button
+        (click)="decreasePageNo()"
+        *ngIf="pageNumber > 0"
+        title="Go to previous page"
+      >
+        < {{ "ProductList.Previous" | translate }}
+      </button>
+      {{ "ProductList.Page" | translate }}
+      <button
+        *ngFor="let pageNo of multiplePages"
+        [style.color]="pageNumber === pageNo - 1 ? 'black' : null"
+        [style.text-decoration]="pageNumber === pageNo - 1 ? 'underline' : null"
+        (click)="showPageNo(pageNo - 1)"
+        title="Go to page"
+      >
+        {{ pageNo }}
+      </button>
+      <span *ngIf="pageNumber + numberOfMultiplePages <= totalPages">...</span>
+      {{ "ProductList.of" | translate }}
+      {{ totalPages }}
+      <button
+        (click)="increasePageNo()"
+        *ngIf="pageNumber + 1 < totalPages"
+        title="Go to next page"
+      >
+        {{ "ProductList.Next" | translate }} >
+      </button>
+      <button
+        (click)="showLastPage()"
+        *ngIf="pageNumber + 1 < totalPages"
+        title="Go to last page"
+      >
+        >>
+      </button>
+    </div>
+  </div>
 </div>
 <div class="footer"></div>

@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Recommended for you</h1>
+  <div>  <h1>Recommended for you</h1>  </div>
   <div class="product-list" *ngIf='userDetails?.id'>
       <app-product-item
         *ngFor="let product of finalProducts"
@@ -7,10 +7,6 @@
         [ngStyle]="{ margin: '15px' }"
         [darkTheme]="false"
       ></app-product-item>
-      <i aria-hidden="true"></i>
-      <i aria-hidden="true"></i>
-      <i aria-hidden="true"></i>
-      <i aria-hidden="true"></i>
     </div>
   <div *ngIf="!userDetails" class="no-products">
     Fill in your additional details to get personalized recommendations

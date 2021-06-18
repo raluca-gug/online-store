@@ -13,17 +13,26 @@
   font-size: 1.1 em;
   justify-content: space-between;
   align-items: stretch;
-  margin: auto;
-  width: 90%;
+  margin: 0 20px;
+
   .child {
     cursor: pointer;
     margin: 10px;
   }
 }
 
-.recommended {
-  margin: auto;
+.container {
+  display: flex;
 }
+
+.recommended {
+  margin: 20px;
+}
+
+.sidebar {
+  margin-top: 10px;
+}
+
 .product-light {
   background-color: white;
   color: #000;
