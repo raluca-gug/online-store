@@ -26,32 +26,34 @@ export class RecommendedComponent implements OnInit {
     private additionalDetailsService: AdditionalDetailsServiceService) { }
 
   ngOnInit(): void {
-    this.userDetails=this.additionalDetailsService.get(this.user.id);
-    // if (localStorage.getItem('productsDetails') === null)      
-    //   getProductDetailsArray.getProductDetail(this.productService);
-    this.productsDetails=JSON.parse(localStorage.getItem('productsDetails')!);
-    this.idealWheel=this.computeIdealWheel(this.userDetails.height)
-    if(this.userDetails.id){
-      this.productsDetails=this.filterByWeight();
-      if(this.productsDetails.length>3){
-        this.aproximateWheel= this.filterByWheelRange(this.productsDetails);
-        if(this.aproximateWheel.length<3){
-          this.fill(this.aproximateWheel, this.productsDetails)
-        }
-        else {
-          this.exactWheel=this.filterByWheelDiameter(this.aproximateWheel);
-          if(this.exactWheel.length<3){
-            this.fill(this.exactWheel, this.aproximateWheel);
+    if (this.user) {
+      this.userDetails=this.additionalDetailsService.get(this.user.id);
+      // if (localStorage.getItem('productsDetails') === null)      
+      //   getProductDetailsArray.getProductDetail(this.productService);
+      this.productsDetails=JSON.parse(localStorage.getItem('productsDetails')!);
+      this.idealWheel=this.computeIdealWheel(this.userDetails.height)
+      if(this.userDetails.id){
+        this.productsDetails=this.filterByWeight();
+        if(this.productsDetails.length>3){
+          this.aproximateWheel= this.filterByWheelRange(this.productsDetails);
+          if(this.aproximateWheel.length<3){
+            this.fill(this.aproximateWheel, this.productsDetails)
           }
           else {
-            this.ageAppropriate=this.filterByAge(this.exactWheel)
-            if(this.ageAppropriate.length<3 ) this.fill(this.ageAppropriate, this.exactWheel);
-            this.productsDetails=this.ageAppropriate;
+            this.exactWheel=this.filterByWheelDiameter(this.aproximateWheel);
+            if(this.exactWheel.length<3){
+              this.fill(this.exactWheel, this.aproximateWheel);
+            }
+            else {
+              this.ageAppropriate=this.filterByAge(this.exactWheel)
+              if(this.ageAppropriate.length<3 ) this.fill(this.ageAppropriate, this.exactWheel);
+              this.productsDetails=this.ageAppropriate;
+            }
           }
         }
+        this.productsDetails=this.productsDetails.slice(0,3);
+        this.productsDetails.forEach((el: any, i: number)=> this.productService.getProduct(el.id).subscribe(res=> this.finalProducts[i]=res))
       }
-      this.productsDetails=this.productsDetails.slice(0,3);
-      this.productsDetails.forEach((el: any, i: number)=> this.productService.getProduct(el.id).subscribe(res=> this.finalProducts[i]=res))
     }
   }
 

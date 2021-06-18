@@ -38,14 +38,15 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     //autoWatch: true,
-    browsers: ['HeadlessChrome'],
+    watch: true,
+    //browsers: ['HeadlessChrome'],
     singleRun: true,
     restartOnFileChange: true,
-    customLaunchers: {
-      HeadlessChrome: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
-      }
-    }
+    // customLaunchers: {
+    //   HeadlessChrome: {
+    //     base: 'ChromeHeadless',
+    //     flags: ['--no-sandbox']
+    //   }
+    // }
   });
 };

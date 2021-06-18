@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, RouterEvent, GuardsCheckEnd, GuardsCheckStart, NavigationEnd } from '@angular/router';
 import { AccountService } from '../../core/services/account.service';
 import { CreateUser } from '../../core/models/createUser';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { filter, first, map } from 'rxjs/operators';
 
 @Component({
   templateUrl: './register.component.html',
@@ -12,8 +13,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     public accountService: AccountService,
     private router: Router,
-    private formBuilder: FormBuilder
-  ) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
+  ) {}
   form!: FormGroup;
   message = '';
   hide1 = true;
@@ -26,6 +28,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   emailExists: any;
   usernameExists: any;
   darkTheme!: boolean;
+  dataFromRoute!: any;
 
 
   submit() {
@@ -109,6 +112,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isDirty(): boolean{
     return this.form.dirty;
   }
+
+  onLeave(){
+    this.router.events.pipe(
+      filter( event =>event instanceof GuardsCheckStart))
+    .subscribe((event: any) => 
+        this.dataFromRoute=this.route.snapshot.data.leave
+      );
+    this.router.events.pipe(
+      filter(event => event instanceof GuardsCheckEnd))
+      .subscribe( (event: any)=> 
+        this.dataFromRoute=''
+      );
+  }
+
   ngOnDestroy() {
     if (this.interval) {
       clearInterval(this.interval);

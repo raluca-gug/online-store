@@ -1,3 +1,4 @@
+import { AccountService } from 'src/app/core/services/account.service';
 import { User } from 'src/app/core/models/user';
 import { Router } from '@angular/router';
 import { SearchService } from '../../core/services/search.service';
@@ -17,6 +18,7 @@ export class NavbarComponent implements OnInit {
   qty = 0;
   qtyEmitter$ = new BehaviorSubject<number>(this.qty);
   userLogged!: boolean;
+  isAdmin!: boolean;
   user!: User;
   userLanguage = '';
   userOptions = false;
@@ -26,7 +28,8 @@ export class NavbarComponent implements OnInit {
     private searchService: SearchService,
     private router: Router,
     private authService: SocialAuthService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private accountService: AccountService
   ) {
     translate.addLangs(['ro', 'en', 'de']);
     if (!localStorage.hasOwnProperty('lang'))
@@ -67,6 +70,7 @@ export class NavbarComponent implements OnInit {
     localStorage.hasOwnProperty('user')
       ? (this.userLogged = true)
       : (this.userLogged = false);
+    this.isAdmin=this.accountService.isAdmin;
     this.user = JSON.parse(localStorage.getItem('user') || '[]');
     this.cartService.currentCart.subscribe((cart) => {
       this.cart = cart;

@@ -18,7 +18,7 @@ const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'new-password', component: NewPasswordComponent },
-      { path: 'register', canDeactivate: [LeaveGuard], component: RegisterComponent },
+      { path: 'register', canDeactivate: [LeaveGuard], component: RegisterComponent, data: {leave: 'By leaving this page you will lose data. Are you sure?'} },
       {
         path: 'userConfirmation',
         component: ConfirmAccountComponent,

@@ -84,13 +84,7 @@ export class CartComponent implements OnInit, AfterViewInit {
     });
     this.total = parseFloat(this.total.toFixed(2));
   }
-  // changeRoute() {
-  //   if (!this.user)
-  //     this.router.navigate(['/account/login'], {
-  //       state: { redirect: this.router.url },
-  //     });
-  //   else this.router.navigate(['order']);
-  // }
+  
   receive(event: any) {
     this.curentTheme = event
     this.elementRef.nativeElement.ownerDocument.body.style.backgroundColor = this.curentTheme

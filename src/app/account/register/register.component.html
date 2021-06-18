@@ -4,7 +4,8 @@
     'elevated-dark': darkTheme
   }"
 >
-  <img src="../../../assets/eStore.png" alt="" routerLink="/" />
+  <img src="../../../assets/eStore.png" alt="" routerLink="/" (click)="onLeave()"/>
+  <div>{{dataFromRoute }}</div>
   <form [formGroup]="form" (ngSubmit)="submit()">
     <h1>{{ "Register.Register" | translate }}</h1>
     <hr />

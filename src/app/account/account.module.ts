@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
+import { LeavePageDialogComponent } from './register/leave-page-dialog/leave-page-dialog.component';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -45,7 +46,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UserDetailsComponent,
     MyOrdersComponent,
     OrderItemComponent,
+    LeavePageDialogComponent,
   ],
   exports: [TranslateModule],
+  entryComponents: [LeavePageDialogComponent]
 })
 export class AccountModule {}

@@ -4,7 +4,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 
 import { RecommendedComponent } from './recommended.component';
 
-fdescribe('RecommendedComponent', () => {
+describe('RecommendedComponent', () => {
   let component: RecommendedComponent;
   let fixture: ComponentFixture<RecommendedComponent>;
   let spy: any;

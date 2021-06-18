@@ -88,32 +88,26 @@
 
       <a
         routerLink="/cart"
-        [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }"
-        ><span class="material-icons icons"> shopping_cart </span>
-        <h4>
-          {{ "Navbar.Cart" | translate }}
-          <span *ngIf="this.qty !== 0"
-            ><span class="qty">( {{ qtyEmitter$ | async }} )</span></span
-          >
-        </h4></a
-      >
+        [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }">
+        <span class="material-icons icons"> shopping_cart </span>
+          <h4>
+            {{ "Navbar.Cart" | translate }}
+            <span *ngIf="this.qty !== 0"><span class="qty">( {{ qtyEmitter$ | async }} )</span></span>
+          </h4>
+        </a>
 
-      <a
+      <a *ngIf="userLogged"
       routerLink="/service/user"
-      [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }"
-      ><span class="material-icons icons"> build </span>
-      <h4>
-        Service
-      </h4></a
-    >
-    <a
-      routerLink="/service/admin"
-      [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }"
-      ><span class="material-icons icons"> build </span>
-      <h4>
-        Admin
-      </h4></a
-    >
+      [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }">
+        <span class="material-icons icons"> build </span>
+        <h4>Service</h4>
+      </a>
+      <a *ngIf="isAdmin"
+        routerLink="/service/admin"
+        [ngClass]="{ colorForDark: darkTheme, aColor: !darkTheme }">
+        <span class="material-icons icons"> build </span>
+        <h4>Admin</h4>
+      </a>
 
     </div>
     <div class="language-selector">
@@ -122,15 +116,11 @@
         <select
           [ngClass]="{ 'elevated-dark': darkTheme }"
           #langSelect
-          (change)="
-            translate.use(langSelect.value); setLanguage(langSelect.value)
-          "
-        >
+          (change)="translate.use(langSelect.value); setLanguage(langSelect.value)">
           <option
             *ngFor="let lang of translate.getLangs()"
             [value]="lang"
-            [selected]="lang === translate.currentLang"
-          >
+            [selected]="lang === translate.currentLang">
             {{ lang }}
           </option>
         </select>
@@ -138,20 +128,17 @@
           *ngIf="translate.currentLang == 'ro'"
           src="../../assets/flags/RO.png"
           id="flag"
-          alt="flag"
-        />
+          alt="flag"/>
         <img
           *ngIf="translate.currentLang == 'en'"
           src="../../assets/flags/GB.png"
           id="flag"
-          alt="flag"
-        />
+          alt="flag"/>
         <img
           *ngIf="translate.currentLang == 'de'"
           src="../../assets/flags/DE.png"
           id="flag"
-          alt="flag"
-        />
+          alt="flag"/>
       </p>
     </div>
   </nav>
