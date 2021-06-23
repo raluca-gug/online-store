@@ -1,0 +1,37 @@
+<div class="container">
+    <h2> <mat-icon *ngIf='clearAll' (click)="sendClear('all')"> refresh </mat-icon> Filters: </h2>
+    <h3><mat-icon *ngIf='clearPrice' (click)="sendClear('price')"> refresh </mat-icon> Price </h3>
+    <form [formGroup]='priceRangeForm' class="form-price">
+        <div class="inputs">
+            <div class='input-and-label'>
+                <label for="min">Min</label>
+                <input type="number" name='min' formControlName="min"/>
+            </div>
+            <div class='input-and-label'>
+                <label for="max">Max</label>
+                <input type="number" name='max' formControlName="max">
+            </div>
+        </div>
+        <div>
+            <button (click)='sendPriceRange()'>Apply</button> 
+        </div>
+    </form>
+    <h3> <mat-icon *ngIf='clearWheel' (click)="sendClear('wheel')"> refresh </mat-icon> Wheel diameter </h3>
+    <form [formGroup]='wheelDiameterForm' class='form-wheel'>
+        <div>
+            <input type="checkbox" id="24" name="24" formControlName=24>
+            <label for="24">24"</label>
+        </div>
+        <div>
+            <input type="checkbox" id="27" name="27" formControlName=27>
+            <label for="27">27.5"</label>
+        </div>
+        <div>
+            <input type="checkbox" id="29" name="29" formControlName=29>
+            <label for="29">29"</label>
+        </div>
+        <div class="button-wheel">
+            <button (click)='sendWheel()'>Apply</button> 
+        </div>
+    </form>
+</div>

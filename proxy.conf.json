@@ -1,0 +1,8 @@
+{
+  "/": {
+    "target": "http://3.120.32.114:8080",
+    "secure": false,
+    "changeOrigin": "true",
+    "pathRewrite": { "^/": "" }
+  }
+}

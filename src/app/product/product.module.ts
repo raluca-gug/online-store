@@ -1,6 +1,6 @@
 import { RecommendedModule } from './../recommended/recommended.module';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../shared-module/shared-module.module';
 import { MaterialModule } from './../../modules/material/material.module';
 import { RatingModule } from 'ng-starrating';
@@ -14,13 +14,15 @@ import { ProductDetailsDialogComponent } from './product-details-dialog/product-
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
   declarations: [
     ProductDetailsComponent,
     ProductDetailsDialogComponent,
-    ProductListComponent
+    ProductListComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { HttpLoaderFactory } from '../app.module';
     FormsModule,
     RecommendedModule,
     RouterModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
