@@ -1,5 +1,6 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Filters } from 'src/app/core/models/filters';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,38 +10,56 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class SidebarComponent implements OnInit {
   priceRangeForm!: FormGroup;
   wheelDiameterForm!: FormGroup;
+  ratingForm!:FormGroup;
   clearAll=false;
   clearPrice=false;
   clearWheel=false;
-  @Output() priceRange= new EventEmitter<{min: number, max: number}>();
-  @Output() wheelDiameter= new EventEmitter<{24: boolean, 27: boolean, 29:boolean}>();
-  @Output() clearFilter=new EventEmitter<{all: boolean, price: boolean, wheel: boolean}>();
+  clearRating=false;
+  @Output() filterEvent=new EventEmitter<Filters>();
+  filters= new Filters();
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.priceRangeForm=this.fb.group({
-      min: 0,
-      max: 0
-    })
+      min: [0, Validators.required],
+      max: [10000, Validators.required] 
+    });
     this.wheelDiameterForm=this.fb.group({
-      24: false,
-      27: false,
-      29: false
-    })
+      wheel24: false,
+      wheel27: false,
+      wheel29: false
+    }, 
+    {validators: [this.validateOneIsChecked()]});
+    this.ratingForm=this.fb.group({
+      star1: false,
+      star2: false,
+      star3: false,
+      star4: false,
+      star5: false
+    }, 
+    {validators: [this.validateOneIsChecked()]});
   }
 
-  sendPriceRange() {
-    this.priceRange.emit({min: this.priceRangeForm.controls.min.value, max: this.priceRangeForm.controls.max.value})
+  sendPriceRange () {
+    Object.assign(this.filters.priceRange, this.priceRangeForm.value);
+    this.filterEvent.emit(this.filters);
     this.clearAll=true;
     this.clearPrice=true;
   }
 
-  sendWheel() {
-    
-    this.wheelDiameter.emit(this.wheelDiameterForm.value)
+  sendWheel () {
+    Object.assign(this.filters.wheelDiameter, this.wheelDiameterForm.value)
+    this.filterEvent.emit(this.filters);
     this.clearAll=true;
     this.clearWheel=true;
+  }
+
+  sendRating () {
+    Object.assign(this.filters.rating, this.ratingForm.value);
+    this.filterEvent.emit(this.filters);
+    this.clearAll=true;
+    this.clearRating=true;
   }
 
   sendClear(param: string) {
@@ -48,16 +67,46 @@ export class SidebarComponent implements OnInit {
       this.clearAll=false;
       this.clearPrice=false;
       this.clearWheel=false;
-      this.clearFilter.emit({all: true, price: false, wheel: false});
+      this.clearRating=false;
+      this.filters= new Filters();
+      this.filterEvent.emit(this.filters);
+      this.priceRangeForm.reset();
+      this.wheelDiameterForm.reset();
+      this.ratingForm.reset();
     } 
     if (param=='price'){
       this.clearPrice=false;
-      this.clearFilter.emit({all: false, price: true, wheel: false});
+      if(!this.clearWheel && !this.clearRating) this.clearAll=false;
+      this.filters.priceRange={min:0, max: 10000}
+      this.filterEvent.emit(this.filters);
+      this.priceRangeForm.reset();
     } 
     if (param=='wheel') {
       this.clearWheel=false;
-      this.clearFilter.emit({all: false, price: false, wheel: true});
+      if(!this.clearPrice && !this.clearRating) this.clearAll=false;
+      this.filters.wheelDiameter={wheel24: true, wheel27: true, wheel29: true}
+      this.filterEvent.emit(this.filters);
+      this.wheelDiameterForm.reset();
     }
+    if (param=='rating') {
+      this.clearRating=false;
+      if(!this.clearPrice && ! this.clearWheel) this.clearAll=false;
+      this.filters.rating={star1: true, star2: true, star3: true, star4: true, star5: true}
+      this.filterEvent.emit(this.filters);
+      this.ratingForm.reset();
+    }
+  }
+
+  validateOneIsChecked () {
+    return (formGroup: FormGroup): ValidationErrors | null => {
+      let numberOfCheckedBoxes=0;
+      Object.keys(formGroup.controls).forEach(el=> {
+        if(formGroup.controls[el].value) numberOfCheckedBoxes++  });
+      if (numberOfCheckedBoxes < 1) {
+          return { requireCheckboxesToBeChecked: true};
+        }
+      return null;
+    };
   }
 
 }

@@ -1,5 +1,5 @@
 <div class="container">
-    <h2> <mat-icon *ngIf='clearAll' (click)="sendClear('all')"> refresh </mat-icon> Filters: </h2>
+    <h2> <mat-icon *ngIf='clearAll' (click)="sendClear('all')"> refresh </mat-icon> Filters </h2>
     <h3><mat-icon *ngIf='clearPrice' (click)="sendClear('price')"> refresh </mat-icon> Price </h3>
     <form [formGroup]='priceRangeForm' class="form-price">
         <div class="inputs">
@@ -13,25 +13,61 @@
             </div>
         </div>
         <div>
-            <button (click)='sendPriceRange()'>Apply</button> 
+            <button (click)='sendPriceRange()' [disabled]="priceRangeForm.invalid">Apply</button> 
         </div>
     </form>
     <h3> <mat-icon *ngIf='clearWheel' (click)="sendClear('wheel')"> refresh </mat-icon> Wheel diameter </h3>
     <form [formGroup]='wheelDiameterForm' class='form-wheel'>
         <div>
-            <input type="checkbox" id="24" name="24" formControlName=24>
-            <label for="24">24"</label>
+            <input type="checkbox" id="wheel24" name="wheel24" formControlName=wheel24>
+            <label for="wheel24">24"</label>
         </div>
         <div>
-            <input type="checkbox" id="27" name="27" formControlName=27>
-            <label for="27">27.5"</label>
+            <input type="checkbox" id="wheel27" name="wheel27" formControlName=wheel27>
+            <label for="wheel27">27.5"</label>
         </div>
         <div>
-            <input type="checkbox" id="29" name="29" formControlName=29>
-            <label for="29">29"</label>
+            <input type="checkbox" id="wheel29" name="wheel29" formControlName=wheel29>
+            <label for="wheel29">29"</label>
         </div>
         <div class="button-wheel">
-            <button (click)='sendWheel()'>Apply</button> 
+            <button (click)='sendWheel()' [disabled]="wheelDiameterForm.invalid">Apply</button> 
+        </div>
+    </form>
+    <h3> <mat-icon *ngIf='clearRating' (click)="sendClear('rating')"> refresh </mat-icon> Rating </h3>
+    <form [formGroup]='ratingForm' class='form-wheel'>
+        <div class='rating-checkbox'>
+            <input type="checkbox" id="star1" name="star1" formControlName=star1>
+            <label for="star1">
+                <star-rating [value]="1" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+            </label>
+        </div>
+        <div class='rating-checkbox'>
+            <input type="checkbox" id="star2" name="star2" formControlName=star2>
+            <label for="star2">
+                <star-rating [value]="2" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+            </label>
+        </div>
+        <div class='rating-checkbox'>
+            <input type="checkbox" id="star3" name="star3" formControlName=star3>
+            <label for="star3">   
+                <star-rating [value]="3" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+            </label>
+        </div>
+        <div class='rating-checkbox'>
+            <input type="checkbox" id="star4" name="star4" formControlName=star4>
+            <label for="star4">                
+                <star-rating [value]="4" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+            </label>
+        </div>
+        <div class='rating-checkbox'>
+            <input type="checkbox" id="star5" name="star5" formControlName=star5>
+            <label for="star5">                
+                <star-rating [value]="5" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+            </label>
+        </div>
+        <div class="button-wheel">
+            <button (click)='sendRating()' [disabled]="ratingForm.invalid">Apply</button> 
         </div>
     </form>
 </div>

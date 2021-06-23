@@ -12,25 +12,29 @@ describe('RecommendedComponent', () => {
     "id": "6040d6ba1e240556a8b76ec9",
     "category": "Electrica",
     "maxWeight": 200,
-    "wheelDiameter": 27.5
+    "wheelDiameter": 27.5,
+    "price": 100
   },
   {
     "id": "6040d6ba1e240556a8b76ecb",
     "category": "MTB",
     "maxWeight": 160,
-    "wheelDiameter": 26
+    "wheelDiameter": 26,
+    "price": 100
   },
   {
     "id": "6040d6ba1e240556a8b76e9f",
     "category": "All mountain",
     "maxWeight": 80,
-    "wheelDiameter": 29
+    "wheelDiameter": 29,  
+    "price": 100
   },  
   {
     "id": "6040d6ba1e240556a8b76e97",
     "category": "Copii",
     "maxWeight": 40,
-    "wheelDiameter": 24
+    "wheelDiameter": 24,
+    "price": 100
   }]
   let userDetail=JSON.stringify({items:[{
     "id": "60ba21fa76d6230bd7167872",

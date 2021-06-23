@@ -10,6 +10,7 @@ export class getProductDetailsArray{
       products.forEach((element: any, i: number)=> {
         productsDetails[i]=new ProductDetails();
         productsDetails[i].id=element.id;
+        productsDetails[i].price=element.price;
       
         if(element.name.includes('ALL MOUNTAIN')){
             productsDetails[i].category='All mountain';

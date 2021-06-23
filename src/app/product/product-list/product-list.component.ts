@@ -1,3 +1,4 @@
+import { Filters } from 'src/app/core/models/filters';
 import { Product } from '../../core/models/product';
 import { Subscription } from 'rxjs';
 import { SearchService } from '../../core/services/search.service';
@@ -27,6 +28,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   allProducts: Product[]=[];
   productsFilteredByWheel: Product[]=[];
   productsFilteredByPrice: Product[]=[];
+  productsFilteredByRating: Product[]=[];
   multiplePages: number[] = [];
   subscription!: Subscription;
   searchTerm = '';
@@ -40,47 +42,49 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   sortBy = '';
   darkTheme!: boolean;
   curentTheme!: string;
-  priceRange!: {min: number, max: number};
-  wheelDiameter!: {24: boolean, 27: boolean, 29: boolean};
+  filters=new Filters();
   sidebarOpen= false;
 
   receiveFromItem ($event: any) {
     console.log('Am primit de la copil id: ', $event)
   }
 
-  receivePriceRange ($event: any) {
-    this.priceRange=$event;
+  receiveFilters ($event: any) {
+    this.filters=$event;
+    this.productsFilteredByPrice=[];
+    this.productsFilteredByWheel=[];
+    this.productsFilteredByRating=[];
     this.filterByPrice();
+    this.filterByWheel();
+    this.filterByRating();
   }
 
   filterByPrice () {
-    this.productsFilteredByPrice=this.allProducts.filter(el=> el.price>this.priceRange.min && el.price<this.priceRange.max);
-    if(this.productsFilteredByWheel.length>0){
-      this.products=this.productsFilteredByWheel.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
-    } else {
-      this.products=this.productsFilteredByPrice;
-    }
-    console.log('resulted intersection',this.products)
+    this.productsFilteredByPrice=this.allProducts.filter(el=> el.price>=this.filters.priceRange.min && el.price<=this.filters.priceRange.max);
+    if(this.productsFilteredByWheel.length>0) {
+      this.productsFilteredByPrice=this.productsFilteredByWheel.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
+    } 
+    if(this.productsFilteredByRating.length>0) {
+      this.productsFilteredByPrice=this.productsFilteredByRating.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
+    } 
+    this.products=this.productsFilteredByPrice;
   }
 
-  receiveWheelDiameter ($event:any) {
-    this.wheelDiameter=$event;
-    this.filterByWheel();
-  }
 
   filterByWheel () {
     this.productsFilteredByWheel=this.allProducts;
     let partial: Product[]=[] 
-    if (this.wheelDiameter[24]) partial=partial.concat(this.filterByWheelOneDiameter('24')); console.log('partial 24:', partial)
-    if (this.wheelDiameter[27]) partial=partial.concat(this.filterByWheelOneDiameter('27')); console.log('partial 27:', partial)
-    if (this.wheelDiameter[29]) partial=partial.concat(this.filterByWheelOneDiameter('29')); console.log('partial 29:', partial)
+    if (this.filters.wheelDiameter.wheel24) partial=partial.concat(this.filterByWheelOneDiameter('24')); 
+    if (this.filters.wheelDiameter.wheel27) partial=partial.concat(this.filterByWheelOneDiameter('27'));
+    if (this.filters.wheelDiameter.wheel29) partial=partial.concat(this.filterByWheelOneDiameter('29'));
     this.productsFilteredByWheel=partial;
-    if(this.productsFilteredByPrice.length>0){
-      this.products=this.productsFilteredByWheel.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
-    } else {
-      this.products=this.productsFilteredByWheel;
+    if(this.productsFilteredByPrice.length>0) {
+      this.productsFilteredByWheel=this.productsFilteredByWheel.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
+    } 
+    if(this.productsFilteredByRating.length>0) {
+      this.productsFilteredByWheel=this.productsFilteredByWheel.filter(a => this.productsFilteredByRating.some(b => a.id === b.id)); 
     }
-    console.log('resulted intersection',this.products) 
+    this.products=this.productsFilteredByWheel;
   }
 
   filterByWheelOneDiameter (term: string) {
@@ -89,21 +93,28 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
     return partial;
   }
 
-  clearFilter ($event: any) {
-    if($event.all) {
-      this.callForProducts();
-      this.getAllProducts();
-      this.productsFilteredByPrice=[];
-      this.productsFilteredByWheel=[];
-    }
-    if($event.price) {
-      this.productsFilteredByPrice=[];
-      this.filterByWheel();
-    }
-    if($event.wheel) {
-      this.productsFilteredByWheel=[]
-      this.filterByPrice();
-    }
+  filterByRating () {
+    this.productsFilteredByRating=this.allProducts;
+    let partial: Product[]=[];
+    if(this.filters.rating.star1) partial=partial.concat(this.filterByOneRating(1));
+    if(this.filters.rating.star2) partial=partial.concat(this.filterByOneRating(2));
+    if(this.filters.rating.star3) partial=partial.concat(this.filterByOneRating(3));
+    if(this.filters.rating.star4) partial=partial.concat(this.filterByOneRating(4));
+    if(this.filters.rating.star5) partial=partial.concat(this.filterByOneRating(5));
+    this.productsFilteredByRating=partial;
+    if(this.productsFilteredByPrice.length>0){
+      this.productsFilteredByRating=this.productsFilteredByRating.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
+    } 
+    if(this.productsFilteredByWheel.length>0){
+      this.productsFilteredByRating=this.productsFilteredByRating.filter(a => this.productsFilteredByWheel.some(b => a.id === b.id)); 
+    } 
+    this.products=this.productsFilteredByRating;
+  }
+
+  filterByOneRating (stars: number) {
+    let partial: Product[]=[]
+    partial=this.productsFilteredByRating.filter(el=>Math.floor(el.rating)==stars);
+    return partial;
   }
 
   getAllProducts () {

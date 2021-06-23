@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { AdminGuard } from './admin.guard';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 
-fdescribe('AdminGuard', () => {
+describe('AdminGuard', () => {
   let guard: AdminGuard;
   const routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
   let accountSpy={isAuthenticated: true, isAdmin: true};
