@@ -1,73 +1,75 @@
 <div class="container">
     <h2> <mat-icon *ngIf='clearAll' (click)="sendClear('all')"> refresh </mat-icon> Filters </h2>
     <h3><mat-icon *ngIf='clearPrice' (click)="sendClear('price')"> refresh </mat-icon> Price </h3>
-    <form [formGroup]='priceRangeForm' class="form-price">
-        <div class="inputs">
-            <div class='input-and-label'>
-                <label for="min">Min</label>
-                <input type="number" name='min' formControlName="min"/>
+    <form [formGroup]='filtersForm'>
+        <div class="form-price">
+            <div class="inputs">
+                <div class='input-and-label'>
+                    <label for="min">Min</label>
+                    <input type="number" name='min' formControlName="min"/>
+                </div>
+                <div class='input-and-label'>
+                    <label for="max">Max</label>
+                    <input type="number" name='max' formControlName="max">
+                </div>
             </div>
-            <div class='input-and-label'>
-                <label for="max">Max</label>
-                <input type="number" name='max' formControlName="max">
+            <div>
+                
             </div>
         </div>
-        <div>
-            <button (click)='sendPriceRange()' [disabled]="priceRangeForm.invalid">Apply</button> 
+        <h3> <mat-icon *ngIf='clearWheel' (click)="sendClear('wheel')"> refresh </mat-icon> Wheel diameter </h3>
+        <div  class='form-wheel'>
+            <div>
+                <input type="checkbox" id="wheel24" name="wheel24" formControlName=wheel24>
+                <label for="wheel24">24"</label>
+            </div>
+            <div>
+                <input type="checkbox" id="wheel27" name="wheel27" formControlName=wheel27>
+                <label for="wheel27">27.5"</label>
+            </div>
+            <div>
+                <input type="checkbox" id="wheel29" name="wheel29" formControlName=wheel29>
+                <label for="wheel29">29"</label>
+            </div>
+            <div class="button-wheel">
+                
+            </div>
         </div>
-    </form>
-    <h3> <mat-icon *ngIf='clearWheel' (click)="sendClear('wheel')"> refresh </mat-icon> Wheel diameter </h3>
-    <form [formGroup]='wheelDiameterForm' class='form-wheel'>
-        <div>
-            <input type="checkbox" id="wheel24" name="wheel24" formControlName=wheel24>
-            <label for="wheel24">24"</label>
-        </div>
-        <div>
-            <input type="checkbox" id="wheel27" name="wheel27" formControlName=wheel27>
-            <label for="wheel27">27.5"</label>
-        </div>
-        <div>
-            <input type="checkbox" id="wheel29" name="wheel29" formControlName=wheel29>
-            <label for="wheel29">29"</label>
-        </div>
-        <div class="button-wheel">
-            <button (click)='sendWheel()' [disabled]="wheelDiameterForm.invalid">Apply</button> 
-        </div>
-    </form>
-    <h3> <mat-icon *ngIf='clearRating' (click)="sendClear('rating')"> refresh </mat-icon> Rating </h3>
-    <form [formGroup]='ratingForm' class='form-wheel'>
-        <div class='rating-checkbox'>
-            <input type="checkbox" id="star1" name="star1" formControlName=star1>
-            <label for="star1">
-                <star-rating [value]="1" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
-            </label>
-        </div>
-        <div class='rating-checkbox'>
-            <input type="checkbox" id="star2" name="star2" formControlName=star2>
-            <label for="star2">
-                <star-rating [value]="2" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
-            </label>
-        </div>
-        <div class='rating-checkbox'>
-            <input type="checkbox" id="star3" name="star3" formControlName=star3>
-            <label for="star3">   
-                <star-rating [value]="3" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
-            </label>
-        </div>
-        <div class='rating-checkbox'>
-            <input type="checkbox" id="star4" name="star4" formControlName=star4>
-            <label for="star4">                
-                <star-rating [value]="4" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
-            </label>
-        </div>
-        <div class='rating-checkbox'>
-            <input type="checkbox" id="star5" name="star5" formControlName=star5>
-            <label for="star5">                
-                <star-rating [value]="5" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
-            </label>
-        </div>
-        <div class="button-wheel">
-            <button (click)='sendRating()' [disabled]="ratingForm.invalid">Apply</button> 
+        <h3> <mat-icon *ngIf='clearRating' (click)="sendClear('rating')"> refresh </mat-icon> Rating </h3>
+        <div  class='form-wheel'>
+            <div class='rating-checkbox'>
+                <input type="radio" id="star1" name="rating" formControlName=rating value=1>
+                <label for="star1">
+                    <star-rating [value]="1" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+                </label>
+            </div>
+            <div class='rating-checkbox'>
+                <input type="radio" id="star2" name="rating" formControlName=rating value=2>
+                <label for="star2">
+                    <star-rating [value]="2" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+                </label>
+            </div>
+            <div class='rating-checkbox'>
+                <input type="radio" id="star3" name="rating" formControlName=rating value=3>
+                <label for="star3">   
+                    <star-rating [value]="3" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+                </label>
+            </div>
+            <div class='rating-checkbox'>
+                <input type="radio" id="star4" name="rating" formControlName=rating value=4>
+                <label for="star4">                
+                    <star-rating [value]="4" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+                </label>
+            </div>
+            <div class='rating-checkbox'>
+                <input type="radio" id="star5" name="rating" formControlName=rating value=5>
+                <label for="star5">                
+                    <star-rating [value]="5" [totalstars]="5" [readonly]="true" checkedcolor="#ffd700" uncheckedcolor="#dcdcdc" size="24px"></star-rating>
+                </label>
+            </div>
+            <div class="button-wheel">
+                <button (click)='sendFilters()' [disabled]="!filtersForm.dirty">Apply</button> 
+            </div>
         </div>
     </form>
 </div>

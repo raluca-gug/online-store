@@ -61,7 +61,7 @@
       <i aria-hidden="true"></i>
     </div>
     <div class='recommended'>
-      <app-recommended [priceRange]="filters.priceRange"></app-recommended>
+      <app-recommended [priceRange]="{min: filters.min, max: filters.max}"></app-recommended>
     </div>
     <div class="page-controls">
       <label for="pageSize">{{ "ProductList.Products" | translate }}</label>

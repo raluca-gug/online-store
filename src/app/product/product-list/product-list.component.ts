@@ -60,7 +60,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   filterByPrice () {
-    this.productsFilteredByPrice=this.allProducts.filter(el=> el.price>=this.filters.priceRange.min && el.price<=this.filters.priceRange.max);
+    this.productsFilteredByPrice=this.allProducts.filter(el=> el.price>=this.filters.min && el.price<=this.filters.max);
     if(this.productsFilteredByWheel.length>0) {
       this.productsFilteredByPrice=this.productsFilteredByWheel.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
     } 
@@ -74,9 +74,9 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
   filterByWheel () {
     this.productsFilteredByWheel=this.allProducts;
     let partial: Product[]=[] 
-    if (this.filters.wheelDiameter.wheel24) partial=partial.concat(this.filterByWheelOneDiameter('24')); 
-    if (this.filters.wheelDiameter.wheel27) partial=partial.concat(this.filterByWheelOneDiameter('27'));
-    if (this.filters.wheelDiameter.wheel29) partial=partial.concat(this.filterByWheelOneDiameter('29'));
+    if (this.filters.wheel24) partial=partial.concat(this.filterByWheelOneDiameter('24')); 
+    if (this.filters.wheel27) partial=partial.concat(this.filterByWheelOneDiameter('27'));
+    if (this.filters.wheel29) partial=partial.concat(this.filterByWheelOneDiameter('29'));
     this.productsFilteredByWheel=partial;
     if(this.productsFilteredByPrice.length>0) {
       this.productsFilteredByWheel=this.productsFilteredByWheel.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
@@ -95,13 +95,7 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   filterByRating () {
     this.productsFilteredByRating=this.allProducts;
-    let partial: Product[]=[];
-    if(this.filters.rating.star1) partial=partial.concat(this.filterByOneRating(1));
-    if(this.filters.rating.star2) partial=partial.concat(this.filterByOneRating(2));
-    if(this.filters.rating.star3) partial=partial.concat(this.filterByOneRating(3));
-    if(this.filters.rating.star4) partial=partial.concat(this.filterByOneRating(4));
-    if(this.filters.rating.star5) partial=partial.concat(this.filterByOneRating(5));
-    this.productsFilteredByRating=partial;
+    this.productsFilteredByRating=this.productsFilteredByRating.filter(el => el.rating>=this.filters.rating);
     if(this.productsFilteredByPrice.length>0){
       this.productsFilteredByRating=this.productsFilteredByRating.filter(a => this.productsFilteredByPrice.some(b => a.id === b.id)); 
     } 
@@ -109,12 +103,6 @@ export class ProductListComponent implements OnInit, AfterViewInit, OnDestroy {
       this.productsFilteredByRating=this.productsFilteredByRating.filter(a => this.productsFilteredByWheel.some(b => a.id === b.id)); 
     } 
     this.products=this.productsFilteredByRating;
-  }
-
-  filterByOneRating (stars: number) {
-    let partial: Product[]=[]
-    partial=this.productsFilteredByRating.filter(el=>Math.floor(el.rating)==stars);
-    return partial;
   }
 
   getAllProducts () {
