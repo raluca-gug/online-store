@@ -40,13 +40,13 @@
 </div>
 <div class="container">
   <div class="sidebar" *ngIf='sidebarOpen'>
-    <app-sidebar (priceRange)='receivePriceRange($event)' (clearFilter)='clearFilter($event)' (wheelDiameter)='receiveWheelDiameter($event)'></app-sidebar>
+    <app-sidebar (filterEvent)="receiveFilters($event)"></app-sidebar>
   </div>
   <div class="sidebar">
     <mat-icon (click)="sidebarOpen=!sidebarOpen">filter_list</mat-icon>
   </div>
   <div class="content">
-    <div class="product-list">
+    <div class="product-list" *ngIf="products.length>0">
       <app-product-item
         (id)=receiveFromItem($event);
         class="child"
@@ -61,7 +61,7 @@
       <i aria-hidden="true"></i>
     </div>
     <div class='recommended'>
-      <app-recommended></app-recommended>
+      <app-recommended [priceRange]="{min: filters.min, max: filters.max}"></app-recommended>
     </div>
     <div class="page-controls">
       <label for="pageSize">{{ "ProductList.Products" | translate }}</label>

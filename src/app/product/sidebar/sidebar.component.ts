@@ -1,5 +1,6 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Filters } from 'src/app/core/models/filters';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,40 +8,35 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  priceRangeForm!: FormGroup;
-  wheelDiameterForm!: FormGroup;
+  filtersForm!: FormGroup;
   clearAll=false;
   clearPrice=false;
   clearWheel=false;
-  @Output() priceRange= new EventEmitter<{min: number, max: number}>();
-  @Output() wheelDiameter= new EventEmitter<{24: boolean, 27: boolean, 29:boolean}>();
-  @Output() clearFilter=new EventEmitter<{all: boolean, price: boolean, wheel: boolean}>();
+  clearRating=false;
+  @Output() filterEvent=new EventEmitter<Filters>();
+  filters= new Filters();
 
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.priceRangeForm=this.fb.group({
+    this.filtersForm=this.fb.group({
       min: 0,
-      max: 0
-    })
-    this.wheelDiameterForm=this.fb.group({
-      24: false,
-      27: false,
-      29: false
-    })
+      max: 10000,
+      wheel24: false,
+      wheel27: false,
+      wheel29: false,
+      rating: 0
+    });
   }
 
-  sendPriceRange() {
-    this.priceRange.emit({min: this.priceRangeForm.controls.min.value, max: this.priceRangeForm.controls.max.value})
+  sendFilters () {
+    Object.assign(this.filters, this.filtersForm.value);
+    console.log('filters: ', this.filters)
+    this.filterEvent.emit(this.filters);
     this.clearAll=true;
-    this.clearPrice=true;
-  }
-
-  sendWheel() {
-    
-    this.wheelDiameter.emit(this.wheelDiameterForm.value)
-    this.clearAll=true;
-    this.clearWheel=true;
+    if((this.filters.min !=0 || this.filters.max !=10000) && this.filters.min!=undefined && this.filters.max!=undefined) this.clearPrice=true;
+    if(this.filters.wheel24 || this. filters.wheel27 || this.filters.wheel29) this.clearWheel=true;
+    if(this.filters.rating) this.clearRating=true;
   }
 
   sendClear(param: string) {
@@ -48,16 +44,37 @@ export class SidebarComponent implements OnInit {
       this.clearAll=false;
       this.clearPrice=false;
       this.clearWheel=false;
-      this.clearFilter.emit({all: true, price: false, wheel: false});
+      this.clearRating=false;
+      this.filters= new Filters();
+      this.filterEvent.emit(this.filters);
+      this.filtersForm.reset();
     } 
-    if (param=='price'){
+    if (param=='price') {
       this.clearPrice=false;
-      this.clearFilter.emit({all: false, price: true, wheel: false});
-    } 
+      if(!this.clearWheel && !this.clearRating) this.clearAll=false;
+      this.filters.min=0;
+      this.filters.max=10000;
+      this.filterEvent.emit(this.filters);
+      this.filtersForm.controls.min.reset();
+      this.filtersForm.controls.max.reset();
+    }
     if (param=='wheel') {
       this.clearWheel=false;
-      this.clearFilter.emit({all: false, price: false, wheel: true});
+      if(!this.clearPrice && !this.clearRating) this.clearAll=false;
+      this.filters.wheel24= true;
+      this.filters.wheel27= true;
+      this.filters.wheel29= true;
+      this.filterEvent.emit(this.filters);
+      this.filtersForm.controls.wheel24.reset();
+      this.filtersForm.controls.wheel27.reset();
+      this.filtersForm.controls.wheel29.reset();
+    }
+    if (param=='rating') {
+      this.clearRating=false;
+      if(!this.clearPrice && ! this.clearWheel) this.clearAll=false;
+      this.filters.rating=0;
+      this.filterEvent.emit(this.filters);
+      this.filtersForm.controls.rating.reset();
     }
   }
-
 }

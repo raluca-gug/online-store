@@ -1,7 +1,7 @@
 import { getProductDetailsArray } from './../getProductsDetails';
 import { AdditionalDetailsServiceService } from './../../core/services/additional-details-service.service';
 import { ProductService } from 'src/app/core/services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { ProductDetails } from 'src/app/core/models/productDetails';
 import { AdditionalDetails } from 'src/app/core/models/additionalDetails';
 
@@ -10,8 +10,8 @@ import { AdditionalDetails } from 'src/app/core/models/additionalDetails';
   templateUrl: './recommended.component.html',
   styleUrls: ['./recommended.component.scss']
 })
-export class RecommendedComponent implements OnInit {
-
+export class RecommendedComponent implements OnChanges {
+  @Input() priceRange!: {min: number, max: number};
   products: any =[];
   finalProducts: any=[];
   productsDetails: ProductDetails[]=[];
@@ -25,7 +25,8 @@ export class RecommendedComponent implements OnInit {
   constructor(private productService: ProductService,
     private additionalDetailsService: AdditionalDetailsServiceService) { }
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    console.log('onCHanges', this.priceRange)
     if (this.user) {
       this.userDetails=this.additionalDetailsService.get(this.user.id);
       // if (localStorage.getItem('productsDetails') === null)      
@@ -33,6 +34,7 @@ export class RecommendedComponent implements OnInit {
       this.productsDetails=JSON.parse(localStorage.getItem('productsDetails')!);
       this.idealWheel=this.computeIdealWheel(this.userDetails.height)
       if(this.userDetails.id){
+        this.productsDetails=this.filterByPrice();
         this.productsDetails=this.filterByWeight();
         if(this.productsDetails.length>3){
           this.aproximateWheel= this.filterByWheelRange(this.productsDetails);
@@ -88,6 +90,11 @@ export class RecommendedComponent implements OnInit {
     
     this.productsDetails=receiver;
   }
+
+  filterByPrice () {
+    return this.productsDetails.filter(el=> el.price>= this.priceRange.min && el.price<= this.priceRange.max)
+  }
+
   filterByWeight(){
     return this.productsDetails.filter(el=> el.maxWeight>=this.userDetails.weight);
   }

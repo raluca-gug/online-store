@@ -7,7 +7,7 @@ export interface Product {
   price: number;
   brand: string;
   rating: number;
-  qty: number;
+  qty?: number;
 }
 
 

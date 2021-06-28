@@ -13,7 +13,7 @@
     }
 
     h3{
-        margin: 10px;
+        margin: 15px 15px 20px 15px;
         background-color: #4cb5cf63;
         padding-left: 10px;
     }
@@ -64,8 +64,17 @@ button {
     cursor: pointer;
 }
 
+button:disabled  {
+    background-color: #4cb5cf81;
+}
+
 .button-wheel {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.rating-checkbox {
+    display: flex;
+    flex-direction: row;
 }

@@ -4,5 +4,6 @@ export class ProductDetails {
       public category: string = '',    
       public maxWeight: number = 0,
       public wheelDiameter: number=0,
+      public price: number=0
     ) {}
   }
