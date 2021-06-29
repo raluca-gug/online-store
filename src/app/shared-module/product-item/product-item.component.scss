@@ -55,58 +55,20 @@
     left: 46%;
   }
 }
-.back {
-  // background-color: #ffffff;
-  position: absolute;
-  transform: rotateY(180deg);
-  border: 2px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(
-    to right,
-    #5fd4d2,
-    #e65353,
-    #4cb5cf,
-    #ffc663,
-    #56c465,
-    #634fbd
-  );
-  top: 0;
-  .details {
-    text-align: justify;
-    margin: 0 5%;
-  }
-  .details-header {
-    font-weight: 500;
-    margin: 0 auto;
-  }
-  h2 {
-    margin: 10% 0 0;
-  }
-  h3 {
-    font-weight: 600;
-  }
-  .stockPosition {
-    bottom: 5px;
-    width: 100%;
-    position: absolute;
-    margin: 0;
-  }
 
-  .limitedStock {
-    color: #ff0000;
-  }
-  .someStock {
-    color: #ffa500;
-  }
-  .goodStock {
-    color: #008000;
-  }
-}
-.product:hover {
-  @include mat-elevation(10);
-  transition: 3s 2s;
-  transform: rotateY(180deg);
-}
 .product:focus {
   outline: none;
+}
+
+.mat-icon{
+  font-size: 1.7rem;
+  color: #e3242b;
+  padding: 10px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.container-relative{
+  position: relative;
 }

@@ -20,6 +20,10 @@ import {
   FacebookLoginProvider
 } from 'angularx-social-login';
 import { MatButtonModule } from '@angular/material/button';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { FavoriteModule } from './favorite/favorite.module';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -38,6 +42,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatButtonModule,
     SharedModule,
     CoreModule,
+    FavoriteModule,
     [HttpClientModule],
     OverlayModule,
     TranslateModule.forRoot({
@@ -48,6 +53,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     }),
     AppRoutingModule,
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ 
+      maxAge: 25, 
+      logOnly: environment.production }),
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -71,6 +80,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     }
   ],
   bootstrap: [AppComponent],
-  exports: [TranslateModule, AccountModule, SharedModule],
+  exports: [TranslateModule,  SharedModule],
 })
 export class AppModule { }

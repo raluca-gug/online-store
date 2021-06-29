@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+    <div>  <h1>Your favorite products</h1>  </div>
+    <div class="product-list" *ngIf="products$ | async as favoriteProducts">
+        <app-product-item
+          *ngFor="let product of favoriteProducts"
+          [product]="product"
+          [ngStyle]="{ margin: '15px' }"
+          [darkTheme]="false"
+        ></app-product-item>
+      </div>
+    <!-- <div *ngIf="(products$ | async)?.length==0" class="no-products">
+      Add your favorite products
+    </div> -->
+  </div>
