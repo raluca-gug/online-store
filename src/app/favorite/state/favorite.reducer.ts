@@ -28,7 +28,7 @@ export const favoriteReducer = createReducer(
     on(ProductActions.removeProduct, (state, action): FavoriteState => {
         return {
            ...state,
-           products: [...state.products.filter(el => el.id != action.product.id)],
+           products: [...state.products.filter(el => el.id !== action.product.id)],
         }
     })
 )

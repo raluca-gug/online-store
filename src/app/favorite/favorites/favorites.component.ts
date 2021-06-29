@@ -10,12 +10,7 @@ import { FavoriteState, getProducts } from '../state/favorite.reducer';
   templateUrl: './favorites.component.html',
   styleUrls: ['./favorites.component.scss']
 })
-export class FavoritesComponent implements OnInit {
-  products$!: Observable<Product[]>;
+export class FavoritesComponent {
+  products$: Observable<Product[]>=this.store.select(getProducts);
   constructor(private store: Store <FavoriteState>) { }
-
-  ngOnInit(): void {
-    this.products$=this.store.select(getProducts)
-  }
-
 }
