@@ -3,7 +3,7 @@
 }}</span
 ><span class="inactive">{{ "OrderItem.Order details" | translate }}</span>
 <h1>{{ "OrderItem.Order nb" | translate }} {{ order.id }}</h1>
-
+<ng-container *ngIf="products">
 <div *ngFor="let product of products" class="product line">
   <div><img src="{{ product.image }}" alt="" class="product-image" /></div>
   <div class="product-name">
@@ -30,10 +30,11 @@
       <p>{{ "OrderItem.Price" | translate }}</p>
       <h2>{{ product.price }} lei</h2>
     </div>
-    <div class="product-data">
+    <div class="product-data" *ngIf="product.qty">
       <p>{{ "OrderItem.Value" | translate }}</p>
-      <h2>{{ (product.price * product.qty).toFixed(2) }} lei</h2>
+      <h2>{{ product.price * product.qty }} lei</h2>
     </div>
   </div>
 </div>
 <h2 class="total">{{ "OrderItem.Total" | translate }}{{ order.orderValue }}</h2>
+</ng-container>

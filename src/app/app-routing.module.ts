@@ -1,5 +1,5 @@
 import { AuthGuard } from './account/auth.guard';
-import { NgModule, Component } from '@angular/core';
+import { NgModule,} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const accountModule = () =>
@@ -19,7 +19,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('./order/order.module').then((m) => m.OrderModule),
   },
-  { path: 'cart', loadChildren: cartModule },
+  { path: 'cart', loadChildren: cartModule },  
+  { path: '',
+	  redirectTo: 'favorites', pathMatch: 'full'},
   {
     path: 'service',
     loadChildren: () =>

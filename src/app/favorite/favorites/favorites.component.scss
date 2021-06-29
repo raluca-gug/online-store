@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    width: 90vw;
+    margin: 130px auto;
+    background-color: #eceff1;
+  }
+  
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+  
+    .child {
+      cursor: pointer;
+      margin: 10px;  
+    }
+  }
+  
+  h1 {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  h1:before,
+  h1:after {
+    content: " ";
+    flex: 1 1;
+    border-bottom: 2px solid #4cb5cf;
+    margin: auto 1rem;
+  }
+  
+  .no-products {
+    text-align: center;
+  }
+  

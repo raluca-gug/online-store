@@ -10,6 +10,7 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { OrderItemComponent } from './user-details/order-item/order-item.component';
+import { FavoritesComponent } from '../favorite/favorites/favorites.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
       },
       { path: 'details', canActivate: [AuthGuard], component: UserDetailsComponent },
       { path: 'order/:id', component: OrderItemComponent },
-    
+      { path: 'favorites', component: FavoritesComponent },
     ],
   },
 ];

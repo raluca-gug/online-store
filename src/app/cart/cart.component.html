@@ -43,7 +43,7 @@
             <div class="outOfStock" *ngIf="product.itemsInStock <= 0">
               {{ "Cart.Out of stock" | translate }}
             </div>
-            <div *ngIf="product.itemsInStock > 0">
+            <div *ngIf="product.itemsInStock > 0 && product.qty">
               <button
                 (click)="modifyQuantity(product.id, -1)"
                 class="quantity-buttons"
@@ -71,7 +71,7 @@
               </button>
             </div>
           </div>
-          <div class="product-data">
+          <div class="product-data" *ngIf="product.qty">
             <p>{{ "Cart.Price" | translate }}</p>
             <h2>{{ (product.price * product.qty).toFixed(2) }} lei</h2>
             <span class="pointer" (click)="deleteFromCart(product.id)">
