@@ -60,13 +60,22 @@
   outline: none;
 }
 
-.mat-icon{
+.mat-icon {
   font-size: 1.7rem;
-  color: #e3242b;
   padding: 10px;
   position: absolute;
+}
+
+.favorite {
   left: 0;
   top: 0;
+  color: #e3242b;
+}
+
+.cart {
+  top: 0;
+  left: 35px;
+  color: #8bcf4c;
 }
 
 .container-relative{

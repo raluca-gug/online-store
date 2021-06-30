@@ -38,7 +38,13 @@ export class ProductItemComponent implements OnChanges {
     event.stopPropagation();
     this.isFavorite=!this.isFavorite;
     !this.isFavorite?
-      this.store.dispatch(FavoriteActions.removeProduct({product: this.product}))
-      :this.store.dispatch(FavoriteActions.addProduct({product: this.product}))
+      this.store.dispatch(FavoriteActions.removeFromFavorites({product: this.product}))
+      :this.store.dispatch(FavoriteActions.addToFavorites({product: this.product}))
+  }
+
+  addToCart(event: any) {
+    this.isFavorite=false;
+    event.stopPropagation();
+    this.store.dispatch(FavoriteActions.addToCart({product: this.product}));
   }
 }

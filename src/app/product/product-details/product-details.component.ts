@@ -38,26 +38,7 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   curentTheme!: string;
 
   addToCart() {
-    this.cartService.currentCart.pipe(first()).subscribe((res) => {
-      if (Object.keys(res).length !== 0) this.cart = res;
-      let existInCart = false;
-      for (let key in this.cart.products)
-        if (key === this.product.id) {
-          if (this.cart.products[key] + this.qty <= this.product.itemsInStock) {
-            this.cart.products[key] += this.qty;
-          } else this.cart.products[key] = this.product.itemsInStock;
-          existInCart = true;
-        }
-      if (!existInCart) {
-        this.cart.products[this.product.id] = this.qty;
-        if (localStorage.hasOwnProperty('user'))
-          this.cart.userId = JSON.parse(
-            localStorage.getItem('user') || '{}'
-          ).id;
-      }
-      if (this.cart.products != null) delete this.cart.products[''];
-      this.cartService.update(this.cart);
-    });
+    this.cartService.addToCart(this.product, this.qty);
   }
   openDialog() {
     if (this.darkTheme) {

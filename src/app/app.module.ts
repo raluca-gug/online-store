@@ -24,6 +24,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { FavoriteModule } from './favorite/favorite.module';
+import { EffectsModule } from '@ngrx/effects';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -57,6 +58,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     StoreDevtoolsModule.instrument({ 
       maxAge: 25, 
       logOnly: environment.production }),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
