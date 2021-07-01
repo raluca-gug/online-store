@@ -19,5 +19,17 @@ export class FavoriteEffects {
             )
         )
     })
+
+    // exemplu 
+    // addToCart$= createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(FavoriteActions.addToCart),
+    //         map((action) => {
+    //             localStorage.setItem('ceva', JSON.stringify( action.product));
+    //             return FavoriteActions.removeFromFavorites({product: action.product})
+    //         }
+    //         )
+    //     )
+    // })
     
 }

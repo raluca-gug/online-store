@@ -6,7 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/core/services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { cartBE } from '../../core/models/cartBE';
-import { first, ignoreElements } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { getProducts } from 'src/app/favorite/state/favorite.reducer';
+import * as FavoriteActions from '../../favorite/state/favorite.actions'
 
 @Component({
   selector: 'app-product-details',
@@ -20,7 +22,8 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     private cartService: CartService,
     public dialog: MatDialog,
     private router: Router,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private store: Store
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -36,6 +39,9 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
   outOfStock: boolean = false;
   darkTheme!: boolean;
   curentTheme!: string;
+  isFavorite=false;
+  uncheckedColor='#dcdcdc'
+  checkedColor='#ffd700'
 
   addToCart() {
     this.cartService.addToCart(this.product, this.qty);
@@ -83,12 +89,24 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit {
     localStorage.setItem('history', JSON.stringify(this.history));
   }
 
+  toggleFavorite(event: any) {
+    event.stopPropagation();
+    this.isFavorite=!this.isFavorite;
+    !this.isFavorite?
+      this.store.dispatch(FavoriteActions.removeFromFavorites({product: this.product}))
+      :this.store.dispatch(FavoriteActions.addToFavorites({product: this.product}))
+  }
+
   ngOnInit() {
     this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!)
     this.productServ.getProduct(this.id).subscribe((product) => {
       this.product = product;
       (this.product.itemsInStock <= 0) ? this.outOfStock = true : null;
       this.handleHistory(product);
+      this.store.select(getProducts).subscribe(res => res.forEach(el => {
+        if(el.id==this.product.id) this.isFavorite=true;
+        console.log('is fave: ', this.isFavorite)
+      }))
     });
   }
   ngAfterViewInit() {

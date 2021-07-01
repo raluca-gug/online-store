@@ -1,8 +1,10 @@
 <div class="details" *ngIf="product" [ngClass]="{ dark: darkTheme }">
   <app-navbar (curentTheme)="receive($event)"></app-navbar>
   <h1>{{ product.name | titlecase }}</h1>
-  <div class="product-information">
+  <div class="product-information container-relative">
     <img [src]="product.image" alt="" />
+    <mat-icon *ngIf='!isFavorite' (click)="toggleFavorite($event)" class='favorite'>favorite_border</mat-icon>
+    <mat-icon *ngIf='isFavorite' (click)="toggleFavorite($event)" class='favorite'>favorite</mat-icon>
     <div class="product-details">
       <div class="rating-description">
         <p>
@@ -70,3 +72,4 @@
   <i aria-hidden="true"></i>
   <i aria-hidden="true"></i>
 </div>
+<app-product-comments></app-product-comments>

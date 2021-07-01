@@ -100,6 +100,7 @@ export class CartService {
   }
 
   addToCart(product: Product, qty: number) {
+    if (qty===0) return of (product);
     let cart= new cartBE();
 
     this.currentCart.pipe(first()).subscribe((res) => {

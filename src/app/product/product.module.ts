@@ -1,3 +1,4 @@
+import { StoreModule } from '@ngrx/store';
 import { RecommendedModule } from './../recommended/recommended.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +16,8 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ProductCommentsComponent } from './product-comments/product-comments.component';
+import { productCommentsReducer } from './product-comments/state/product-comments.reducer';
 
 
 @NgModule({
@@ -22,7 +25,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ProductDetailsComponent,
     ProductDetailsDialogComponent,
     ProductListComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProductCommentsComponent
   ],
   imports: [
     CommonModule,
@@ -41,6 +45,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
         deps: [HttpClient]
       }
     }),
+    StoreModule.forFeature('product-comments', productCommentsReducer)
   ],
   
   entryComponents: [ProductDetailsDialogComponent],

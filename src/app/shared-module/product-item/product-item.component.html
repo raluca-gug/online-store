@@ -24,7 +24,7 @@
     </div>
       <img src="{{ product.image }}" alt="" id='img' />
       <mat-icon *ngIf='!isFavorite' (click)="toggleFavorite($event)" class='favorite'>favorite_border</mat-icon>
-      <mat-icon *ngIf='isFavorite' (click)="toggleFavorite($event)" class='favorite'>favorite</mat-icon>>
+      <mat-icon *ngIf='isFavorite' (click)="toggleFavorite($event)" class='favorite'>favorite</mat-icon>
       <mat-icon *ngIf="product.itemsInStock>0" class='cart' (click)="addToCart($event)">shopping_cart</mat-icon>
     <h2 *ngIf="product.name" (click)="transmit()" id='clickable'>{{ product.name.substring(0, 30) | titlecase }}</h2>
     <star-rating

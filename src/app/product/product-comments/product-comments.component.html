@@ -1,0 +1,34 @@
+
+<div class="border"></div> 
+<div class="container">
+    <div class="container-comms"> 
+        <h2>Comments</h2>
+        <div *ngFor="let com of comments; index as i;" class="comment">
+            <div class="user">
+                {{usernames[i]}}
+            </div>
+            <div class="body">
+                {{com.comment}}
+            </div>
+            <span>{{com.likesUsers.length}}</span>
+            <mat-icon [ngClass]="com.likesUsers.includes(this.userId)? 'colored' : 'grayed'" (click)="like(com)" class='thumb'>thumb_up</mat-icon>
+            <span>{{com.dislikesUsers.length}}</span>
+            <mat-icon [ngClass]="com.dislikesUsers.includes(this.userId)? 'colored' : 'grayed'" (click)="dislike(com)" class='thumb'>thumb_down</mat-icon>
+        </div>
+        <div class="message" *ngIf="showMessage">
+            <mat-icon (click)="showMessage=false">close</mat-icon>
+            You cannot upvote or downvote your own comments
+        </div>
+        <form [formGroup]="commentsForm" class="comment-form">
+            <label for="comm"> Write you comment: </label>
+            <br/>
+            <textarea formControlName="comment" name="comm" id="" cols="50" rows="5"></textarea>
+            <br/>
+            <button (click)="submit()" [disabled]="commentsForm.invalid">Submit</button>
+        </form>
+    
+    </div>
+<div class="container-qanda">
+    <h2> Q and A </h2>
+</div>
+</div>
