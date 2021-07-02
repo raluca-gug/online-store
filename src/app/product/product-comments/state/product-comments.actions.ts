@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ProductComment } from './product-comments.reducer';
+import { ProductComment, Questions, Reply } from './product-comments.reducer';
 
 export const addComment = createAction(
     'product-comments/add new comment',
@@ -29,4 +29,14 @@ export const dislikeComment = createAction(
 export const removeDislikeComment = createAction(
     'product-comments/remove dislike',
     props<{id: string, userId: string}>()
+)
+
+export const addQuestion = createAction(
+    'product-commnets/ add question',
+    props<{question: Questions}>()
+)
+
+export const addReply = createAction (
+    'product-comments/ add reply',
+    props<{reply: Reply, questionId: string}>()
 )

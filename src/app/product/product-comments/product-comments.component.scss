@@ -1,96 +1,134 @@
 @import "~@angular/material/theming";
 
 .border {
-    border-top: 3px solid #4cb5cf;
+  border-top: 3px solid #4cb5cf;
 }
 
-.container{
-    display: flex;
+.container {
+  display: flex;
 }
 
 .container-comms {
-    flex: 50%;
-    position: relative;
-    // width: 80%;
-    margin: 40px 3%;
+  flex: 50%;
+  position: relative;
+  // width: 80%;
+  margin: 40px 3%;
 
-    h2 {
-        align-items: flex-start;
+  h2 {
+    align-items: flex-start;
+  }
+
+  .comment {
+    @include mat-elevation(6);
+    display: flex;
+    flex-direction: row;
+    margin: 30px;
+    padding: 10px;
+
+    .user {
+      width: calc(100% / 5 * 1);
+      text-align: center;
     }
 
-    .comment {
-        @include mat-elevation(6);
-        display: flex;
-        flex-direction: row;
-        margin:30px;
-        padding: 10px;
-
-        .user {
-            width: calc(100% / 5 * 1);
-            text-align: center;
-        }
-
-        .body {
-            width: calc(100% / 5 * 4);
-            border-left: 1px solid lightgray;
-            padding-left: 10px;
-        }
-        
-        .colored {
-            color: #4cb5cf
-        }
-
-        .grayed {
-            color: lightgray;
-        }
+    .body {
+      width: calc(100% / 5 * 4);
+      border-left: 1px solid lightgray;
+      padding-left: 10px;
     }
 
-    .thumb{
-        margin: 0 10px;
+    .colored {
+      color: #4cb5cf;
     }
 
-    .message {
-        position: sticky;
-        bottom: 50px;
-        left: 10px;
-        background-color: #03c04cbd;
-        font-size: 20px;
-        padding: 30px 20px;
-        border-radius: 3%;
-
-        .mat-icon {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-        }
+    .grayed {
+      color: lightgray;
     }
-    .comment-form{
-        margin: 30px; 
+  }
 
-        textarea{
-            border: none;
-            @include mat-elevation(6);
-        }
+  .thumb {
+    margin: 0 10px;
+  }
 
-        button{
-            // background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
-            margin-top: 10px;
-            background-color:#634fbd;
-            padding: 10px;
-            border: none;
-            color: white;
-            font-size: 18x; 
-            border-radius: 5px;
-        }
-        button:disabled{
-            background-color: #634fbd6e;
-        }
+  .message {
+    position: sticky;
+    bottom: 50px;
+    left: 10px;
+    background-color: #03c04cbd;
+    font-size: 20px;
+    padding: 30px 20px;
+    border-radius: 3%;
+
+    .mat-icon {
+      position: absolute;
+      top: 0px;
+      right: 0px;
     }
+  }
+  .comment-form {
+    margin: 30px;
+  }
 }
 
-.container-qanda{
-    flex: 50%;
-    border-left: 3px solid #4cb5cf; 
-    padding: 20px 40px;
-    margin-top: 20px;
+.container-qanda {
+  flex: 50%;
+  border-left: 3px solid #4cb5cf;
+  padding: 20px 40px;
+  margin: 20px 0;
+}
+
+textarea {
+  border: none;
+  @include mat-elevation(6);
+}
+
+button {
+  // background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
+  margin-top: 10px;
+  background-color: #634fbd;
+  padding: 10px;
+  border: none;
+  color: white;
+  font-size: 18x;
+  border-radius: 5px;
+}
+
+button:disabled {
+  background-color: #634fbd6e;
+}
+
+.mat-expansion-panel-header {
+  padding: 20px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-size: 12px;
+}
+
+.reply {
+  background-color: #4cb5cf23;
+  margin: 0px 0px 10px 20%;
+  display: flex;
+  padding: 10px 20px 0px;
+  border-radius: 5px;
+
+  p {
+    margin-bottom: 2px;
+  }
+
+  .reply-text {
+    margin-left: 20px;
+  }
+}
+
+.spacer {
+  margin-bottom: 30px;
+}
+
+.mat-panel-description {
+    align-content: flex-start;
 }

@@ -54,7 +54,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       }
     }),
     AppRoutingModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({}, {
+      runtimeChecks: {
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+      },
+    }),
     StoreDevtoolsModule.instrument({ 
       maxAge: 25, 
       logOnly: environment.production }),

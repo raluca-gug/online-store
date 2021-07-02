@@ -11,9 +11,9 @@
                 {{com.comment}}
             </div>
             <span>{{com.likesUsers.length}}</span>
-            <mat-icon [ngClass]="com.likesUsers.includes(this.userId)? 'colored' : 'grayed'" (click)="like(com)" class='thumb'>thumb_up</mat-icon>
+            <mat-icon [ngClass]="com.likesUsers.includes(this.user.id)? 'colored' : 'grayed'" (click)="like(com)" class='thumb'>thumb_up</mat-icon>
             <span>{{com.dislikesUsers.length}}</span>
-            <mat-icon [ngClass]="com.dislikesUsers.includes(this.userId)? 'colored' : 'grayed'" (click)="dislike(com)" class='thumb'>thumb_down</mat-icon>
+            <mat-icon [ngClass]="com.dislikesUsers.includes(this.user.id)? 'colored' : 'grayed'" (click)="dislike(com)" class='thumb'>thumb_down</mat-icon>
         </div>
         <div class="message" *ngIf="showMessage">
             <mat-icon (click)="showMessage=false">close</mat-icon>
@@ -24,11 +24,56 @@
             <br/>
             <textarea formControlName="comment" name="comm" id="" cols="50" rows="5"></textarea>
             <br/>
-            <button (click)="submit()" [disabled]="commentsForm.invalid">Submit</button>
+            <button (click)="submitComment()" [disabled]="commentsForm.invalid">Submit</button>
         </form>
     
     </div>
 <div class="container-qanda">
     <h2> Q and A </h2>
+    <mat-accordion multi='false'>
+        <mat-expansion-panel *ngFor="let question of questions, index as i" (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i] = false"  [(expanded)]="panelOpenState[i]">
+          <mat-expansion-panel-header [collapsedHeight]="'fit-content'" [expandedHeight]="'fit-content'">
+            <mat-panel-title>
+                <div class="title">
+                    <div>{{question.userId}}</div>
+                    <div class='date'>{{question.date |date: 'MMM d, y'}}</div>
+                </div>
+            </mat-panel-title>
+            <mat-panel-description *ngIf="panelOpenState[i]">
+              {{question.text}}
+            </mat-panel-description>
+            <mat-panel-description *ngIf="!panelOpenState[i]">
+                {{question.text.slice(0, 30)}}...
+              </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="accordion-content">
+            <div class="reply" *ngFor="let reply of question.reply">
+               <div>
+                    <p> {{reply.userId}}: </p> 
+                    <p class='date'> {{reply.date |date: 'MMM d, y'}} </p> 
+               </div> 
+               <div class="reply-text">
+                    {{reply.text}}
+               </div>
+            </div>
+            <button (click)="showReplyForm=true" *ngIf="!showReplyForm" style="float: right;">Reply</button>
+            <form [formGroup]="replyForm" class="comment-form"  *ngIf="showReplyForm" >
+                <label for="reply"> Write your reply: </label>
+                <br/>
+                <textarea formControlName="text" name="reply" cols="50" rows="5"></textarea>
+                <br/>
+                <button (click)="submitReply(question.id); panelOpenState[i] = true" [disabled]="replyForm.invalid">Submit</button>
+            </form>
+          </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="spacer"></div>
+    <form [formGroup]="questionsForm" class="comment-form">
+        <label for="quest"> Write your question: </label>
+        <br/>
+        <textarea formControlName="text" name="quest" cols="50" rows="5"></textarea>
+        <br/>
+        <button (click)="submitQuestion()" [disabled]="questionsForm.invalid">Submit</button>
+    </form>
 </div>
 </div>

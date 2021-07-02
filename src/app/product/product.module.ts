@@ -18,7 +18,7 @@ import { HttpLoaderFactory } from '../app.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProductCommentsComponent } from './product-comments/product-comments.component';
 import { productCommentsReducer } from './product-comments/state/product-comments.reducer';
-
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -38,6 +38,7 @@ import { productCommentsReducer } from './product-comments/state/product-comment
     RecommendedModule,
     RouterModule,
     ReactiveFormsModule,
+    MatExpansionModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

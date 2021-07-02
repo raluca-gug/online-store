@@ -3,9 +3,25 @@ import * as Actions from './product-comments.actions';
 import * as AppState from '../../../store/app.state';
 
 export interface State extends AppState.State {
-    comments: ProductComment[];
+    commentsAndQA: CommentsAndQA;
   }
 
+interface CommentsAndQA{
+    comments: ProductComment[];
+    questions: Questions[];
+}
+
+export interface Reply {
+    id: string,
+    userId: string,
+    text: string,
+    date: Date,
+    productId: String;
+}
+
+export interface Questions extends Reply {
+    reply: Reply[];
+}
 export interface ProductComment {
     id: string,
     productId: string,
@@ -15,52 +31,95 @@ export interface ProductComment {
     dislikesUsers: string[]
 }
 
-let initialState: ProductComment[];
-if (localStorage.getItem('comments')!==null) initialState=JSON.parse(localStorage.getItem('comments')!)
-else initialState = []
+let initialState: CommentsAndQA ={comments: [], questions: []};
+if (localStorage.getItem('state')!==null) {
+    if(JSON.parse(localStorage.getItem('state')!).comments){
+        initialState={...initialState, comments: JSON.parse(localStorage.getItem('state')!).comments}
+    }
+    if(JSON.parse(localStorage.getItem('state')!).questions){
+        initialState={...initialState, questions: JSON.parse(localStorage.getItem('state')!).questions,}
+    }
+} 
 
-const getProductCommentFeatureState=createFeatureSelector<ProductComment[]>('product-comments');
+const getProductCommentFeatureState=createFeatureSelector<CommentsAndQA>('product-comments');
 
 export const getComments=createSelector(
     getProductCommentFeatureState,
-    state=>state
+    state=>state.comments
+)
+
+export const getQuestions=createSelector(
+    getProductCommentFeatureState,
+    state=>state.questions
 )
 
 export const productCommentsReducer= createReducer(
     initialState,
-    on (Actions.addComment, (state, action): ProductComment[] => {
-        let newState=[
-             ...state, action.comment
-        ]
+    on (Actions.addComment, (state, action): CommentsAndQA => {
+        let newState={
+             ...state, 
+             comments: [...state.comments, action.comment]
+        }
+        localStorage.setItem('state', JSON.stringify(newState))
+        return newState;
+    }),
+
+    on (Actions.likeComment, (state, action): CommentsAndQA => {
+        let newState={
+            ...state,
+            comments: state.comments.map(
+                item => action.id === item.id ? {...item, likesUsers: [...item.likesUsers, action.userId]} : item)
+        }
+        localStorage.setItem('state', JSON.stringify(newState));
+        return newState;
+    }),
+
+    on (Actions.removeLikeComment, (state, action): CommentsAndQA => {
+        let newState={
+            ...state,
+            comments: state.comments.map(
+            item => action.id === item.id ? {...item, likesUsers: item.likesUsers.filter(el=> el!=action.userId)} : item)
+        }
+        localStorage.setItem('state', JSON.stringify(newState))
+        return newState;
+    }),
+
+    on (Actions.dislikeComment, (state, action): CommentsAndQA => {
+        let newState={
+            ...state, 
+            comments: state.comments.map(
+            item => action.id === item.id ? {...item, dislikesUsers: [...item.dislikesUsers, action.userId]} : item)
+        }
+        localStorage.setItem('state', JSON.stringify(newState))
+        return newState;
+    }),
+
+    on (Actions.removeDislikeComment, (state, action): CommentsAndQA => {
+        let newState={
+            ...state,
+            comments: state.comments.map(
+            item => action.id === item.id ? {...item, dislikesUsers: item.dislikesUsers.filter(el=> el!=action.userId)} : item)
+        }
         localStorage.setItem('comments', JSON.stringify(newState))
         return newState;
     }),
 
-    on (Actions.likeComment, (state, action): ProductComment[] => {
-        let newState=state.map(
-            item => action.id === item.id ? {...item, likesUsers: [...item.likesUsers, action.userId]} : item);
-        localStorage.setItem('comments', JSON.stringify(newState))
-        return newState;
+    on (Actions.addQuestion, (state, action): CommentsAndQA => {
+        let newState={
+            ...state, 
+            questions: [...state.questions, action.question]
+       }
+       localStorage.setItem('state', JSON.stringify(newState))
+       return newState;
     }),
 
-    on (Actions.removeLikeComment, (state, action): ProductComment[] => {
-        let newState=state.map(
-            item => action.id === item.id ? {...item, likesUsers: item.likesUsers.filter(el=> el!=action.userId)} : item);
-        localStorage.setItem('comments', JSON.stringify(newState))
-        return newState;
-    }),
-
-    on (Actions.dislikeComment, (state, action): ProductComment[] => {
-        let newState=state.map(
-            item => action.id === item.id ? {...item, dislikesUsers: [...item.dislikesUsers, action.userId]} : item);
-        localStorage.setItem('comments', JSON.stringify(newState))
-        return newState;
-    }),
-
-    on (Actions.removeDislikeComment, (state, action): ProductComment[] => {
-        let newState=state.map(
-            item => action.id === item.id ? {...item, dislikesUsers: item.dislikesUsers.filter(el=> el!=action.userId)} : item);
-        localStorage.setItem('comments', JSON.stringify(newState))
-        return newState;
+    on (Actions.addReply, (state, action): CommentsAndQA => {
+        let updatedQuestions=state.questions.map(el => el.id == action.questionId ? {...el, reply: [...el.reply, action.reply]} : el)
+        let newState={
+            ...state, 
+            questions: updatedQuestions
+       }
+       localStorage.setItem('state', JSON.stringify(newState))
+       return newState;
     }),
 )
