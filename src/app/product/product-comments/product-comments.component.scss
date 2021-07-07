@@ -1,17 +1,6 @@
 @import "~@angular/material/theming";
 
-.border {
-  border-top: 3px solid #4cb5cf;
-}
-
-.container {
-  display: flex;
-}
-
 .container-comms {
-  flex: 50%;
-  position: relative;
-  // width: 80%;
   margin: 40px 3%;
 
   h2 {
@@ -35,45 +24,29 @@
       border-left: 1px solid lightgray;
       padding-left: 10px;
     }
-
-    .colored {
-      color: #4cb5cf;
-    }
-
-    .grayed {
-      color: lightgray;
-    }
   }
 
-  .thumb {
-    margin: 0 10px;
-  }
-
-  .message {
-    position: sticky;
-    bottom: 50px;
-    left: 10px;
-    background-color: #03c04cbd;
-    font-size: 20px;
-    padding: 30px 20px;
-    border-radius: 3%;
-
-    .mat-icon {
-      position: absolute;
-      top: 0px;
-      right: 0px;
-    }
-  }
   .comment-form {
     margin: 30px;
   }
 }
 
+.thumb {
+  margin: 0 10px;
+}
+
+.colored {
+  color: #4cb5cf;
+}
+
+.grayed {
+  color: lightgray;
+}
+
 .container-qanda {
-  flex: 50%;
-  border-left: 3px solid #4cb5cf;
+  position: relative;
   padding: 20px 40px;
-  margin: 20px 0;
+  margin: 40px 3%;
 }
 
 textarea {
@@ -82,7 +55,6 @@ textarea {
 }
 
 button {
-  // background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
   margin-top: 10px;
   background-color: #634fbd;
   padding: 10px;
@@ -111,17 +83,30 @@ button:disabled {
 
 .reply {
   background-color: #4cb5cf23;
-  margin: 0px 0px 10px 20%;
+  margin: 0 0 10px 20%;
   display: flex;
-  padding: 10px 20px 0px;
+  padding: 10px 0 10px 20px;
   border-radius: 5px;
 
   p {
     margin-bottom: 2px;
   }
 
+  .reply-name {
+    width: 10%;
+    border-right: 1px solid lightgray;
+  }
+
   .reply-text {
     margin-left: 20px;
+    display: flex;
+    width: 80%;
+    div:first-child {
+      flex-grow: 9;
+    }
+    div:nth-child(2) {
+      flex-grow: 1;
+    }
   }
 }
 
@@ -130,5 +115,27 @@ button:disabled {
 }
 
 .mat-panel-description {
-    align-content: flex-start;
+  align-content: flex-start;
+}
+
+.message {
+  position: relative;
+  bottom: 50px;
+  right: 10px;
+  max-width: 700px;
+  background-color: #03c04cbd;
+  font-size: 20px;
+  padding: 30px 20px;
+  border-radius: 3%;
+
+  .mat-icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+}
+
+.mat-expansion-panel-header-title{
+    max-width: 20%;
+    border-right: 1px solid lightgray;
 }

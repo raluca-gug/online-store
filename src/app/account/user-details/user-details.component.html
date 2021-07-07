@@ -87,7 +87,7 @@
         </div>
         <div class="btn-container">
           <button
-            class="submit-btn"
+            class="my-button my-button-primary"
             [disabled]="!accountForm.valid || usernameExists"
             (click)="submit(accountForm)"
           >
@@ -146,7 +146,7 @@
         </div>
         <div class="btn-container">
           <button
-            class='submit-btn'
+            class='my-button my-button-primary'
             (click)="submit(addressForm)"
             [disabled]="!addressForm.valid"
           >
@@ -230,7 +230,7 @@
         <div class="btn-container">
           <button
             id="additionalDetails"
-            class="submit-btn"
+            class="my-button my-button-primary"
             (click)="submitAdditionalDetails()"
             [disabled]="!additionalDetailsForm.valid"
           >

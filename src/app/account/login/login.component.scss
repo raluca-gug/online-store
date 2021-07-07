@@ -38,20 +38,14 @@
     padding-left: 5px;
   }
   .buttons {
-    background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
-    color: white;
-    min-width: 60vmin;
+    min-width: 58vmin;
     min-height: 2rem;
-    border-radius: 5px;
-    border: none;
-    font-size: 1.2rem;
     align-self: center;
-    margin: 3% auto;
+    margin: 10px auto;
     position: relative;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    cursor: pointer;
   }
   .non-button {
     border: none;
@@ -88,25 +82,20 @@
   .forgot:active {
     outline: none;
   }
-  .send-email {
-    background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
-    color: white;
-    min-width: 20vmin;
+
+  .send-email-btn {
+    min-width: 65px;
     min-height: 2.1rem;
-    border-radius: 3%;
-    border: none;
-    font-size: 1.2rem;
     align-self: flex-end;
     margin: 0;
-    cursor: pointer;
+    padding: 0;
   }
-  .send-email-disabled {
-    background-image: linear-gradient(to right, #5fd4d270, #634fbd77 40%);
-  }
+
   .forgot-section {
     display: flex;
     flex-direction: row;
   }
+
   mat-icon {
     vertical-align: middle;
     align-self: center;
@@ -158,18 +147,7 @@ body {
   margin: 5% auto;
   max-height: 90%;
 }
-.fb {
-  font-family: Lucida Grande, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-weight: 500;
-  font-size: 1rem;
-  padding: 0.3rem 0.3rem 0.3rem 0;
-  background: #1877f2;
-  color: #fff;
-  border-radius: 5px;
-  border: none;
-  margin: 1rem 0;
-  cursor: pointer;
-}
+
 .mat-icon {
   font-size: 1.6rem;
   vertical-align: middle;
@@ -178,4 +156,13 @@ body {
 .social {
   display: flex;
   flex-direction: column;
+}
+
+.social-icon {
+  margin: 0 10px;
+}
+
+.google{
+  width: 40px;
+  margin: 0;
 }

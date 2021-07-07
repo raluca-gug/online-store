@@ -40,3 +40,23 @@ export const addReply = createAction (
     'product-comments/ add reply',
     props<{reply: Reply, questionId: string}>()
 )
+
+export const likeReply = createAction (
+    'product-comments/like reply',
+    props<{id: string, userId: string}>()
+)
+
+export const removeLikeReply = createAction (
+    'product-comments/remove like reply',
+    props<{id: string, userId: string}>()
+)
+
+export const dislikeReply = createAction (
+    'product-comments/dislike reply',
+    props<{id: string, userId: string}>()
+)
+
+export const removeDislikeReply = createAction (
+    'product-comments/remove dislike reply',
+    props<{id: string, userId: string}>()
+)

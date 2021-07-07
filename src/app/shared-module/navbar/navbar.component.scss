@@ -112,13 +112,9 @@
     width: 70%;
     margin-bottom: 5px;
   }
-  .signout-btn {
-    background-image: linear-gradient(to left, #5fd4d2, #634fbd 50%);
-    width: 80%;
-    color: white;
-    border: 0;
+  button {
+    padding-top: 5px 10px;
     margin-top: 20px;
-    padding: 2px;
   }
   .view-user-details {
     text-decoration: none;

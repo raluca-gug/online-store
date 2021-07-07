@@ -14,12 +14,19 @@ interface CommentsAndQA{
 export interface Reply {
     id: string,
     userId: string,
+    userName: string,
+    text: string,
+    date: Date,
+    likesUsers: string[],
+    dislikesUsers: string[]
+}
+
+export interface Questions {
+    id: string,
+    userId: string,
     text: string,
     date: Date,
     productId: String;
-}
-
-export interface Questions extends Reply {
     reply: Reply[];
 }
 export interface ProductComment {
@@ -114,12 +121,60 @@ export const productCommentsReducer= createReducer(
     }),
 
     on (Actions.addReply, (state, action): CommentsAndQA => {
-        let updatedQuestions=state.questions.map(el => el.id == action.questionId ? {...el, reply: [...el.reply, action.reply]} : el)
+        let updatedQuestions=state.questions.map(el => el.id == action.questionId ? {...el, reply: [{...action.reply}, ...el.reply]} : el)
         let newState={
             ...state, 
             questions: updatedQuestions
        }
        localStorage.setItem('state', JSON.stringify(newState))
        return newState;
+    }),
+
+    on (Actions.likeReply, (state, action): CommentsAndQA => {
+        let updatedQuestions=state.questions.map(el =>
+            {return {...el, reply:  el.reply.map((item:any) => item.id===action.id ? {...item, likesUsers: [...item.likesUsers, action.userId]} : item)}}
+            )
+        let newState={
+            ...state,
+            questions: updatedQuestions
+        }
+        localStorage.setItem('state', JSON.stringify(newState));
+        return newState;
+    }),
+
+    on (Actions.dislikeReply, (state, action): CommentsAndQA => {
+        let updatedQuestions=state.questions.map(el =>
+            {return {...el, reply:  el.reply.map((item:any) => item.id===action.id ? {...item, dislikesUsers: [...item.dislikesUsers, action.userId]} : item)}}
+            )
+        let newState={
+            ...state,
+            questions: updatedQuestions
+        }
+        localStorage.setItem('state', JSON.stringify(newState));
+        return newState;
+    }),
+
+    on (Actions.removeLikeReply, (state, action): CommentsAndQA => {
+        let updatedQuestions=state.questions.map(el =>
+            {return {...el, reply:  el.reply.map((item:any) => item.id===action.id ? {...item, likesUsers: item.likesUsers.filter((elz: any)=> elz!=action.userId)} : item)}}
+            )
+        let newState={
+            ...state,
+            questions: updatedQuestions
+        }
+        localStorage.setItem('state', JSON.stringify(newState))
+        return newState;
+    }),
+
+    on (Actions.removeDislikeReply, (state, action): CommentsAndQA => {
+        let updatedQuestions=state.questions.map(el =>
+            {return {...el, reply:  el.reply.map((item:any) => item.id===action.id ? {...item, dislikesUsers: item.dislikesUsers.filter((elz: any)=> elz!=action.userId)} : item)}}
+            )
+        let newState={
+            ...state,
+            questions: updatedQuestions
+        }
+        localStorage.setItem('state', JSON.stringify(newState))
+        return newState;
     }),
 )

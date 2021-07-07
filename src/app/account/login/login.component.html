@@ -90,7 +90,7 @@
         <span style="color: #ff0000">*</span>{{ "Login.Fields" | translate }}
       </p>
       <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary buttons">
+        <button [disabled]="loading" class="my-button my-button-primary buttons">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"
@@ -101,17 +101,17 @@
       </div>
     </form>
     <div class="social">
-      <button class="fb" id='fb' (click)="signInWithFB()">
-        <mat-icon [ngStyle]="{ color: 'white' }">facebook</mat-icon>
+      <button class="my-button my-button-blue" id='fb' (click)="signInWithFB()">
+        <mat-icon [ngStyle]="{ color: 'white' }" class='social-icon'>facebook</mat-icon>
         {{ "Login.Continue" | translate }} Facebook
       </button>
-      <button mat-button class="fb" id='google' (click)="signInWithGoogle()">
-        <mat-icon svgIcon="logo"></mat-icon>
+      <button mat-button class="my-button my-button-blue" id='google' (click)="signInWithGoogle()">
+        <mat-icon svgIcon="logo" class='social-icon google'></mat-icon>
         {{ "Login.Continue" | translate }} Google
       </button>
     </div>
     <h4>{{ "Login.Or" | translate }}</h4>
-    <button routerLink="../register" class="btn btn-link buttons">
+    <button routerLink="../register" class="my-button my-button-primary buttons">
       {{ "Login.Create" | translate }}
     </button>
     <p class="forgot" (click)="email = !email">
@@ -130,7 +130,7 @@
           [ngClass]="{ 'elevated-dark': darkTheme }"
         />
         <button
-          class="send-email"
+          class="my-button my-button-primary send-email-btn"
           (click)="sendEmail()"
           [disabled]="!emailForm.valid"
           [ngClass]="{ 'send-email-disabled': !emailForm.valid }"

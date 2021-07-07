@@ -1,6 +1,6 @@
 import { User } from './../../core/models/user';
 import { AccountService } from './../../core/services/account.service';
-import { getComments, getQuestions, ProductComment, Questions } from './state/product-comments.reducer';
+import { getComments, getQuestions, ProductComment, Questions, Reply } from './state/product-comments.reducer';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -49,10 +49,12 @@ export class ProductCommentsComponent implements OnInit {
 
     this.replyForm=this.fb.group({
       id:'',
-      userId: `${this.user.firstName} ${this.user.lastName}`,
+      userId: this.user.id,
+      userName: `${this.user.firstName} ${this.user.lastName}`,
       text: [ '', Validators.required],
       date: new Date(),
-      productId: this.route.snapshot.params['id'],
+      likesUsers: this.fb.array([]),
+      dislikesUsers: this.fb.array([])
     })
 
     this.store.select(getComments).subscribe(res => {
@@ -116,6 +118,30 @@ export class ProductCommentsComponent implements OnInit {
     this.replyForm.controls['id'].setValue(Math.floor(Math.random() * 100000).toString());
     this.store.dispatch(Actions.addReply({reply: this.replyForm.value, questionId}));
     this.replyForm.controls["text"].reset();
+  }
+
+  likeReply(reply: Reply) {
+    if (reply.userId!=this.user.id && !reply.likesUsers.includes(this.user.id)) {
+      this.store.dispatch(Actions.likeReply({id: reply.id, userId: this.user.id}))
+    } else 
+      if (reply.userId!=this.user.id && reply.likesUsers.includes(this.user.id)) {
+        this.store.dispatch(Actions.removeLikeReply({id: reply.id, userId: this.user.id}))
+      } else {
+        this.showMessage=true;
+        setTimeout(()=> this.showMessage=false, 3000)
+      }
+  }
+
+  dislikeReply(reply: Reply) {
+    if (reply.userId!=this.user.id && !reply.dislikesUsers.includes(this.user.id)) {
+      this.store.dispatch(Actions.dislikeReply({id: reply.id, userId: this.user.id}))
+    } else 
+      if (reply.userId!=this.user.id && reply.dislikesUsers.includes(this.user.id)) {
+        this.store.dispatch(Actions.removeDislikeReply({id: reply.id, userId: this.user.id}))
+      } else {
+        this.showMessage=true;
+        setTimeout(()=> this.showMessage=false, 3000)
+      }
   }
 
 }

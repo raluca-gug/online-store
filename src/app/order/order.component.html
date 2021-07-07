@@ -24,7 +24,7 @@
       <div></div>
       <div class="actions distance-top">
         <mat-icon></mat-icon>
-        <button [routerLink]="'/cart'">{{ "Order.Modify" | translate }}</button>
+        <button [routerLink]="'/cart'" class="my-button my-button-warning">{{ "Order.Modify" | translate }}</button>
         <mat-icon
           (click)="changeSection(2, $event)"
           [style.visibility]="section == 1 ? 'visible' : 'hidden'"
@@ -62,7 +62,7 @@
           [style.display]="section == 2 ? 'block' : 'none'"
           >forward</mat-icon
         >
-        <button [routerLink]="'/account/details'">
+        <button [routerLink]="'/account/details'" class="my-button my-button-warning">
           {{ "Order.Modify" | translate }}
         </button>
         <mat-icon
@@ -125,11 +125,10 @@
           [style.visibility]="section == 3 ? 'visible' : 'hidden'"
           >forward</mat-icon
         >
-        <button (click)="placeOrder()">
+        <button (click)="placeOrder()" class="my-button my-button-primary">
           {{ "Order.Send Order" | translate }}
         </button>
-        <mat-icon></mat-icon>
-        <button (click)="payPall()" class="paypal" *ngIf="!isHidden"></button>
+        <button (click)="payPall()" class="paypal my-button" *ngIf="!isHidden"></button>
       </div>
     </div>
   </div>
