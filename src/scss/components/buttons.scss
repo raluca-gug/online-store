@@ -3,28 +3,27 @@
 .my-button {
   border: none;
   color: white;
-  font-size: 17px;
+  font-size: $font-size;
   border-radius: 5px;
   padding: 10px 20px;
-  margin: 10px;
-}
 
-.my-button:hover {
-  cursor: pointer;
-  border: none;
-  @include mat-elevation(3);
-}
+  &:hover {
+    cursor: pointer;
+    border: none;
+    @include mat-elevation(3);
+  }
 
-.my-button:active:focus {
-  outline: none;
+  &:active:focus {
+    outline: none;
+  }
 }
 
 .my-button-primary {
   background-color: $primary;
-}
 
-.my-button-primary:disabled {
+  &:disabled {
     background-color: rgba($primary, .5);;
+}
 }
 
 .my-button-warning {
@@ -34,5 +33,3 @@
 .my-button-blue {
     background-color: $social-blue;
 }
-
-

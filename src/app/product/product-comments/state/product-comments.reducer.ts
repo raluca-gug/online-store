@@ -107,7 +107,7 @@ export const productCommentsReducer= createReducer(
             comments: state.comments.map(
             item => action.id === item.id ? {...item, dislikesUsers: item.dislikesUsers.filter(el=> el!=action.userId)} : item)
         }
-        localStorage.setItem('comments', JSON.stringify(newState))
+        localStorage.setItem('state', JSON.stringify(newState))
         return newState;
     }),
 
