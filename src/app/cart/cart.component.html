@@ -43,7 +43,7 @@
             <div class="outOfStock" *ngIf="product.itemsInStock <= 0">
               {{ "Cart.Out of stock" | translate }}
             </div>
-            <div *ngIf="product.itemsInStock > 0 && product.qty">
+            <div *ngIf="product.itemsInStock > 0 && product.qty" class="quantity">
               <button
                 (click)="modifyQuantity(product.id, -1)"
                 class="quantity-buttons"
@@ -107,16 +107,18 @@
     </div>
     <div class="calculation-body line">
       <button
-        class="margin2 order-button"
+        class="my-button my-button-primary"
         [disabled]="products.length == 0"
         routerLink="/order"
       >
         {{ "Cart.Next Step" | translate }}
       </button>
     </div>
-    <button class="margin2 back-button" [routerLink]="'/'">
-      {{ "Cart.Continue shopping" | translate }}
-    </button>
+    <div class="calculation-body line">
+      <button class=" my-button my-button-primary" [routerLink]="'/'">
+        {{ "Cart.Continue shopping" | translate }}
+      </button>
+    </div>
   </div>
 </div>
 <div class="empty-cart-container" *ngIf="products.length === 0">

@@ -7,7 +7,10 @@ export interface FavoriteState {
     products: Product[]
 }
 
-const initialState:FavoriteState={products: []}
+
+let initialState:FavoriteState;
+if(JSON.parse(localStorage.getItem("favorites")!)!==null) initialState={products: JSON.parse(localStorage.getItem("favorites")!) }
+else initialState= {products: [] }
 
 const getFavoriteFeatureState = createFeatureSelector<FavoriteState>('favorite');
 
@@ -18,17 +21,21 @@ export const getProducts = createSelector(
 
 export const favoriteReducer = createReducer(
     initialState,
-    on(ProductActions.addProduct, (state, action): FavoriteState => {
+    on(ProductActions.addToFavorites, (state, action): FavoriteState => {
         if (state.products.includes(action.product)) return state;
-        return {
-           ...state,
-           products: [...state.products, action.product],
-        }
+        let newState= {
+            ...state,
+            products: [...state.products, action.product],
+         }
+        localStorage.setItem('favorites', JSON.stringify(newState.products))
+        return newState;
     }),
-    on(ProductActions.removeProduct, (state, action): FavoriteState => {
-        return {
-           ...state,
-           products: [...state.products.filter(el => el.id !== action.product.id)],
-        }
+    on(ProductActions.removeFromFavorites, (state, action): FavoriteState => {
+        let newState={
+            ...state,
+            products: [...state.products.filter(el => el.id !== action.product.id)],
+         }
+        localStorage.setItem('favorites', JSON.stringify(newState.products))
+        return  newState
     })
 )

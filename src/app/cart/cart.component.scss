@@ -145,7 +145,8 @@ mat-icon {
 }
 .larger {
   font-size: 1.4rem;
-  vertical-align: middle;
+  //vertical-align: middle;
+  padding-top: 15px;
 }
 @media only screen and (max-width: 1024px) {
   h2 {
@@ -223,4 +224,13 @@ mat-icon {
     max-width: 90%;
     align-items: center;
   }
+}
+
+button{
+  width: 90%;
+  margin: 10px auto;
+}
+
+.quantity{
+  display: flex;
 }

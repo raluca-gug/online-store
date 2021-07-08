@@ -38,9 +38,9 @@
   h4 {
     font-weight: 500;
   }
-  .menu{
+  .menu {
     font-size: 1rem;
-    li{
+    li {
       padding: 3px;
     }
   }
@@ -83,8 +83,8 @@
     display: flex;
     flex-grow: 1;
     justify-content: center;
-    h2{
-      text-align: center
+    h2 {
+      text-align: center;
     }
     @media only screen and (max-width: 850px) {
       flex-direction: column;
@@ -99,7 +99,7 @@
         margin-bottom: 12%;
         align-items: center;
         width: fit-content;
-      };
+      }
     }
   }
 }
@@ -129,23 +129,6 @@ mat-icon {
   color: white;
 }
 
-.submit-btn {
-    background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
-    color: white;
-    min-width: 7rem;
-    min-height: 2rem;
-    border-radius: 3%;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-}
-
-.submit-btn:disabled{
-  background-image: linear-gradient(to right, #5fd4d2d0, #634fbda4 40%);
-  cursor: not-allowed;
-}
-
-
 .confirm-light {
   background-color: #ffffff;
 }
@@ -166,17 +149,17 @@ mat-icon {
     margin: 0 5px 30px 0;
   }
 }
-input{
+input {
   font-size: 1rem;
   border: 1px gray solid;
   border-radius: 3%;
   padding: 2px;
 }
-input.invalid:focus{
+input.invalid:focus {
   outline: 1px red solid;
-  border: 1px red solid
+  border: 1px red solid;
 }
-.invalid{
+.invalid {
   border: 1px red solid;
 }
 label {
@@ -184,15 +167,15 @@ label {
   text-align: left;
   margin-bottom: 2px;
 }
-.input-label-group{
+.input-label-group {
   margin-bottom: 8px;
 }
-.btn-container{
+.btn-container {
   justify-content: center;
   display: flex;
   margin: 1rem;
 }
-.error{
+.error {
   margin-top: 5px;
   color: red;
 }

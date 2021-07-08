@@ -35,16 +35,7 @@ body {
   div {
     padding: 0.5rem;
     position: relative;
-    button {
-      min-height: 2rem;
-      height: fit-content;
-      font-size: 1rem;
-      background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
-      border: none;
-      min-width: 7rem;
-      color: white;
-      border-radius: 5px;
-    }
+    
     button:hover {
       cursor: pointer;
       border: none;
@@ -54,17 +45,23 @@ body {
       outline: none;
     }
     .paypal {
+      min-height: 40px;
+      width: 120px;
+      border-radius: 5px;
+      margin: 10px;
+      padding: 10px 20px;
       background-color: transparent;
       background-image: url("../../assets/icons/paypal-seeklogo.com.svg");
-      background-repeat: no-repeat;
+      // background-repeat: no-repeat;
       background-size: cover;
       background-position: 10px 5px;
-      margin: 0 0 0 1.5rem;
     }
   }
   .flex {
-    padding: 2rem 2rem 3rem 2rem;
+    padding: 1rem 1rem 1rem 1rem;
     margin: 1.3rem;
+    width: 30%;
+    height: 480px;
   }
   h2 {
     border-bottom: 1px solid #979292;
@@ -184,17 +181,17 @@ body {
   h3 {
     margin: 0;
   }
-  button {
-    min-height: 2rem;
-    height: fit-content;
-    font-size: 1rem;
-    background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
-    border: none;
-    min-width: 7rem;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  // button {
+  //   min-height: 2rem;
+  //   height: fit-content;
+  //   font-size: 1rem;
+  //   background-image: linear-gradient(to right, #5fd4d2, #634fbd 40%);
+  //   border: none;
+  //   min-width: 7rem;
+  //   color: white;
+  //   border-radius: 5px;
+  //   cursor: pointer;
+  // }
   .buttons {
     display: flex;
     justify-content: space-around;

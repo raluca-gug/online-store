@@ -1,3 +1,5 @@
+import { SortByDatePipe } from './product-comments/sortByDate.pipe';
+import { StoreModule } from '@ngrx/store';
 import { RecommendedModule } from './../recommended/recommended.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +17,11 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ProductCommentsComponent } from './product-comments/product-comments.component';
+import { productCommentsReducer } from './product-comments/state/product-comments.reducer';
+import { MatExpansionModule } from '@angular/material/expansion';
+import {MatTabsModule} from '@angular/material/tabs';
+import { SortPipe } from './product-comments/sort.pipe';
 
 
 @NgModule({
@@ -22,7 +29,10 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     ProductDetailsComponent,
     ProductDetailsDialogComponent,
     ProductListComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProductCommentsComponent,
+    SortPipe,
+    SortByDatePipe
   ],
   imports: [
     CommonModule,
@@ -34,6 +44,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     RecommendedModule,
     RouterModule,
     ReactiveFormsModule,
+    MatExpansionModule,
+    MatTabsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -41,6 +53,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
         deps: [HttpClient]
       }
     }),
+    StoreModule.forFeature('product-comments', productCommentsReducer)
   ],
   
   entryComponents: [ProductDetailsDialogComponent],

@@ -1,8 +1,11 @@
+import { cartBE } from './../models/cartBE';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
+import { Product } from '../models/product';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +18,9 @@ export class CartService {
   mergedCart!: any;
   remoteCart!: any;
   currentCart = this.cartSource.asObservable();
+
   constructor(private http: HttpClient) {}
+
   update(cart: any) {
     this.cartSource.next(cart);
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -39,10 +44,12 @@ export class CartService {
       }
     }
   }
+
   getCart() {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
     return this.http.get(`${environment.apiUrl}/carts/users/${this.user.id}`);
   }
+
   deleteCart(id: string) {
     return this.http.delete(`${environment.apiUrl}/carts/${id}`);
   }
@@ -90,5 +97,32 @@ export class CartService {
         this.cartSource.next(this.mergedCart);
       }
     }
+  }
+
+  addToCart(product: Product, qty: number) {
+    if (qty===0) return of (product);
+    let cart= new cartBE();
+
+    this.currentCart.pipe(first()).subscribe((res) => {
+      if (Object.keys(res).length !== 0) cart = res;
+      let existInCart = false;
+      for (let key in cart.products)
+        if (key === product.id) {
+          if (cart.products[key] + qty <= product.itemsInStock) {
+            cart.products[key] += qty;
+          } else cart.products[key] = product.itemsInStock;
+          existInCart = true;
+        }
+      if (!existInCart) {
+        cart.products[product.id] = qty;
+        if (localStorage.hasOwnProperty('user'))
+          cart.userId = JSON.parse(
+            localStorage.getItem('user') || '{}'
+          ).id;
+      }
+      if (cart.products != null) delete cart.products[''];
+      this.update(cart);
+    })
+    return of (product);
   }
 }
