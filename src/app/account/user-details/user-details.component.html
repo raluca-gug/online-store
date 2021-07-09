@@ -31,33 +31,42 @@
       </h2>
       <form [formGroup]="accountForm">
         <div class="input-label-group">
-          <label> *{{ "AccountInfo.First Name" | translate }}: </label>
+          <label for="firstName" class="input-label"> {{ "AccountInfo.First Name" | translate }}* </label>
           <input
             type="text"
+            id="firstName"
             formControlName='firstName'
-            [class.invalid]="accountForm.controls.firstName.invalid && accountForm.controls.firstName.touched"
+            placeholder="First name"
+            [class.invalid-input]="accountForm.controls.firstName.invalid && accountForm.controls.firstName.touched"
+            class="my-text-input"
           />
         </div>
         <div class="input-label-group">
-          <label> *{{ "AccountInfo.Last Name" | translate }}:</label>
+          <label for="lastName" class="input-label">{{ "AccountInfo.Last Name" | translate }}*</label>
           <input
             type="text"
+            id="lastName"
+            placeholder="Last name"
             formControlName="lastName"
-            [class.invalid]="accountForm.controls.lastName.invalid && accountForm.controls.lastName.touched"
+            [class.invalid-input]="accountForm.controls.lastName.invalid && accountForm.controls.lastName.touched"
+            class="my-text-input"
           />
         </div>
         <div class="input-label-group">
-          <label>*{{ "AccountInfo.Username" | translate }}:</label>
+          <label for="username" class="input-label">{{ "AccountInfo.Username" | translate }}*</label>
           <input
             type="text"
+            id="username"
             formControlName="username"
+            placeholder="Username"
             (keyup)='checkUsername()'
-            [class.invalid]="accountForm.controls.username.invalid && accountForm.controls.username.touched || usernameExists"
+            [class.invalid-input]="accountForm.controls.username.invalid && accountForm.controls.username.touched || usernameExists"
+            class="my-text-input"
           />
-          <p *ngIf="usernameExists" class='error'> 
+          <p *ngIf="usernameExists" class='error-input'> 
             Username taken 
           </p>
-          <p *ngIf="accountForm.controls.username.hasError('invalidAsync')" class='error'> 
+          <p *ngIf="accountForm.controls.username.hasError('invalidAsync')" class='error-input'> 
             Username taken async validator 
             
           </p>
@@ -66,13 +75,16 @@
           </p>
         </div>
         <div class="input-label-group">
-          <label for="phone"> *{{ "AccountInfo.Phone Number" | translate }}: </label>
+          <label for="phone" class="input-label"> {{ "AccountInfo.Phone Number" | translate }}* </label>
           <input
             type="tel"
+            id="phone"
+            placeholder="Telephone"
             formControlName="telephone"
-            [class.invalid]="accountForm.controls.telephone.invalid && accountForm.controls.telephone.touched "
+            [class.invalid-input]="accountForm.controls.telephone.invalid && accountForm.controls.telephone.touched "
+            class="my-text-input"
           />
-          <p *ngIf="accountForm.controls.telephone.hasError('minlength')" class='error'> 
+          <p *ngIf="accountForm.controls.telephone.hasError('minlength')" class='error-input'> 
              Telephone number apears to be too short 
           </p>
         </div>
@@ -81,7 +93,7 @@
             || accountForm.controls.firstName.hasError('required')
             || accountForm.controls.lastName.hasError('required')
             || accountForm.controls.username.hasError('required')
-            " class='error'> 
+            " class='error-form'> 
             *All fields are required
           </p>
         </div>
@@ -104,35 +116,47 @@
       </h2>
       <form [formGroup]='addressForm'>
         <div class="input-label-group">
-          <label for="address"> *{{ "AccountInfo.Address" | translate }}: </label>
+          <label for="address" class="input-label"> {{ "AccountInfo.Address" | translate }}* </label>
           <input
             type="text"
+            id="address"
+            placeholder="Address"
             formControlName="address"
-            [class.invalid]="addressForm.controls.address.invalid && addressForm.controls.address.dirty "
+            [class.invalid-input]="addressForm.controls.address.invalid && addressForm.controls.address.dirty "
+            class="my-text-input"
           />
         </div>
         <div class="input-label-group">
-          <label for="city"> *{{ "AccountInfo.City" | translate }}: </label>
+          <label for="city"  class="input-label"> {{ "AccountInfo.City" | translate }}* </label>
           <input
             type="text"
+            id="city"
+            placeholder="City"
             formControlName="city"
-            [class.invalid]="addressForm.controls.city.invalid && addressForm.controls.city.touched "
+            [class.invalid-input]="addressForm.controls.city.invalid && addressForm.controls.city.touched "
+            class="my-text-input"
           />
         </div>
         <div class="input-label-group">
-          <label for="county"> *{{ "AccountInfo.County" | translate }}: </label>
+          <label for="county" class="input-label"> {{ "AccountInfo.County" | translate }}* </label>
           <input
             type="text"
+            id="county"
+            placeholder="County"
             formControlName="county"
-            [class.invalid]="addressForm.controls.county.invalid && addressForm.controls.county.touched "
+            [class.invalid-input]="addressForm.controls.county.invalid && addressForm.controls.county.touched "
+            class="my-text-input"
           /><br />
         </div>
         <div class="input-label-group">
-          <label for="postalCode"> *{{ "AccountInfo.Postal Code" | translate }}: </label>
+          <label for="postalCode" class="input-label"> {{ "AccountInfo.Postal Code" | translate }}* </label>
           <input
             type="text"
+            id="postalCode"
+            placeholder="Postal code"
             formControlName="postalCode"
-            [class.invalid]="addressForm.controls.postalCode.invalid && addressForm.controls.postalCode.touched "
+            [class.invalid-input]="addressForm.controls.postalCode.invalid && addressForm.controls.postalCode.touched "
+            class="my-text-input"
           />
         </div>
         <div *ngIf='addressForm'>
@@ -140,7 +164,7 @@
               || addressForm.controls.city.hasError('required')
               || addressForm.controls.county.hasError('required')
               || addressForm.controls.postalCode.hasError('required')
-              " class='error'> 
+              " class='error-form'> 
               *All fields are required
             </p>
         </div>
@@ -174,48 +198,55 @@
       </h2>
       <form [formGroup]='additionalDetailsForm'>
         <div class="input-label-group">
-          <label for="weight"> *Weight (kg): </label>
+          <label for="weight"  class="input-label"> Weight (kg)* </label>
           <input
             type="number"
+            id="weight"
+            placeholder="Weight"
             formControlName="weight"
-            [class.invalid]="additionalDetailsForm.controls.weight.invalid && additionalDetailsForm.controls.weight.touched "
+            [class.invalid-input]="additionalDetailsForm.controls.weight.invalid && additionalDetailsForm.controls.weight.touched "
+            class="my-text-input"
           />
-          <p *ngIf="additionalDetailsForm.controls.weight.hasError('smaller')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('smaller')" class='error-input'>
             Weight can't be samller than 3 kg
           </p>
-          <p *ngIf="additionalDetailsForm.controls.weight.hasError('bigger')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.weight.hasError('bigger')" class='error-input'>
             Weight can't be greater than 200 kg
           </p>
         </div>
         <div class="input-label-group" >
-          <label for="height"> *Height (cm): </label>
+          <label for="height"  class="input-label"> Height (cm)* </label>
           <input
             type="number"
-            formControlName="height"
-            [class.invalid]="additionalDetailsForm.controls.height.invalid && additionalDetailsForm.controls.height.touched "
+            id="height"
+            placeholder="Height"
+            formControlName="height" class="my-text-input"
+            [class.invalid-input]="additionalDetailsForm.controls.height.invalid && additionalDetailsForm.controls.height.touched "
           />
-          <p *ngIf="additionalDetailsForm.controls.height.hasError('min')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.height.hasError('min')" class='error-input'>
             Height can't be samller than 1 cm
           </p>
-          <p *ngIf="additionalDetailsForm.controls.height.hasError('max')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.height.hasError('max')" class='error-input'>
             Height can't be greater than 250 cm
           </p>
         </div>
         <div class="input-label-group" >
-          <label for="yearOfBirth"> *Year of birth: </label>
+          <label for="yearOfBirth" class="input-label"> Year of birth* </label>
           <input
             type="number"
             min="1920"
+            placeholder="Year of birth"
+            id="yearOfBirth" class="my-text-input"
             formControlName="yearOfBirth"
-            [class.invalid]="additionalDetailsForm.controls.yearOfBirth.invalid && additionalDetailsForm.controls.yearOfBirth.touched "
+            [class.invalid-input]="additionalDetailsForm.controls.yearOfBirth.invalid && additionalDetailsForm.controls.yearOfBirth.touched "
           />
-          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('min')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('min')" class='error-input'>
             Year of birth can't be samller than 1920
           </p>
-          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('max')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('max')" class='error-input'>
             Year of birth can't be greater than 2020
           </p>
-          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('pattern')" class='error'>
+          <p *ngIf="additionalDetailsForm.controls.yearOfBirth.hasError('pattern')" class='error-input'>
             Year of birth cannot contain a decimal point
           </p>
         </div>
@@ -223,7 +254,7 @@
           <p *ngIf="additionalDetailsForm.controls.weight.hasError('required') 
               || additionalDetailsForm.controls.height.hasError('required')
               || additionalDetailsForm.controls.yearOfBirth.hasError('required')
-              " class='error'> 
+              " class='error-form'> 
               *All fields are required
             </p>
         </div>

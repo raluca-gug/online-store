@@ -8,7 +8,7 @@
     [ngClass]="{ 'elevated-dark': darkTheme, 'light-container': !darkTheme }"
   >
     <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="form-group inputs">
+      <div class="form-group input-with-icon">
         <input
           matInput
           type="text"
@@ -38,7 +38,7 @@
 
         <div
           *ngIf="submitted && formControls.username.errors"
-          class="invalid-feedback"
+          class="invalid-input"
         >
           <div *ngIf="formControls.username.errors.required">
             {{ "Login.UsernameRequired" | translate }}
@@ -46,17 +46,8 @@
         </div>
       </div>
       <span class="spacer"></span>
-      <div
-        *ngIf="
-          formControls.password.errors && formControls.password.errors.pattern
-        "
-        style="color: #ff0000"
-      >
-        {{ "Login.PasswordLength" | translate }} <br />
-        {{ "Login.Case" | translate }}<br />
-        {{ "Login.Number" | translate }}
-      </div>
-      <div class="form-group inputs">
+      
+      <div class="form-group input-with-icon">
         <input
           matInput
           [(ngModel)]="valuePass"
@@ -69,20 +60,20 @@
           placeholder="{{ 'Login.Password' | translate }}"
           title="Password must contain: one uppercase letter, one number,
            one special character and be at lest 8 characters long."
-        />
-        <mat-icon (click)="hide = !hide">{{
-          hide ? "visibility_off" : "visibility"
-        }}</mat-icon>
-        <div
-          *ngIf="submitted && formControls.password.errors"
-          class="invalid-feedback"
-        >
-          <div *ngIf="formControls.password.errors.required">
+          />
+          <mat-icon (click)="hide = !hide">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
+          <div
+            *ngIf="submitted && formControls.password.errors"
+            class="error-form mt-10"
+          >
+          <div *ngIf="formControls.password.errors.required"  class="error-form mt-10">
             {{ "Login.PasswordRequired" | translate }}
           </div>
         </div>
       </div>
-      <div *ngIf="errorFromServer" class="invalid-feedback">
+      <div *ngIf="errorFromServer" class="error-form mt-10">
         {{ serverMessage }}
       </div>
       <span class="spacer"></span>
@@ -90,7 +81,7 @@
         <span style="color: #ff0000">*</span>{{ "Login.Fields" | translate }}
       </p>
       <div class="form-group">
-        <button [disabled]="loading" class="my-button my-button-primary buttons">
+        <button [disabled]="loading || !form.valid" class="my-button my-button-primary buttons">
           <span
             *ngIf="loading"
             class="spinner-border spinner-border-sm mr-1"

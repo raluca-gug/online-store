@@ -1,0 +1,76 @@
+@import "~@angular/material/theming";
+
+.input-label {
+  padding: 2px 0 1px;
+}
+
+.my-text-input {
+  padding: $buttons-padding;
+  border: 1px solid gray;
+  background-color: $gray;
+  border-radius: 3px;
+
+  &:focus {
+    outline: 2px solid gray;
+    border: none;
+  }
+
+  &::-webkit-input-placeholder {
+    color: gray;
+  }
+}
+
+.invalid-input {
+  border: 1px $danger solid;
+
+  &:focus {
+    outline: 2px $danger solid;
+    border: none;
+  }
+}
+
+.error-form {
+  background-color: $danger;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.error-input {
+  color: $danger;
+}
+
+.input-with-icon {
+  padding: $buttons-padding;
+  border: 1px solid gray;
+  background-color: $gray;
+  border-radius: 3px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+
+  input::-webkit-input-placeholder {
+    color: #817e7e;
+  }
+
+  input {
+    background-color: $gray;
+  }
+
+  &:focus-within {
+    @include mat-elevation(2);
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+  }
+
+  mat-icon {
+    vertical-align: middle;
+    align-self: center;
+    color: gray;
+    padding: 0 2%;
+    cursor: pointer;
+  }
+}

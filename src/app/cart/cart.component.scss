@@ -226,11 +226,15 @@ mat-icon {
   }
 }
 
-button{
+button {
   width: 90%;
   margin: 10px auto;
 }
 
-.quantity{
+.quantity {
   display: flex;
+}
+
+.margin10 {
+  margin-top: 10px;
 }

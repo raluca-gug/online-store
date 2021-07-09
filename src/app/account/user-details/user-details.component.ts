@@ -4,7 +4,6 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
-  FormControl,
   ValidatorFn,
   AbstractControl,
   ValidationErrors,
@@ -18,7 +17,6 @@ import {
   AfterViewInit,
   ElementRef,
 } from '@angular/core';
-import { usernameValidator } from 'src/app/shared-module/username-validator';
 
 enum DetailsOption {
   Account=1,

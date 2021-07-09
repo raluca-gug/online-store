@@ -38,7 +38,7 @@
     padding-left: 5px;
   }
   .buttons {
-    min-width: 58vmin;
+    min-width: 60vmin;
     min-height: 2rem;
     align-self: center;
     margin: 10px auto;
@@ -47,22 +47,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
   }
-  .non-button {
-    border: none;
-    background-color: transparent;
-  }
-  .inputs {
-    border: 1px outset #979292;
-    border-radius: 5px;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    width: 100%;
-    min-width: 60vmin;
-    padding: 0;
-    height: 2rem;
-    margin: 0;
-  }
+
   input::-webkit-input-placeholder {
     color: #817e7e;
   }
@@ -162,7 +147,11 @@ body {
   margin: 0 10px;
 }
 
-.google{
+.google {
   width: 40px;
   margin: 0;
+}
+
+#google {
+  margin-top: 20px;
 }
