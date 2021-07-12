@@ -58,13 +58,9 @@
             [ngClass]="{ dark: darkTheme, 'example-list-light': !darkTheme }"
           >
             <li [ngClass]="{ dark: darkTheme }">
-              <h4>{{ "Navbar.Hello" | translate }}</h4>
-            </li>
-            <li [ngClass]="{ dark: darkTheme }">
-              <h4 class="user-name">
+              <h3>{{ "Navbar.Hello" | translate }}
                 {{user.firstName }} {{ user.lastName }}
-              </h4>
-              <div class="user-name-separator"></div>
+              </h3>
             </li>
 
             <li [ngClass]="{ dark: darkTheme }">
@@ -73,16 +69,16 @@
                 class="view-user-details"
                 [ngClass]="{ dark: darkTheme }"
               >
-                >
-                 <!-- {{ "Navbar.MyDetails" | translate }} -->
-                 My account
+                
+                 {{ "Navbar.MyDetails" | translate }}
+                 
                  </a
               >
             </li>
             <li>
               <a routerLink="/favorites"
                 class="view-user-details">
-                > Favorite products
+                 Favorite products
               </a>
             </li>
             <button class="my-button my-button-primary" (click)="signout()">
@@ -116,7 +112,8 @@
       </a>
 
     </div>
-    <div class="language-selector">
+
+    <!-- <div class="language-selector">
       <p class="language-selector-p">
         {{ "Navbar.Language" | translate }}
         <select
@@ -126,27 +123,42 @@
           <option
             *ngFor="let lang of translate.getLangs()"
             [value]="lang"
-            [selected]="lang === translate.currentLang">
+            [selected]="lang === translate.currentLang"
+            style="background-image: url('../../assets/flags/{{lang}}.png');">
             {{ lang }}
+            <img
+              src="../../assets/flags/{{lang}}.png"
+              id="flag"
+              alt="flag"/>
+             <img
+              *ngIf="translate.currentLang == 'en'"
+              src="../../assets/flags/GB.png"
+              id="flag"
+              alt="flag"/>
+            <img
+              *ngIf="translate.currentLang == 'de'"
+              src="../../assets/flags/DE.png"
+              id="flag"
+              alt="flag"/> 
           </option>
         </select>
-        <img
-          *ngIf="translate.currentLang == 'ro'"
-          src="../../assets/flags/RO.png"
-          id="flag"
-          alt="flag"/>
-        <img
-          *ngIf="translate.currentLang == 'en'"
-          src="../../assets/flags/GB.png"
-          id="flag"
-          alt="flag"/>
-        <img
-          *ngIf="translate.currentLang == 'de'"
-          src="../../assets/flags/DE.png"
-          id="flag"
-          alt="flag"/>
       </p>
-    </div>
+    </div> -->
+    
+    <mat-form-field>
+      <mat-label> {{ "Navbar.Language" | translate }}</mat-label>
+      <mat-select #langSelect (selectionChange)="translate.use(langSelect.value); setLanguage(langSelect.value)" [(value)]="selected">
+        <mat-select-trigger>
+          <img src="../../assets/flags/{{selected}}.png"  id="flag" alt="flag">
+          {{selected}}
+        </mat-select-trigger>
+        <mat-option
+        *ngFor="let lang of languages" [value]="lang.value">
+          <img src='{{lang.img}}'  id="flag" alt="flag">
+          {{lang.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </nav>
   <div class="horizontal"></div>
 </div>
