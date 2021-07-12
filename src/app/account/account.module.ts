@@ -17,6 +17,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 import { LeavePageDialogComponent } from './register/leave-page-dialog/leave-page-dialog.component';
+import { CustomInputComponent } from './custom-input/custom-input.component';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MyOrdersComponent,
     OrderItemComponent,
     LeavePageDialogComponent,
+    CustomInputComponent,
   ],
   exports: [TranslateModule],
   entryComponents: [LeavePageDialogComponent]

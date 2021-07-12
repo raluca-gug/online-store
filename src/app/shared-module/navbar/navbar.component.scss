@@ -94,28 +94,31 @@
 .example-list {
   z-index: 2;
   list-style-type: none;
-  width: 180px;
-  padding-top: 8px;
-  height: 180px;
+  width: 210px;
+  padding: 8px;
+  height: 200px;
   border-radius: 5px;
+  text-align: center;
   @include mat-elevation(6);
+
   h3 {
     font-weight: 700;
   }
   .user-name {
     margin-top: -20px;
     margin-bottom: 2px;
-    padding-left: 10px;
   }
   .user-name-separator {
     border-bottom: 1px solid black;
     width: 70%;
     margin-bottom: 5px;
   }
+
   button {
-    padding-top: 5px 10px;
-    margin-top: 20px;
+    margin: 20px auto;
+    display: block;
   }
+
   .view-user-details {
     text-decoration: none;
     margin-bottom: 20px;
@@ -168,4 +171,12 @@
   .horizontal {
     margin-top: 8%;
   }
+}
+
+.mat-form-field {
+  max-width: 80px;
+}
+
+.my-button {
+  margin: 0 auto;
 }

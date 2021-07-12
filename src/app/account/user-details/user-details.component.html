@@ -6,19 +6,19 @@
     </div>
     <h2>{{ user.firstName }} {{ user.lastName }}</h2>
     <ul class='menu'>
-      <li [ngClass]="{ active: detailsOption == DetailsOption.Account }"
+      <li [ngClass]="{ 'my-button my-button-primary': detailsOption == DetailsOption.Account }"
         (click)="detailsOption = 1">
         {{ "AccountInfo.Account Info" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == DetailsOption.Address}"
+      <li [ngClass]="{ 'my-button my-button-primary': detailsOption == DetailsOption.Address}"
         (click)="detailsOption = DetailsOption.Address">
         {{ "AccountInfo.Address" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == DetailsOption.AddDetails }"
+      <li [ngClass]="{ 'my-button my-button-primary': detailsOption == DetailsOption.AddDetails }"
         (click)="detailsOption = 5">
         {{ "Additional details" | translate }}
       </li>
-      <li [ngClass]="{ active: detailsOption == DetailsOption.Orders || detailsOption == DetailsOption.OrderItem}"
+      <li [ngClass]="{ 'my-button my-button-primary': detailsOption == DetailsOption.Orders || detailsOption == DetailsOption.OrderItem}"
         (click)="detailsOption = DetailsOption.Orders" >
         {{ "AccountInfo.My Orders" | translate }}
       </li>

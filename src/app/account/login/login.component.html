@@ -10,9 +10,7 @@
     <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group input-with-icon">
         <input
-          matInput
           type="text"
-          [(ngModel)]="valueUser"
           formControlName="username"
           [ngClass]="{
             'is-invalid': submitted && formControls.username.errors,
@@ -22,11 +20,11 @@
         />
         <button
           mat-button
-          *ngIf="valueUser"
+          *ngIf="form.controls.username.value"
           matSuffix
           mat-icon-button
           aria-label="Clear"
-          (click)="valueUser = ''; valuePass = ''"
+          (click)="form.reset()"
           class="non-button"
           [ngClass]="{
             'elevated-dark': darkTheme,
@@ -47,32 +45,10 @@
       </div>
       <span class="spacer"></span>
       
-      <div class="form-group input-with-icon">
-        <input
-          matInput
-          [(ngModel)]="valuePass"
-          [type]="hide ? 'password' : 'text'"
-          formControlName="password"
-          [ngClass]="{
-            'is-invalid': submitted && formControls.password.errors,
-            'elevated-dark': darkTheme
-          }"
-          placeholder="{{ 'Login.Password' | translate }}"
-          title="Password must contain: one uppercase letter, one number,
-           one special character and be at lest 8 characters long."
-          />
-          <mat-icon (click)="hide = !hide">{{
-            hide ? "visibility_off" : "visibility"
-          }}</mat-icon>
-          <div
-            *ngIf="submitted && formControls.password.errors"
-            class="error-form mt-10"
-          >
-          <div *ngIf="formControls.password.errors.required"  class="error-form mt-10">
-            {{ "Login.PasswordRequired" | translate }}
-          </div>
-        </div>
+      <div>
+        <app-custom-input formControlName="password" ></app-custom-input>
       </div>
+
       <div *ngIf="errorFromServer" class="error-form mt-10">
         {{ serverMessage }}
       </div>

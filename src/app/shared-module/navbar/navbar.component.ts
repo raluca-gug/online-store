@@ -23,6 +23,11 @@ export class NavbarComponent implements OnInit {
   userLanguage = '';
   userOptions = false;
   darkTheme = false;
+  selected!: string; 
+  languages=[{value: 'en', img: "../../assets/flags/en.png"},
+  {value: 'de', img: "../../assets/flags/de.png"},
+  {value: 'ro', img: "../../assets/flags/ro.png"}
+]
   constructor(
     private cartService: CartService,
     private searchService: SearchService,
@@ -78,6 +83,7 @@ export class NavbarComponent implements OnInit {
       for (let key in this.cart.products) this.qty += this.cart.products[key];
       this.qtyEmitter$.next(this.qty);
     });
+    this.selected=this.translate.currentLang;
     !localStorage.hasOwnProperty('darkTheme') ? localStorage.setItem('darkTheme', JSON.stringify(this.darkTheme)) :
       this.darkTheme = JSON.parse(localStorage.getItem('darkTheme')!)
   }

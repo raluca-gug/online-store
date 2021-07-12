@@ -1,0 +1,14 @@
+<div class="form-group input-with-icon">
+    <input
+      [value]=value
+      (input)="onChange($any($event.target)?.value)"
+      (blur)="onTouched()"
+      [type]="hide ? 'password' : 'text'"
+      placeholder="{{ 'Login.Password' | translate }}"
+      title="Password must contain: one uppercase letter, one number,
+       one special character and be at lest 8 characters long."
+      />
+      <mat-icon (click)="hide = !hide">{{
+        hide ? "visibility_off" : "visibility"
+      }}</mat-icon>
+  </div>
